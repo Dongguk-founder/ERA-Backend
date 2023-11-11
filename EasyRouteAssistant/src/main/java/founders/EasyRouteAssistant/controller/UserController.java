@@ -1,6 +1,6 @@
 package founders.easyRouteAssistant.controller;
 
-import founders.easyRouteAssistant.dto.UserRequestDTO;
+import founders.easyRouteAssistant.dto.UserDTO;
 import founders.easyRouteAssistant.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class UserController {
      */
 
     @PostMapping("/register")
-    public @ResponseBody ResponseEntity<String> registerUser(UserRequestDTO userDTO) throws Exception {
+    public @ResponseBody ResponseEntity<String> registerUser(UserDTO userDTO) throws Exception {
         userService.insertUser(userDTO);
         return ResponseEntity.ok("User registered successfully");
     }
@@ -37,7 +37,7 @@ public class UserController {
         - url에서 {…}이 안에 있는 값을 추출해서 사용하는 방식
      */
     @GetMapping("/getUserDetail/{id}")
-    public UserRequestDTO getUserDetail(@PathVariable String id) throws Exception {
+    public UserDTO getUserDetail(@PathVariable String id) throws Exception {
         return userService.getUserDetail(id);
     }
 //    public UserRequestDTO getUserDetail(@RequestParam String id) throws Exception {

@@ -1,6 +1,6 @@
 package founders.easyRouteAssistant.repository;
 
-import founders.easyRouteAssistant.domain.entity.User;
+import founders.easyRouteAssistant.domain.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.concurrent.ExecutionException;
@@ -14,7 +14,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
 
-    @Override
     public void save(User user) throws ExecutionException, InterruptedException {
 
     }
