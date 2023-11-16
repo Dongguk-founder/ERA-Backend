@@ -1,4 +1,4 @@
-package founders.EasyRouteAssistant.dto;
+package founders.easyRouteAssistant.dto;
 
 import lombok.Getter;
 import lombok.Setter;

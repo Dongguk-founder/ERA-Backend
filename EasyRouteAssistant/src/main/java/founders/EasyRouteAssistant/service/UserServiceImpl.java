@@ -1,31 +1,34 @@
-package founders.EasyRouteAssistant.service;
+package founders.easyRouteAssistant.service;
 
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.cloud.FirestoreClient;
-import founders.EasyRouteAssistant.domain.User;
-import founders.EasyRouteAssistant.dto.UserDTO;
-import lombok.extern.slf4j.Slf4j;
+
+import founders.easyRouteAssistant.domain.User;
+import founders.easyRouteAssistant.dto.UserDTO;
+import founders.easyRouteAssistant.repository.UserRepositoryImpl;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
-public class UserServiceImpl implements UserService{
+import java.util.concurrent.ExecutionException;
 
-    private final Firestore userdb = FirestoreClient.getFirestore();
-    private String COLLECTION_NAME = "Users";
+@Service
+@RequiredArgsConstructor
+public class UserServiceImpl implements UserService {
+
+    private final UserRepositoryImpl userRepository;
+
+    @Override
+    public void insertUser(UserDTO userDTO) throws ExecutionException, InterruptedException {
+        User user = new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail(), userDTO.getPassword());
+        userRepository.save(user);
+    }
 
     @Override
     public UserDTO getUserDetail(String id) throws Exception {
-        DocumentReference documentReference =
-                userdb.collection(COLLECTION_NAME).document(id);
-        ApiFuture<DocumentSnapshot> apiFuture = documentReference.get();
-        DocumentSnapshot documentSnapshot = apiFuture.get();
-        UserDTO user = null;
-        if (documentSnapshot.exists()) {
-            user = documentSnapshot.toObject(UserDTO.class);
-        }
-        return user;
+        return null;
+    }
+
+    @Override
+    public String deleteUser(String id) throws Exception {
+        return null;
     }
 }

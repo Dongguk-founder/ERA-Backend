@@ -1,4 +1,4 @@
-package founders.EasyRouteAssistant.domain;
+package founders.easyRouteAssistant.domain;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;
