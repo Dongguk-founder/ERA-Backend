@@ -10,7 +10,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class FavoriteDTO {
-    private String userID;
     private String placeName;
     private String roadNameAddress;
     private Double latitude;
@@ -19,8 +18,6 @@ public class FavoriteDTO {
 
     public static FavoriteDTO toFavoriteDTO(FavoriteEntity favoriteEntity) {
         FavoriteDTO favoriteDTO = new FavoriteDTO();
-
-
 
         return favoriteDTO;
     }
