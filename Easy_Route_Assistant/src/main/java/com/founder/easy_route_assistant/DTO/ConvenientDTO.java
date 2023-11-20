@@ -1,2 +1,29 @@
-package com.founder.easy_route_assistant.DTO;public class ConvenientDTO {
+package com.founder.easy_route_assistant.DTO;
+
+import com.founder.easy_route_assistant.Entity.ConvenientEntity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.data.geo.Point;
+
+@Getter @Setter
+@NoArgsConstructor
+@ToString
+public class ConvenientDTO {
+    private String convenientName;
+    /*private Double latitude;
+    private Double longitude;*/
+    private Point point;
+
+    public static ConvenientDTO toConvenientDTO(ConvenientEntity convenientEntity) {
+        ConvenientDTO convenientDTO = new ConvenientDTO();
+
+        convenientDTO.setConvenientName(convenientEntity.getConvenientName());
+        /*convenientDTO.setLatitude(convenientEntity.getLatitude());
+        convenientDTO.setLongitude(convenientEntity.getLongitude());*/
+        convenientDTO.setPoint(convenientEntity.getPoint());
+
+        return convenientDTO;
+    }
 }
