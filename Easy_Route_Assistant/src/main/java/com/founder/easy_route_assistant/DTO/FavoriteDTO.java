@@ -16,10 +16,4 @@ public class FavoriteDTO {
     private Double longitude;
 
 
-    public static FavoriteDTO toFavoriteDTO(FavoriteEntity favoriteEntity) {
-        FavoriteDTO favoriteDTO = new FavoriteDTO();
-
-        return favoriteDTO;
-    }
-
 }

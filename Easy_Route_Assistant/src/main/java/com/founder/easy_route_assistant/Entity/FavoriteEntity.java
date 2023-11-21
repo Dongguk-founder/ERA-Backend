@@ -15,6 +15,7 @@ import java.util.List;
 public class FavoriteEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "favorite_id")
     private Long id;
 
     @Column
@@ -22,7 +23,7 @@ public class FavoriteEntity {
 
 
     //일대다 매핑
-    @OneToMany(mappedBy = "favorite",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "favorite")
     private List<FavoriteItemEntity> favoriteCollection;
 
 }

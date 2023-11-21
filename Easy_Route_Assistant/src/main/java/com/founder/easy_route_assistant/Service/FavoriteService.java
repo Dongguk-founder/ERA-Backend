@@ -24,10 +24,13 @@ public class FavoriteService {
     public FavoriteDTO savefavorite(String userId, FavoriteDTO favoriteDTO) {
         // Returns whether an entity with the given id exists.
         // 객체 생성 (부모테이블에 먼저 데이터를 삽입해야 자식테이블에 데이터삽입 가능)
+        FavoriteEntity entity ;
         if(favoriteRepository.findByUserID(userId).isEmpty()) {
-            FavoriteEntity entity = FavoriteEntity.builder().userID(userId).build();
+            entity = FavoriteEntity.builder().userID(userId).build();
             // 만든 객체를 favorite db - Favorite db에 저장해야 함
             favoriteRepository.save(entity);
+        }else {
+            entity = favoriteRepository.findByUserID(userId).get();
         }
         if (favoriteItemRepository.findByRoadNameAddress(favoriteDTO.getRoadNameAddress()).isEmpty()) {
             favoriteItemRepository.save(FavoriteItemEntity.builder()
@@ -35,6 +38,7 @@ public class FavoriteService {
                     .roadNameAddress(favoriteDTO.getRoadNameAddress())
                     .longitude(favoriteDTO.getLongitude())
                     .latitude(favoriteDTO.getLatitude())
+                    .favorite(entity)
                     .build());
         }
 
