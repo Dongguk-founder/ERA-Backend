@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Entity;
 
+import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.DTO.UserDTO;
 import jakarta.persistence.*;
 import lombok.Getter;
