@@ -6,6 +6,7 @@ import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.RequestRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
+import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,8 @@ public class RequestService {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public void createRequest(RequestDTO requestDTO) {
+    public void createRequest(String userID, RequestDTO requestDTO) {
+        requestDTO.setUserID(userID);
         RequestEntity requestEntity = converToEntity(requestDTO);
 
         requestRepository.save(requestEntity);
@@ -45,27 +47,20 @@ public class RequestService {
         return requestEntity;
     }
 
-    public List<RequestDTO> getMyRequests(String jwt) {
+    public List<RequestDTO> getAllRequests(String jwt) {
+        String role = jwtProvider.getRole(jwt);
         String userID = jwtProvider.getUserID(jwt);
 
-        UserEntity userEntity = userRepository.findById(userID)
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
-
-        List<RequestEntity> requestEntities = requestRepository.findByUserEntity(userEntity);
+        List<RequestEntity> requestEntities = new ArrayList<>();
         List<RequestDTO> requestDTOS = new ArrayList<>();
 
-        for(RequestEntity requestEntity : requestEntities) {
-            RequestDTO requestDTO = RequestDTO.toRequestDTO(requestEntity);
-
-            requestDTOS.add(requestDTO);
+        if (role.equals("USER")) {
+            UserEntity userEntity = userRepository.findById(userID)
+                    .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
+            requestEntities = requestRepository.findByUserEntity(userEntity);
+        } else if(role.equals("ADMIN")) {
+            requestEntities = requestRepository.findAll();
         }
-
-        return requestDTOS;
-    }
-
-    public List<RequestDTO> getAllRequests() {
-        List<RequestEntity> requestEntities = requestRepository.findAll();
-        List<RequestDTO> requestDTOS = new ArrayList<>();
 
         for(RequestEntity requestEntity : requestEntities) {
             RequestDTO requestDTO = RequestDTO.toRequestDTO(requestEntity);

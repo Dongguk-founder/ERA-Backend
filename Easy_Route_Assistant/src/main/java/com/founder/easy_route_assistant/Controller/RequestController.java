@@ -22,31 +22,21 @@ public class RequestController {
     @Autowired
     private final RequestService requestService;
 
-    /*@PostMapping("/send-request")
-    public String sendRequest(@ModelAttribute RequestDTO requestDTO) {
-        requestService.createRequest(requestDTO);
-
-        return "index";
-    }*/
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @PostMapping("/send-request")
-    public ResponseEntity<RequestDTO> createRequest(@RequestBody RequestDTO requestDTO) {
-        requestService.createRequest(requestDTO);
+    public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
+        String userID = jwtProvider.getUserID(jwt);
+        requestService.createRequest(userID, requestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
     }
 
-    @GetMapping("/my-requests") // http://localhost:8080/my-requests?jwt=
-    public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestParam String jwt, Model model) {
-        List<RequestDTO> requestDTOs = requestService.getMyRequests(jwt);
+    @GetMapping("/request-list")
+    public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
+        List<RequestDTO> requestDTOS = requestService.getAllRequests(jwt);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOs);
-    }
-
-    @GetMapping("/all-requests")
-    public ResponseEntity<List<RequestDTO>> requestDTOS(Model model) {
-        List<RequestDTO> requestDTOs = requestService.getAllRequests();
-
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOs);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOS);
     }
 }

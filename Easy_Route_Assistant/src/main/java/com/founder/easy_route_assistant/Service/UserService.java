@@ -54,7 +54,7 @@ public class UserService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
-        return jwtProvider.createToken(userEntity.getUserID());
+        return jwtProvider.createToken(userEntity.getUserID(), userEntity.getRole());
     }
 
     public Optional<UserEntity> getUserEntity(String userID) {

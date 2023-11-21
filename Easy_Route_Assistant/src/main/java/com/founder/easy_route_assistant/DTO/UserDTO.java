@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.DTO;
 
 import com.founder.easy_route_assistant.Entity.UserEntity;
+import com.founder.easy_route_assistant.security.Role;
 import lombok.*;
 
 @Getter @Setter
@@ -12,6 +13,8 @@ public class UserDTO {
     private String userName;
     private String userEmail;
 
+    private Role role;
+
     public static UserDTO toUserDTO(UserEntity userEntity) {
         UserDTO userDTO = new UserDTO();
 
@@ -19,6 +22,8 @@ public class UserDTO {
         userDTO.setPwd(userEntity.getPwd());
         userDTO.setUserName(userEntity.getUserName());
         userDTO.setUserEmail(userEntity.getUserEmail());
+
+        userDTO.setRole(userEntity.getRole());
 
         return userDTO;
     }
