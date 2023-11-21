@@ -29,15 +29,4 @@ public class RequestEntity {
     @ManyToOne
     @JoinColumn(name="userid")
     private UserEntity userEntity;
-
-    /*@Builder
-    public static RequestEntity toRequestEntity(RequestDTO requestDTO) {
-        RequestEntity requestEntity = new RequestEntity();
-
-        requestEntity.title = requestDTO.getTitle();
-        requestEntity.content = requestDTO.getContent();
-        // requestEntity.userId = requestDTO.getUserID();
-
-        return requestEntity;
-    }*/
 }
