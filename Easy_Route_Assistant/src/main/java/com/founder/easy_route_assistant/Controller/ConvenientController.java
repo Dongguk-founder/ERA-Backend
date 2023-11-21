@@ -1,8 +1,13 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.ConvenientDTO;
+import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Service.ConvenientService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,23 +18,17 @@ import java.util.List;
 public class ConvenientController {
     private final ConvenientService convenientService;
 
-    @GetMapping("/add-convenient")
-    public String addConvenientForm() { return "add-convenient"; }
-
     @PostMapping("/add-convenient")
-    public String addConvenientForm(@ModelAttribute ConvenientDTO convenientDTO) {
-        String addConvenient = convenientService.save(convenientDTO);
+    public ResponseEntity<ConvenientDTO> createConvenient(@RequestBody ConvenientDTO convenientDTO) {
+        convenientService.save(convenientDTO);
 
-        return "index"; // url mapping 말고 response 보내기
+        return ResponseEntity.status(HttpStatus.CREATED).body(convenientDTO);
     }
 
-    // @RequestMapping(method = RequestMethod.GET, path="/get-convenient-list")
-    @GetMapping("/get-convenient-list")
-    public List<ConvenientDTO> getConvenientList() {
-        /*List<ConvenientDTO> ConvenientDTOS = convenientService.getConvenientList();
-        System.out.println(ConvenientDTOS);
-        return ConvenientDTOS;*/
+    @GetMapping("/convenient-list")
+    public ResponseEntity<List<ConvenientDTO>> getConvenientList() {
+        List<ConvenientDTO> convenientDTOS = convenientService.getConvenientList();
 
-        return convenientService.getConvenientList();
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(convenientDTOS);
     }
 }

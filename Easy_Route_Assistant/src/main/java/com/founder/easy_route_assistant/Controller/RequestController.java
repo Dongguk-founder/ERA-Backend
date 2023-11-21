@@ -7,6 +7,8 @@ import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,28 +22,31 @@ public class RequestController {
     @Autowired
     private final RequestService requestService;
 
-    @PostMapping("/send-request")
+    /*@PostMapping("/send-request")
     public String sendRequest(@ModelAttribute RequestDTO requestDTO) {
         requestService.createRequest(requestDTO);
 
         return "index";
+    }*/
+
+    @PostMapping("/send-request")
+    public ResponseEntity<RequestDTO> createRequest(@RequestBody RequestDTO requestDTO) {
+        requestService.createRequest(requestDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
     }
 
-    @GetMapping("/my-request")
-    public List<RequestDTO> requestDTOS(@RequestParam String jwt, Model model) {
+    @GetMapping("/my-requests") // http://localhost:8080/my-requests?jwt=
+    public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestParam String jwt, Model model) {
         List<RequestDTO> requestDTOs = requestService.getMyRequests(jwt);
 
-        System.out.println(requestDTOs);
-
-        return requestDTOs;
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOs);
     }
 
-    @GetMapping("/all-request")
-    public List<RequestDTO> requestDTOS(Model model) {
-        List<RequestDTO> requestDTOS = requestService.getAllRequests();
+    @GetMapping("/all-requests")
+    public ResponseEntity<List<RequestDTO>> requestDTOS(Model model) {
+        List<RequestDTO> requestDTOs = requestService.getAllRequests();
 
-        System.out.println(requestDTOS);
-
-        return requestDTOS;
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOs);
     }
 }
