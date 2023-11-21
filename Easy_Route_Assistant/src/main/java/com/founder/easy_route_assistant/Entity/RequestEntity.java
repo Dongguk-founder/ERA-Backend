@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Getter @Setter
@@ -19,6 +20,10 @@ public class RequestEntity {
 
     @Column
     private String content;
+
+    @Column
+    // @ColumnDefault("false")
+    private Boolean accepted = false;
 
     // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ManyToOne
