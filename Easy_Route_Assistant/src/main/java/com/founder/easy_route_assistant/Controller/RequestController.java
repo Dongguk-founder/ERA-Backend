@@ -6,6 +6,7 @@ import com.founder.easy_route_assistant.Service.RequestService;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,5 +39,12 @@ public class RequestController {
         List<RequestDTO> requestDTOS = requestService.getAllRequests(jwt);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOS);
+    }
+
+    @PatchMapping("/request-accept")
+    public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
+        requestService.updateRequest(jwt, requestDTO);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTO);
     }
 }

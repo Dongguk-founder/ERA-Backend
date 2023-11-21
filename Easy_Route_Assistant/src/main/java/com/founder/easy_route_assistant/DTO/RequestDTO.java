@@ -6,12 +6,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.geo.Point;
 
 @NoArgsConstructor
 @Getter @Setter
 @ToString
 public class RequestDTO {
-    private String title;
+    private int id;
+    private String convenientName;
+    private Point point;
     private String content;
     private boolean accepted;
     private String userID;
@@ -19,7 +22,9 @@ public class RequestDTO {
     public static RequestDTO toRequestDTO(RequestEntity requestEntity) {
         RequestDTO requestDTO = new RequestDTO();
 
-        requestDTO.setTitle(requestEntity.getTitle());
+        requestDTO.setId(requestEntity.getId());
+        requestDTO.setConvenientName(requestEntity.getConvenientName());
+        requestDTO.setPoint(requestEntity.getPoint());
         requestDTO.setContent(requestEntity.getContent());
         requestDTO.setAccepted(requestEntity.getAccepted());
 

@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.data.geo.Point;
 
 @Entity
 @Getter @Setter
@@ -16,7 +17,10 @@ public class RequestEntity {
     private int id;
 
     @Column
-    private String title;
+    private String convenientName;
+
+    @Column
+    private Point point;
 
     @Column
     private String content;
