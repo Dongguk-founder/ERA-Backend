@@ -104,5 +104,8 @@ public class JwtProvider {
         return request.getHeader("Authorization");
     }
 
+    /*public String resolveToken(HttpServletRequest request) {
+        return request.getHeader("jwt");
+    }*/
 
 }
