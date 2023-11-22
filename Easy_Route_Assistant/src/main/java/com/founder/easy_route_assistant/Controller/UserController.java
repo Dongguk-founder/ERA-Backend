@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@ResponseBody
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;

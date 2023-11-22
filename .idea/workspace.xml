@@ -1,25 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/controller/EasyRouteAssistantApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/application.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/EasyRouteAssistantApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/domain/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/domain/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/repository/UserRepositoryImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/EasyRouteAssistant/src/main/java/founders/EasyRouteAssistant/service/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/EasyRouteAssistant/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/FavoriteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/FavoriteDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/FavoriteEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/FavoriteEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/FavoriteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/FavoriteService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/Easy_Route_Assistant">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/Easy_Route_Assistant">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Interface" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,16 +74,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;features/projectsetting&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/heoeunjeong/Desktop/ERA-Backend&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "android.gradle.sync.needed": "true",
+    "git-widget-placeholder": "favoriteCollection",
+    "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="EasyRouteAssistantApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="Easy_Route_Assistant.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.founder.easy_route_assistant.EasyRouteAssistantApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -69,6 +122,8 @@
       <updated>1700185365442</updated>
       <workItem from="1700185366579" duration="111000" />
       <workItem from="1700185493778" duration="38000" />
+      <workItem from="1700188076109" duration="1498000" />
+      <workItem from="1700312194937" duration="42911000" />
     </task>
     <servers />
   </component>
