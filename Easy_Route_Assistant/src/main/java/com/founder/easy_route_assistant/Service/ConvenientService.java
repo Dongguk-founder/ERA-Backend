@@ -15,7 +15,12 @@ public class ConvenientService {
     ConvenientRepository convenientRepository;
 
     public String save(ConvenientDTO convenientDTO) {
-        ConvenientEntity convenientEntity = ConvenientEntity.toConvenientEntity(convenientDTO);
+        ConvenientEntity convenientEntity = ConvenientEntity.builder()
+                    .convenientName(convenientDTO.getConvenientName())
+                    .content(convenientDTO.getContent())
+                    .point(convenientDTO.getPoint())
+                    .build();
+
 
         convenientRepository.save(convenientEntity);
 
@@ -27,8 +32,11 @@ public class ConvenientService {
         List<ConvenientDTO> convenientDTOS = new ArrayList<>();
 
         for(ConvenientEntity convenientEntity : convenientEntities) {
-            ConvenientDTO convenientDTO = ConvenientDTO.toConvenientDTO(convenientEntity);
-
+            ConvenientDTO convenientDTO = ConvenientDTO.builder()
+                    .convenientName(convenientEntity.getConvenientName())
+                    .content(convenientEntity.getContent())
+                    .point(convenientEntity.getPoint())
+                    .build();
             convenientDTOS.add(convenientDTO);
         }
 

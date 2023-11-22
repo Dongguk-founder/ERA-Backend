@@ -11,9 +11,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
-import static com.founder.easy_route_assistant.security.Role.USER;
-
 @Entity
 @Getter @Setter
 @NoArgsConstructor
@@ -33,25 +30,11 @@ public class UserEntity {
     @Column(length = 100)
     private String userEmail;
 
-
     @OneToMany(mappedBy = "user")
     private List<FavoriteEntity> favorite;
 
     @Column
-    @Enumerated(EnumType.STRING)
-    private Role role = USER;
+    private Role role;
 
-    @Builder
-    public static UserEntity toUserEntity(UserDTO userDTO) {
-        UserEntity userEntity = new UserEntity();
-
-        userEntity.userID = userDTO.getUserID();
-        userEntity.pwd = userDTO.getPwd();
-        userEntity.userName = userDTO.getUserName();
-        userEntity.userEmail = userDTO.getUserEmail();
-        userEntity.role = userDTO.getRole();
-
-        return userEntity;
-    }
 
 }

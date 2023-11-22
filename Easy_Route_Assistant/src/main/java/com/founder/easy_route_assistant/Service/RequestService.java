@@ -63,8 +63,10 @@ public class RequestService {
         List<RequestEntity> requestEntities = new ArrayList<>();
         List<RequestDTO> requestDTOS = new ArrayList<>();
 
+        UserEntity userEntity = null;
+
         if (role.equals("USER")) {
-            UserEntity userEntity = userRepository.findById(userID)
+           userEntity = userRepository.findById(userID)
                     .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
             requestEntities = requestRepository.findByUserEntity(userEntity);
         } else if(role.equals("ADMIN")) {
@@ -72,7 +74,15 @@ public class RequestService {
         }
 
         for(RequestEntity requestEntity : requestEntities) {
-            RequestDTO requestDTO = RequestDTO.toRequestDTO(requestEntity);
+            RequestDTO requestDTO = RequestDTO
+                    .builder()
+                    .id(requestEntity.getId())
+                    .convenientName(requestEntity.getConvenientName())
+                    .point(requestEntity.getPoint())
+                    .content(requestEntity.getContent())
+                    .accepted(requestEntity.getAccepted())
+                    .userID(userEntity.getUserID())
+                    .build();
 
             requestDTOS.add(requestDTO);
         }
@@ -87,7 +97,11 @@ public class RequestService {
                     .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 요청입니다."));
 
             if (requestDTO.isAccepted()) { // request에서 accepted가 true일 경우
-                ConvenientDTO convenientDTO = ConvenientDTO.toConvenient(requestEntity); // 요청 받은 변경 사항 그대로 등록
+                ConvenientDTO convenientDTO = ConvenientDTO.builder()
+                        .convenientName(requestDTO.getConvenientName())
+                        .content(requestDTO.getContent())
+                        .point(requestDTO.getPoint())
+                        .build(); // 요청 받은 변경 사항 그대로 등록
 
                 convenientService.save(convenientDTO);
             }
