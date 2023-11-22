@@ -21,21 +21,17 @@ public class ConvenientEntity {
     private String convenientName;
 
     @Column
-    private Point point;
-
-    /*@Column
-    private Double longitude;
+    private String content;
 
     @Column
-    private Double latitude;*/
+    private Point point; // 얘도 유일한 멤버
 
     @Builder
     public static ConvenientEntity toConvenientEntity(ConvenientDTO convenientDTO) {
         ConvenientEntity convenientEntity = new ConvenientEntity();
 
         convenientEntity.convenientName = convenientDTO.getConvenientName();
-        /*convenientEntity.latitude = convenientDTO.getLatitude();
-        convenientEntity.longitude = convenientDTO.getLongitude();*/
+        convenientEntity.content = convenientDTO.getContent();
         convenientEntity.point = convenientDTO.getPoint();
 
         return convenientEntity;

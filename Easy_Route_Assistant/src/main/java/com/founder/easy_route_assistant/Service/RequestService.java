@@ -86,7 +86,7 @@ public class RequestService {
                     .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 요청입니다."));
 
             if (requestDTO.isAccepted()) { // request에서 accepted가 true일 경우
-                ConvenientDTO convenientDTO = ConvenientDTO.toConvenient(requestEntity);
+                ConvenientDTO convenientDTO = ConvenientDTO.toConvenient(requestEntity); // 요청 받은 변경 사항 그대로 등록
 
                 convenientService.save(convenientDTO);
             }

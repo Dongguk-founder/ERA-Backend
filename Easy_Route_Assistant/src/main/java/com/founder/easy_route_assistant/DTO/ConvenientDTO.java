@@ -13,12 +13,14 @@ import org.springframework.data.geo.Point;
 @ToString
 public class ConvenientDTO {
     private String convenientName;
+    private String content;
     private Point point;
 
     public static ConvenientDTO toConvenientDTO(ConvenientEntity convenientEntity) {
         ConvenientDTO convenientDTO = new ConvenientDTO();
 
         convenientDTO.setConvenientName(convenientEntity.getConvenientName());
+        convenientDTO.setContent(convenientEntity.getContent());
         convenientDTO.setPoint(convenientEntity.getPoint());
 
         return convenientDTO;
@@ -28,6 +30,7 @@ public class ConvenientDTO {
         ConvenientDTO convenientDTO = new ConvenientDTO();
 
         convenientDTO.setConvenientName(requestEntity.getConvenientName());
+        convenientDTO.setContent(requestEntity.getContent());
         convenientDTO.setPoint(requestEntity.getPoint());
 
         return convenientDTO;
