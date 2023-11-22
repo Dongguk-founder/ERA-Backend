@@ -5,8 +5,9 @@ import com.founder.easy_route_assistant.security.Role;
 import lombok.*;
 
 @Getter @Setter
-@NoArgsConstructor
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor @Builder
 public class UserDTO {
     private String userID;
     private String pwd;
@@ -15,16 +16,4 @@ public class UserDTO {
 
     private Role role;
 
-    public static UserDTO toUserDTO(UserEntity userEntity) {
-        UserDTO userDTO = new UserDTO();
-
-        userDTO.setUserID(userEntity.getUserID());
-        userDTO.setPwd(userEntity.getPwd());
-        userDTO.setUserName(userEntity.getUserName());
-        userDTO.setUserEmail(userEntity.getUserEmail());
-
-        userDTO.setRole(userEntity.getRole());
-
-        return userDTO;
-    }
 }

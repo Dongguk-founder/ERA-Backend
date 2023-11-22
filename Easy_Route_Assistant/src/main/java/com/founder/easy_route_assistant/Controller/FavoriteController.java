@@ -13,11 +13,17 @@ public class FavoriteController {
 
     private final FavoriteService favoriteService;
 
-    @PutMapping(value = "/add/{userId}")
-    public ResponseEntity<?> saveFavorite(@PathVariable("userId") String userId, @RequestBody FavoriteDTO favoriteDTO){
+    @PutMapping(value = "/add")
+    public ResponseEntity<?> saveFavorite(@RequestHeader() String userId, @RequestBody FavoriteDTO favoriteDTO){
         FavoriteDTO dto = favoriteService.savefavorite(userId,favoriteDTO);
         return ResponseEntity.ok().body(dto);
     }
+
+//    @GetMapping(value = "/find")
+//    public  ResponseEntity<?> findFavorite(){
+//
+//    }
+
 
 
 }

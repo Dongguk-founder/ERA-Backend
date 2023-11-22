@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor @Builder
-@Table(name = "favorite_item")
+@Table(name = "favorite")
 public class FavoriteEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
