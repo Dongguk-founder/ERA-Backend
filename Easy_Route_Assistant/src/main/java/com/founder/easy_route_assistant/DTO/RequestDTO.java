@@ -12,7 +12,7 @@ import org.springframework.data.geo.Point;
 @Getter @Setter
 @ToString
 public class RequestDTO {
-    private int id;
+    private int id; // request끼리 구분하기 위해 Entity에서 id 받아오기 but,
     private String convenientName;
     private Point point;
     private String content;
