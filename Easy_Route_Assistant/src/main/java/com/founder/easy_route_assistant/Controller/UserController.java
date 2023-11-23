@@ -6,6 +6,7 @@ import com.founder.easy_route_assistant.Service.UserService;
 import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import com.nimbusds.jose.shaded.gson.JsonObject;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.apache.catalina.User;

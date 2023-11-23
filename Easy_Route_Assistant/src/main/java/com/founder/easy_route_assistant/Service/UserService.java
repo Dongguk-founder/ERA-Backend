@@ -4,6 +4,7 @@ import com.founder.easy_route_assistant.DTO.LoginDTO;
 import com.founder.easy_route_assistant.DTO.UserDTO;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.UserRepository;
+import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +44,13 @@ public class UserService {
         String encodedPwd = passwordEncoder.encode(rawPwd);
 
         // request -> DTO -> Entity -> Repository에서 save
-        UserEntity userEntity = UserEntity.toUserEntity(userDTO);
+        UserEntity userEntity = UserEntity.builder()
+                .userID(userDTO.getUserID())
+                .pwd(userDTO.getPwd())
+                .userName(userDTO.getUserName())
+                .userEmail(userDTO.getUserEmail())
+                .role(Role.USER)
+                .build();
         userEntity.setPwd(encodedPwd);
 
         userRepository.save(userEntity);

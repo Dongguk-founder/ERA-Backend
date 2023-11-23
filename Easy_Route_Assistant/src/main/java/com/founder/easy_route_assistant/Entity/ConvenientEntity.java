@@ -3,6 +3,7 @@ package com.founder.easy_route_assistant.Entity;
 
 import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.data.geo.Point;
 @Entity
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor @Builder
 @Table(name="convenient")
 public class ConvenientEntity {
     @Id
