@@ -28,6 +28,13 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
+    /*public Boolean duplicationCheck(String userID) { // 매우 수정해야 함.
+        if (userRepository.findByUserID(userID).isPresent()) {
+            return true;
+        }
+        else { return false; }
+    }*/
+
     public String join(UserDTO userDTO) {
         if (userRepository.findById(userDTO.getUserID()).isPresent()) {
             return "아이디가 이미 존재합니다.";
