@@ -32,7 +32,7 @@ public class UserEntity {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private Role role = USER;
+    private Role role;
 
     @Builder
     public static UserEntity toUserEntity(UserDTO userDTO) {
