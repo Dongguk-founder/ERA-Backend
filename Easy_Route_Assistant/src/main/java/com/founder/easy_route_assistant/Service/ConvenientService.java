@@ -20,8 +20,6 @@ public class ConvenientService {
                     .content(convenientDTO.getContent())
                     .point(convenientDTO.getPoint())
                     .build();
-
-
         convenientRepository.save(convenientEntity);
 
         return "편의 시설 등록 성공";

@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Service;
 
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.Entity.FavoriteEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
@@ -42,10 +43,27 @@ public class FavoriteService {
                 favoriteDTO = null;
                 System.out.println("중복된 값을 넣을 수 없음");
             }
-
         }
         // favoriteDTO가 null이면 유저를 찾을 수 없거나 중복값을 넣었다는 것
         return favoriteDTO;
+    }
+
+    public List<FavoriteDTO> getFavoriteList(String userId) {
+        UserEntity userEntity = UserEntity.builder().userID(userId).build();
+        List<FavoriteEntity> favoritecollection = favoriteRepository.findAllByUser(userEntity);
+
+        List<FavoriteDTO> favoriteDTOS = null;
+
+        for (FavoriteEntity f : favoritecollection){
+            FavoriteDTO favoriteDTO = FavoriteDTO.builder()
+                    .placeName(f.getPlaceName())
+                    .roadNameAddress(f.getRoadNameAddress())
+                    .latitude(f.getLatitude())
+                    .longitude(f.getLongitude())
+                    .build();
+            favoriteDTOS.add(favoriteDTO);
+        }
+        return favoriteDTOS;
     }
 
 
