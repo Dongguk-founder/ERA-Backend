@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,10 +50,10 @@ public class FavoriteService {
     }
 
     public List<FavoriteDTO> getFavoriteList(String userId) {
-        UserEntity userEntity = UserEntity.builder().userID(userId).build();
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
         List<FavoriteEntity> favoritecollection = favoriteRepository.findAllByUser(userEntity);
 
-        List<FavoriteDTO> favoriteDTOS = null;
+        List<FavoriteDTO> favoriteDTOS = new ArrayList<>();
 
         for (FavoriteEntity f : favoritecollection){
             FavoriteDTO favoriteDTO = FavoriteDTO.builder()
@@ -61,6 +62,7 @@ public class FavoriteService {
                     .latitude(f.getLatitude())
                     .longitude(f.getLongitude())
                     .build();
+
             favoriteDTOS.add(favoriteDTO);
         }
         return favoriteDTOS;

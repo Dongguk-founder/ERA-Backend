@@ -38,10 +38,10 @@ public class UserController {
         List<String> res = new ArrayList<>();
 
         String jwt = userService.login(loginDTO);
-//        String role = jwtProvider.getRole(jwt);
+        String role = jwtProvider.getRole(jwt);
 
         res.add(jwt);
-//        res.add(role);
+        res.add(role);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
