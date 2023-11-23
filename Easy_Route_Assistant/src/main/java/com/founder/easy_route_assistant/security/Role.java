@@ -2,20 +2,14 @@ package com.founder.easy_route_assistant.security;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 @Getter
-@AllArgsConstructor
+@RequiredArgsConstructor //final로 선언해야하기 때문 (불변성)
 public enum Role {
     ADMIN("admin"),
     USER("user");
 
-    private String role;
+    private final String role;
 
-    /*Role(String role) {
-        this.role = role;
-    }
-
-    public String value() {
-        return role;
-    }*/
 }

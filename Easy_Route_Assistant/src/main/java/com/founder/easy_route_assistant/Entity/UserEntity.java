@@ -30,11 +30,11 @@ public class UserEntity {
     @Column(length = 100)
     private String userEmail;
 
-    @OneToMany(mappedBy = "user")
-    private List<FavoriteEntity> favorite;
-
-    @Column
+    // enum 이름을 DB에 저장
+    @Enumerated(EnumType.STRING)
     private Role role;
 
+    @OneToMany(mappedBy = "user")
+    private List<FavoriteEntity> favorite;
 
 }

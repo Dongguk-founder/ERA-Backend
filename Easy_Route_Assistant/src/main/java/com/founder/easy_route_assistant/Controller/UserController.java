@@ -5,6 +5,7 @@ import com.founder.easy_route_assistant.DTO.UserDTO;
 import com.founder.easy_route_assistant.Service.UserService;
 import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,10 +38,10 @@ public class UserController {
         List<String> res = new ArrayList<>();
 
         String jwt = userService.login(loginDTO);
-        String role = jwtProvider.getRole(jwt);
+//        String role = jwtProvider.getRole(jwt);
 
         res.add(jwt);
-        res.add(role);
+//        res.add(role);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
