@@ -12,5 +12,5 @@ import java.util.Optional;
 public interface FavoriteRepository extends JpaRepository<FavoriteEntity,Long> {
     Optional<FavoriteEntity> findByRoadNameAddress(String s);
 
-    List<FavoriteEntity> findAllByUser(UserEntity userEntity);
+    List<FavoriteEntity> findAllByUser(Optional<UserEntity >userEntity);
 }

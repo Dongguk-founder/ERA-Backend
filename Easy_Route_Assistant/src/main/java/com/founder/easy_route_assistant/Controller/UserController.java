@@ -52,6 +52,7 @@ public class UserController {
         String jwt = userService.login(loginDTO);
         String role = jwtProvider.getRole(jwt);
 
+
         res.put("jwt", jwt);
         res.put("role", role);
 
