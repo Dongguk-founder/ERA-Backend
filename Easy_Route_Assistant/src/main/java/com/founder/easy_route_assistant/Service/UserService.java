@@ -29,7 +29,9 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
+
     public UserDTO join(UserDTO userDTO) {
+
         if (userRepository.findById(userDTO.getUserID()).isPresent()) {
             System.out.println("아이디가 이미 존재합니다.");
         }

@@ -45,10 +45,12 @@ public class FavoriteService {
     }
 
     public List<FavoriteDTO> getFavoriteList(String userId) {
-        UserEntity userEntity = UserEntity.builder().userID(userId).build();
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
         List<FavoriteEntity> favoritecollection = favoriteRepository.findAllByUser(userEntity);
 
+
         List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
+
 
         for (FavoriteEntity f : favoritecollection) {
             FavoriteDTO favoriteDTO = FavoriteDTO.builder()
@@ -57,6 +59,7 @@ public class FavoriteService {
                     .latitude(f.getLatitude())
                     .longitude(f.getLongitude())
                     .build();
+
             favoriteDTOList.add(favoriteDTO);
         }
         return favoriteDTOList;
