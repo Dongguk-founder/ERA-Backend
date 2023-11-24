@@ -25,8 +25,8 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+
+    private final JwtProvider jwtProvider;
 
     /*@PostMapping("/check-duplicate") // 매우 수정해야 함.
     public ResponseEntity<Boolean> duplicationCheck(@RequestBody String userID) {
@@ -40,14 +40,16 @@ public class UserController {
     // 회원가입
     @PostMapping("/join")
     public ResponseEntity<UserDTO> join(@RequestBody UserDTO userDTO) {
-        userService.join(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        userDTO = userService.join(userDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
     }
 
+    //Response 고칠것
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<JSONObject> login(@RequestBody LoginDTO loginDTO) {
         JSONObject res = new JSONObject();
+
 
         String jwt = userService.login(loginDTO);
         String role = jwtProvider.getRole(jwt);

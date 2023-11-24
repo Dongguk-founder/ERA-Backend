@@ -21,11 +21,9 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class RequestController {
-    @Autowired
-    private final RequestService requestService;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+    private final RequestService requestService;
+    private final JwtProvider jwtProvider;
 
     @PostMapping("/send-request")
     public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
@@ -38,9 +36,13 @@ public class RequestController {
     @GetMapping("/request-list")
     // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
-        List<RequestDTO> requestDTOS = requestService.getAllRequests(jwt);
+        List<RequestDTO> requestDTOList = requestService.getAllRequests(jwt);
+        if(!requestDTOList.isEmpty()){
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOList);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOS);
     }
 
     @PatchMapping("/request-accept")

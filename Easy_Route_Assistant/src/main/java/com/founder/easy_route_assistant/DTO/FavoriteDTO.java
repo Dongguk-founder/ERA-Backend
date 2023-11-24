@@ -11,6 +11,4 @@ public class FavoriteDTO {
     private String roadNameAddress;
     private Double latitude;
     private Double longitude;
-
-
 }

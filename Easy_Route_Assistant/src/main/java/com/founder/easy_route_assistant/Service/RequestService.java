@@ -25,25 +25,26 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RequestService {
-    @Autowired
-    private RequestRepository requestRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    private final RequestRepository requestRepository;
 
-    @Autowired
-    private ConvenientService convenientService;
+    private final UserRepository userRepository;
 
-    @Autowired
+    private final ConvenientService convenientService;
+
+
     private JwtProvider jwtProvider;
 
-    public void createRequest(String userID, RequestDTO requestDTO) {
+    public RequestDTO createRequest(String userID, RequestDTO requestDTO) {
         requestDTO.setUserID(userID);
         RequestEntity requestEntity = converToEntity(requestDTO);
 
         requestRepository.save(requestEntity);
+
+        return requestDTO;
     }
 
+    // 이거 코드 수정해야 할듯 service에서 엔티티를 다루지 않게 하도록 함
     private RequestEntity converToEntity(RequestDTO requestDTO) {
         RequestEntity requestEntity = new RequestEntity();
 
@@ -61,7 +62,7 @@ public class RequestService {
         String userID = jwtProvider.getUserID(jwt);
 
         List<RequestEntity> requestEntities = new ArrayList<>();
-        List<RequestDTO> requestDTOS = new ArrayList<>();
+        List<RequestDTO> requestDTOList = new ArrayList<>();
 
         UserEntity userEntity = null;
 
@@ -84,10 +85,10 @@ public class RequestService {
                     .userID(userEntity.getUserID())
                     .build();
 
-            requestDTOS.add(requestDTO);
+            requestDTOList.add(requestDTO);
         }
 
-        return requestDTOS;
+        return requestDTOList;
     }
 
     public void updateRequest(String jwt, RequestDTO requestDTO) {
