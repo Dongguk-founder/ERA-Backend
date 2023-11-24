@@ -59,8 +59,8 @@ public class JwtProvider {
 
     // token에서 userID 뽑기
     public String getUserID(String token) {
-        return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
-//        return extractClaims(token, secretKey).get("userID").toString();
+//        return Jwts.parser().setSigningKey(secretKey.getBytes()).parseClaimsJws(token).getBody().getSubject();
+        return extractClaims(token, secretKey).get("userID").toString();
     }
     public String getRole(String token) {
         return extractClaims(token, secretKey).get("role").toString();

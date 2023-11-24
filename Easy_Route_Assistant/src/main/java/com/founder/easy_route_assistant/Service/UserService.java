@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.ManyToAny;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -28,11 +29,10 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public String join(UserDTO userDTO) {
+    public UserDTO join(UserDTO userDTO) {
         if (userRepository.findById(userDTO.getUserID()).isPresent()) {
-            return "아이디가 이미 존재합니다.";
+            System.out.println("아이디가 이미 존재합니다.");
         }
-
         String rawPwd = userDTO.getPwd();
         String encodedPwd = passwordEncoder.encode(rawPwd);
 
@@ -49,7 +49,7 @@ public class UserService {
         userRepository.save(userEntity);
         //Repository의 save메서드 호출 (조건. entity객체를 넘겨줘야 함)
 
-        return "회원가입 성공";
+        return userDTO;
     }
 
     @Transactional

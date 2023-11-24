@@ -22,26 +22,27 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @Autowired
-    private JwtProvider jwtProvider;
+
+    private final JwtProvider jwtProvider;
 
     // 회원가입
     @PostMapping("/join")
     public ResponseEntity<UserDTO> join(@RequestBody UserDTO userDTO) {
-        userService.join(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        userDTO = userService.join(userDTO);
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
     }
 
+    //Response 고칠것
     // 로그인
     @PostMapping("/login")
     public ResponseEntity<List<String>> login(@RequestBody LoginDTO loginDTO) {
         List<String> res = new ArrayList<>();
 
-        String jwt = userService.login(loginDTO);
-//        String role = jwtProvider.getRole(jwt);
+        String jwt =  userService.login(loginDTO);
+        String role = jwtProvider.getRole(jwt);
 
         res.add(jwt);
-//        res.add(role);
+        res.add(role);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
     }
