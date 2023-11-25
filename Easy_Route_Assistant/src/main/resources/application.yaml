@@ -4,6 +4,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: root
     password: abcd1234@
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 10
 
   thymeleaf:
     cache: false # default는 true. 개발 시에 false로 두면 수정 시 바로 반영.
