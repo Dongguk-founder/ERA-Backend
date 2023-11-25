@@ -6,7 +6,10 @@ import org.springframework.data.geo.Point;
 
 
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor @Builder
+@ToString
 public class ElevatorDTO {
-    private String subway_name;
+    private String sw_cd;
     private Point point;
 }
