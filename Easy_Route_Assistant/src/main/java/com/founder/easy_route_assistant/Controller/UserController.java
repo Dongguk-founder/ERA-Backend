@@ -22,6 +22,7 @@ import java.util.List;
 @Controller
 @ResponseBody
 @RequiredArgsConstructor
+@RequestMapping(value="/user")
 public class UserController {
     private final UserService userService;
 
