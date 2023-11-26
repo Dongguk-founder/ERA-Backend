@@ -60,8 +60,8 @@ public class ChargerService {
             row = (JSONArray) fullObject.get("row");
             for(int i=0; i < row.size(); i++) {
                 JSONObject element = (JSONObject) row.get(i);
-                String signgucode = (String) element.get("SIGNGUCODE");
-                if(Objects.equals(target, signgucode)) {
+                String signgunm = (String) element.get("SIGNGUNM");
+                if(Objects.equals(target, signgunm)) {
                     String latitude = (String) element.get("LATITUDE"); // 위도
                     String longitude = (String) element.get("LONGITUDE"); // 경도
                     String placeDescript = (String) element.get("INSTLLCDESC");
