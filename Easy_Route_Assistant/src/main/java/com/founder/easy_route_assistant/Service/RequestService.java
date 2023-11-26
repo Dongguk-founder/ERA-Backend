@@ -24,7 +24,7 @@ public class RequestService {
 
     private final ConvenientService convenientService;
 
-
+    @Autowired
     private JwtProvider jwtProvider;
 
     public RequestDTO createRequest(String userID, RequestDTO requestDTO) {
@@ -59,7 +59,7 @@ public class RequestService {
         UserEntity userEntity = new UserEntity();
 
         if (role.equals("USER")) {
-           userEntity = userRepository.findById(userID)
+            userEntity = userRepository.findById(userID)
                     .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
             requestEntities = requestRepository.findByUserEntity(userEntity);
         } else if(role.equals("ADMIN")) {

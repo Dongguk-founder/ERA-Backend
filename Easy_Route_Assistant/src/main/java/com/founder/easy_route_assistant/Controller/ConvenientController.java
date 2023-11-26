@@ -15,24 +15,24 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping(value="/convenient")
 public class ConvenientController {
 
     private final ConvenientService convenientService;
 
-    @PostMapping("/add-convenient")
+    @PostMapping("/add")
     public ResponseEntity<ConvenientDTO> createConvenient(@RequestBody ConvenientDTO convenientDTO) {
         convenientService.save(convenientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(convenientDTO);
     }
 
-    @GetMapping("/convenient-list")
+    @GetMapping("/get")
     public ResponseEntity<List<ConvenientDTO>> getConvenientList() {
         List<ConvenientDTO> convenientDTOList = convenientService.getConvenientList();
         if (!convenientDTOList.isEmpty()){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(convenientDTOList);
-        }else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
-
     }
 }
