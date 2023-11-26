@@ -3,6 +3,7 @@ package com.founder.easy_route_assistant.Service;
 import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.Entity.ConvenientEntity;
 import com.founder.easy_route_assistant.Repository.ConvenientRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ConvenientService {
 
-    ConvenientRepository convenientRepository;
+    private final ConvenientRepository convenientRepository;
 
     public ConvenientDTO save(ConvenientDTO convenientDTO) {
         ConvenientEntity convenientEntity = ConvenientEntity.builder()
@@ -21,9 +23,9 @@ public class ConvenientService {
                 .content(convenientDTO.getContent())
                 .point(convenientDTO.getPoint())
                 .build();
+        System.out.println(convenientDTO);
         convenientRepository.save(convenientEntity);
 
-        // 중복값 에러 처리 할 것
         return convenientDTO;
     }
 

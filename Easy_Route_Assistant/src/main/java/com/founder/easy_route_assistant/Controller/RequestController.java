@@ -28,14 +28,12 @@ public class RequestController {
 
     @PostMapping("/send")
     public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
-        String userID = jwtProvider.getUserID(jwt);
-        requestService.createRequest(userID, requestDTO);
+        requestService.createRequest(jwt, requestDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
     }
 
     @GetMapping("/get")
-    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
         List<RequestDTO> requestDTOList = requestService.getAllRequests(jwt);
         if(!requestDTOList.isEmpty()){
@@ -48,8 +46,8 @@ public class RequestController {
 
     @PatchMapping("/update")
     public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
-        requestService.updateRequest(jwt, requestDTO);
+        HttpStatus status = requestService.updateRequest(jwt, requestDTO);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTO);
+        return ResponseEntity.status(status).body(requestDTO);
     }
 }

@@ -9,6 +9,7 @@ import com.founder.easy_route_assistant.Repository.UserRepository;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,26 +28,22 @@ public class RequestService {
     @Autowired
     private JwtProvider jwtProvider;
 
-    public RequestDTO createRequest(String userID, RequestDTO requestDTO) {
-        requestDTO.setUserID(userID);
-        RequestEntity requestEntity = converToEntity(requestDTO);
+    public void createRequest(String jwt, RequestDTO requestDTO) {
+        String userID = jwtProvider.getUserID(jwt);
+        UserEntity userEntity = userRepository.findById(userID).orElseThrow(
+                () -> new IllegalArgumentException("가입되지 않은 사용자입니다.")
+        );
+
+        RequestEntity requestEntity = RequestEntity
+                .builder()
+                .convenientName(requestDTO.getConvenientName())
+                .point(requestDTO.getPoint())
+                .content(requestDTO.getContent())
+                .userEntity(userEntity)
+                .accepted(false)
+                .build();
 
         requestRepository.save(requestEntity);
-
-        return requestDTO;
-    }
-
-    // 이거 코드 수정해야 할듯 service에서 엔티티를 다루지 않게 하도록 함
-    private RequestEntity converToEntity(RequestDTO requestDTO) {
-        RequestEntity requestEntity = new RequestEntity();
-
-        requestEntity.setConvenientName(requestDTO.getConvenientName());
-        requestEntity.setContent(requestDTO.getContent());
-        UserEntity userEntity = userRepository.findById(requestDTO.getUserID())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
-        requestEntity.setUserEntity(userEntity);
-
-        return requestEntity;
     }
 
     public List<RequestDTO> getAllRequests(String jwt) {
@@ -83,7 +80,7 @@ public class RequestService {
         return requestDTOList;
     }
 
-    public void updateRequest(String jwt, RequestDTO requestDTO) {
+    public HttpStatus updateRequest(String jwt, RequestDTO requestDTO) {
         String role = jwtProvider.getRole(jwt);
         if (role.equals("ADMIN")) {
             RequestEntity requestEntity = requestRepository.findById(requestDTO.getId())
@@ -100,6 +97,10 @@ public class RequestService {
             }
 
             requestRepository.delete(requestEntity); // request에서 accepted가 false일 경우
+            return HttpStatus.ACCEPTED;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
         }
     }
 
