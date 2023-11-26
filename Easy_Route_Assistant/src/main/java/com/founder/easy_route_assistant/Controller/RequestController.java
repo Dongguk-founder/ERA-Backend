@@ -20,12 +20,13 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping(value="/request")
 public class RequestController {
 
     private final RequestService requestService;
     private final JwtProvider jwtProvider;
 
-    @PostMapping("/send-request")
+    @PostMapping("/send")
     public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
         String userID = jwtProvider.getUserID(jwt);
         requestService.createRequest(userID, requestDTO);
@@ -33,7 +34,7 @@ public class RequestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
     }
 
-    @GetMapping("/request-list")
+    @GetMapping("/get")
     // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
         List<RequestDTO> requestDTOList = requestService.getAllRequests(jwt);
@@ -45,7 +46,7 @@ public class RequestController {
 
     }
 
-    @PatchMapping("/request-accept")
+    @PatchMapping("/update")
     public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
         requestService.updateRequest(jwt, requestDTO);
 
