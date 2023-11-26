@@ -27,6 +27,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-client")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    //WebClient 라이브러리
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    //JSON 파싱 라이브러리
+    implementation("com.googlecode.json-simple:json-simple:1.1.1")
 
     // JWT
     implementation("io.jsonwebtoken:jjwt:0.9.1")
