@@ -23,7 +23,6 @@ public class JwtProvider {
     private String secretKey = "ERA jwt secret key";
     private final long tokenValidTime = 60 * 60 * 1000L; // 유효 시간 60분
 
-    // private final UserDetailsService userDetailsService;
     private final PrincipalDetailsService principalDetailsService;
 
     // 객체 초기화 시 secretKey를 Base64로 encoding

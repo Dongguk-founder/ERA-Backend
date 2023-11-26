@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.DTO;
 
-import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.security.Role;
 import lombok.*;
 

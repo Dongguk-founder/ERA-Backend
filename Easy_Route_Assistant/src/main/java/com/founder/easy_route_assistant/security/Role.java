@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.security;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

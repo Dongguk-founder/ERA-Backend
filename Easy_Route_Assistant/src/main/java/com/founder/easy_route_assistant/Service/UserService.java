@@ -8,13 +8,10 @@ import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.Optional;
 
 @Service

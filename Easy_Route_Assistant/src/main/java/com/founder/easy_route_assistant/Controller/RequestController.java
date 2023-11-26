@@ -1,21 +1,14 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.RequestDTO;
-import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Service.RequestService;
 import com.founder.easy_route_assistant.token.JwtProvider;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller

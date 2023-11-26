@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.Service;
 
-// import com.founder.easy_route_assistant.DTO.ChargerDTO;
 import com.founder.easy_route_assistant.DTO.ChargerDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,8 +14,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class ChargerService {

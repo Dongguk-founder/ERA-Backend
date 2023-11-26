@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ConvenientRepository extends JpaRepository<ConvenientEntity, Integer> { // int 안 됨?
+public interface ConvenientRepository extends JpaRepository<ConvenientEntity, Integer> {
 }

@@ -98,10 +98,6 @@ public class ElevatorService {
             e.printStackTrace();
         }
 
-
-
-
-
        return elevatorDTOList;
 
     }

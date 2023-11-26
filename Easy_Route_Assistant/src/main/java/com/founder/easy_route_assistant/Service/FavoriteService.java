@@ -1,14 +1,11 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.Entity.FavoriteEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.FavoriteRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

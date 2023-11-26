@@ -1,7 +1,5 @@
 package com.founder.easy_route_assistant.DTO;
 
-import com.founder.easy_route_assistant.Entity.ConvenientEntity;
-import com.founder.easy_route_assistant.Entity.RequestEntity;
 import lombok.*;
 import org.springframework.data.geo.Point;
 
