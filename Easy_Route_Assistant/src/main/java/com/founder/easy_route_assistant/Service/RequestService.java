@@ -1,26 +1,18 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.Controller.ConvenientController;
 import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.RequestDTO;
-import com.founder.easy_route_assistant.Entity.ConvenientEntity;
 import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
-import com.founder.easy_route_assistant.Repository.ConvenientRepository;
 import com.founder.easy_route_assistant.Repository.RequestRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
-import com.founder.easy_route_assistant.security.Role;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.geo.Point;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +55,7 @@ public class RequestService {
         List<RequestEntity> requestEntities = new ArrayList<>();
         List<RequestDTO> requestDTOS = new ArrayList<>();
 
-        UserEntity userEntity = null;
+        UserEntity userEntity = new UserEntity();
 
         if (role.equals("USER")) {
            userEntity = userRepository.findById(userID)
