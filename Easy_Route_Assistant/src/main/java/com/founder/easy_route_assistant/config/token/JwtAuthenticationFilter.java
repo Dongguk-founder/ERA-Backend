@@ -34,5 +34,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response); // 다음 filter 실행
         }
+        else {
+            response.setStatus(404);
+        }
     }
 }
