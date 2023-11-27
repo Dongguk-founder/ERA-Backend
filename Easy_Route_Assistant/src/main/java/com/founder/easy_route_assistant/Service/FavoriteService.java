@@ -1,14 +1,11 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.Entity.FavoriteEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.FavoriteRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,7 +37,7 @@ public class FavoriteService {
         } else {
             System.out.println("중복된 값을 넣을 수 없음");
         }
-        return  favoriteDTO;
+        return favoriteDTO;
     }
 
     public List<FavoriteDTO> getFavoriteList(String userId) {
@@ -53,6 +50,7 @@ public class FavoriteService {
 
         for (FavoriteEntity f : favoritecollection) {
             FavoriteDTO favoriteDTO = FavoriteDTO.builder()
+                    .id(f.getId())
                     .placeName(f.getPlaceName())
                     .roadNameAddress(f.getRoadNameAddress())
                     .point(f.getPoint())
@@ -63,5 +61,7 @@ public class FavoriteService {
         return favoriteDTOList;
     }
 
-
+    public void deleteFavorite(Long favoriteId) {
+        favoriteRepository.deleteById(favoriteId);
+    }
 }

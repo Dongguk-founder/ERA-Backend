@@ -8,6 +8,7 @@ import org.springframework.data.geo.Point;
 @AllArgsConstructor @Builder
 @ToString
 public class FavoriteDTO {
+    private Long id;
     private String placeName;
     private String roadNameAddress;
     private Point point;
