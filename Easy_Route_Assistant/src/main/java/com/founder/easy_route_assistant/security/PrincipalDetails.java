@@ -28,7 +28,7 @@ public class PrincipalDetails implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return userEntity.getPwd();
+        return userEntity.getUserID();
     }
 
     @Override
