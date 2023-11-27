@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.sun.xml.bind:jaxb-core:4.0.1" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="com.sun.xml.bind" artifactId="jaxb-core" version="4.0.1" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind/jaxb-core/4.0.1/e8bf2d711d2d4250537199602bccae0cd4e62726/jaxb-core-4.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.sun.xml.bind/jaxb-core/4.0.1/de7e32142f59c5aa528f34847ce1cd322d8412b6/jaxb-core-4.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
