@@ -1,10 +1,11 @@
-package com.founder.easy_route_assistant.security;
+package com.founder.easy_route_assistant.config;
 
-import com.founder.easy_route_assistant.token.JwtAuthenticationFilter;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.token.JwtAuthenticationFilter;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -21,6 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtProvider jwtProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -34,7 +36,7 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) -> // Spring Security가 Session을 아예 배재(생성, 사용 X)
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

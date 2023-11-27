@@ -3,7 +3,7 @@ package com.founder.easy_route_assistant.Controller;
 import com.founder.easy_route_assistant.DTO.LoginDTO;
 import com.founder.easy_route_assistant.DTO.UserDTO;
 import com.founder.easy_route_assistant.Service.UserService;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -40,5 +40,13 @@ public class UserController {
         res.put("role", role);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(res);
+    }
+
+    // 로그아웃
+    @PostMapping("/logout")
+    public HttpStatus logout(@RequestHeader String jwt) {
+        userService.logout(jwt);
+
+        return HttpStatus.OK;
     }
 }

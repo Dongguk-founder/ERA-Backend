@@ -1,6 +1,6 @@
 package com.founder.easy_route_assistant.DTO;
 
-import com.founder.easy_route_assistant.security.Role;
+import com.founder.easy_route_assistant.config.Role;
 import lombok.*;
 
 @Getter @Setter

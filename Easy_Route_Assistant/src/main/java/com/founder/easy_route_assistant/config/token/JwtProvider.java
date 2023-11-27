@@ -1,17 +1,19 @@
-package com.founder.easy_route_assistant.token;
+package com.founder.easy_route_assistant.config.token;
 
-import com.founder.easy_route_assistant.security.PrincipalDetails;
-import com.founder.easy_route_assistant.security.PrincipalDetailsService;
-import com.founder.easy_route_assistant.security.Role;
+import com.founder.easy_route_assistant.config.PrincipalDetails;
+import com.founder.easy_route_assistant.config.PrincipalDetailsService;
+import com.founder.easy_route_assistant.config.Role;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Base64;
 import java.util.Date;
@@ -24,6 +26,8 @@ public class JwtProvider {
     private final long tokenValidTime = 60 * 60 * 1000L; // 유효 시간 60분
 
     private final PrincipalDetailsService principalDetailsService;
+
+    private final RedisTemplate<String, String> redisTemplate;
 
     // 객체 초기화 시 secretKey를 Base64로 encoding
     @PostConstruct
@@ -48,27 +52,42 @@ public class JwtProvider {
     }
 
     // 인증 정보 조회
-    public Authentication getAuthentication(String token) {
-        PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService.loadUserByUsername(this.getUserID(token));
+    public Authentication getAuthentication(String jwt) {
+        PrincipalDetails principalDetails = (PrincipalDetails) principalDetailsService.loadUserByUsername(this.getUserID(jwt));
         return new UsernamePasswordAuthenticationToken(principalDetails, "", principalDetails.getAuthorities());
     }
 
-    // token에서 userID 뽑기
-    public String getUserID(String token) {
-        return extractClaims(token, secretKey).get("userID").toString();
+    // token에서 userID, role 뽑기
+    public String getUserID(String jwt) {
+        return extractClaims(jwt, secretKey).get("userID").toString();
     }
-    public String getRole(String token) {
-        return extractClaims(token, secretKey).get("role").toString();
+    public String getRole(String jwt) {
+        return extractClaims(jwt, secretKey).get("role").toString();
     }
-    private Claims extractClaims(String token, String secretKey) {
-        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+    private Claims extractClaims(String jwt, String secretKey) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt).getBody();
+    }
+
+    public Long getExpiration(String jwt) {
+        Date expiration = extractClaims(jwt, secretKey).getExpiration();
+        long now = new Date().getTime();
+        return expiration.getTime() - now;
     }
 
     // 토큰 유효성, 만료 일자 확인
     public boolean validateToken(String jwt) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
+
+            String black = redisTemplate.opsForValue().get(jwt);
+            System.out.println("let's check: " + black);
+            if (StringUtils.hasText(black)) {
+                throw new IllegalAccessException();
+            }
+
             return true;
+        } catch (IllegalAccessException e) {
+            logger.info("로그아웃한 사용자");
         } catch (MalformedJwtException e) {
             logger.info("잘못된 JWT 서명");
         } catch(ExpiredJwtException e) {

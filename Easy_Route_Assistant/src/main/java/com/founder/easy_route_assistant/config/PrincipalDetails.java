@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.security;
+package com.founder.easy_route_assistant.config;
 
 import lombok.Getter;
 import com.founder.easy_route_assistant.Entity.UserEntity;

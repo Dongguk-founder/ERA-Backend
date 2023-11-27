@@ -1,6 +1,6 @@
 package com.founder.easy_route_assistant.Entity;
 
-import com.founder.easy_route_assistant.security.Role;
+import com.founder.easy_route_assistant.config.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.List;

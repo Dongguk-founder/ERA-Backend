@@ -2,7 +2,7 @@ package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.RequestDTO;
 import com.founder.easy_route_assistant.Service.RequestService;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
