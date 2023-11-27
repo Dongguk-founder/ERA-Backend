@@ -117,19 +117,6 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RunManager" selected="Spring Boot.EasyRouteAssistantApplication">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Easy_Route_Assistant.test" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Easy_Route_Assistant.test" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="build.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
       <module name="Easy_Route_Assistant" />
       <option name="filePath" value="$PROJECT_DIR$/Easy_Route_Assistant/build.gradle.kts" />

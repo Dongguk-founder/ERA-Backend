@@ -18,8 +18,9 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final JwtProvider jwtProvider;
 
-    @PutMapping(value = "/add")
-    public ResponseEntity<FavoriteDTO> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO) {
+    @PostMapping(value = "/add")
+    public ResponseEntity<FavoriteDTO> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
+
         String userId = jwtProvider.getUserID(jwt);
         FavoriteDTO dto = favoriteService.savefavorite(userId, favoriteDTO);
         return ResponseEntity.ok().body(dto);
@@ -30,7 +31,9 @@ public class FavoriteController {
         String userId = jwtProvider.getUserID(jwt);
         List<FavoriteDTO> favoriteList = favoriteService.getFavoriteList(userId);
 
+
         if (!favoriteList.isEmpty()) {
+
             return ResponseEntity.status(HttpStatus.OK).body(favoriteList);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

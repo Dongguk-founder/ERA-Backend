@@ -31,8 +31,7 @@ public class FavoriteService {
             favoriteRepository.save(FavoriteEntity.builder()
                     .placeName(favoriteDTO.getPlaceName())
                     .roadNameAddress(favoriteDTO.getRoadNameAddress())
-                    .longitude(favoriteDTO.getLongitude())
-                    .latitude(favoriteDTO.getLatitude())
+                    .point(favoriteDTO.getPoint())
                     .user(userEntity.get())
                     .build());
         } else {
@@ -54,8 +53,7 @@ public class FavoriteService {
                     .id(f.getId())
                     .placeName(f.getPlaceName())
                     .roadNameAddress(f.getRoadNameAddress())
-                    .latitude(f.getLatitude())
-                    .longitude(f.getLongitude())
+                    .point(f.getPoint())
                     .build();
 
             favoriteDTOList.add(favoriteDTO);

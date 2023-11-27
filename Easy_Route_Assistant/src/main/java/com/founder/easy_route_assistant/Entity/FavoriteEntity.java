@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.geo.Point;
 
 @Entity
 @Getter
@@ -23,10 +24,7 @@ public class FavoriteEntity {
     private String roadNameAddress;
 
     @Column
-    private Double latitude;
-
-    @Column
-    private Double longitude;
+    private Point point ;
 
     //다대일 매핑
     @ManyToOne
