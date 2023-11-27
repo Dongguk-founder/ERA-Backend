@@ -139,7 +139,7 @@
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
-  <component name="RunManager" selected="Kotlin script (Beta).build.gradle.kts">
+  <component name="RunManager" selected="Spring Boot.EasyRouteAssistantApplication">
     <configuration name="build.gradle.kts" type="KotlinStandaloneScriptRunConfigurationType" temporary="true" nameIsGenerated="true">
       <module name="Easy_Route_Assistant" />
       <option name="filePath" value="$PROJECT_DIR$/Easy_Route_Assistant/build.gradle.kts" />
