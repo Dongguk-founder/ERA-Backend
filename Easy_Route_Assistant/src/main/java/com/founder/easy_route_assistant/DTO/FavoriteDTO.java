@@ -7,6 +7,7 @@ import lombok.*;
 @AllArgsConstructor @Builder
 @ToString
 public class FavoriteDTO {
+    private Long id;
     private String placeName;
     private String roadNameAddress;
     private Double latitude;
