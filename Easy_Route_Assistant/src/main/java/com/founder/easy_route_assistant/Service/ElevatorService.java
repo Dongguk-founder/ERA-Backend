@@ -55,6 +55,7 @@ public class ElevatorService {
                 .block();
 
         List<ElevatorDTO> elevatorDTOList = new ArrayList<>();
+
         JSONParser jsonParser = new JSONParser();
         JSONArray row = null;
         try {
@@ -80,9 +81,9 @@ public class ElevatorService {
                     int count = 0;
                     while (m.find()){
                         if (count == 0){
-                            latitude = Double.parseDouble(m.group());
-                        }else {
                             longtitude = Double.parseDouble(m.group());
+                        }else {
+                            latitude = Double.parseDouble(m.group());
                         }
                         count++;
                     }

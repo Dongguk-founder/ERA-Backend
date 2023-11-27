@@ -20,7 +20,7 @@ public class FavoriteController {
     private final FavoriteService favoriteService;
     private final JwtProvider jwtProvider;
 
-    @PutMapping(value = "/add")
+    @PostMapping(value = "/add")
     public ResponseEntity<FavoriteDTO> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
         String userId = jwtProvider.getUserID(jwt);
         FavoriteDTO dto = favoriteService.savefavorite(userId,favoriteDTO);
