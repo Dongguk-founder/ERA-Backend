@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" afterDir="false" />
-    </list>
+    <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +149,7 @@
       <workItem from="1701062276676" duration="6297000" />
       <workItem from="1701169149726" duration="6665000" />
       <workItem from="1701188978863" duration="199000" />
-      <workItem from="1701189424817" duration="615000" />
+      <workItem from="1701189424817" duration="922000" />
     </task>
     <servers />
   </component>

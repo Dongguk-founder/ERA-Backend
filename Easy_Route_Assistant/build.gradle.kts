@@ -5,6 +5,10 @@ plugins {
     kotlin("jvm") version "1.9.20"
 }
 
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
+
 group = "com.founder"
 version = "0.0.1-SNAPSHOT"
 
