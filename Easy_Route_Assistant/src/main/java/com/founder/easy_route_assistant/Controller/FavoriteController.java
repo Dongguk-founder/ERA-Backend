@@ -27,7 +27,7 @@ public class FavoriteController {
     }
 
     @GetMapping(value = "/find")
-    public ResponseEntity<List<FavoriteDTO>> getFavoriteList(@RequestHeader String jwt) {
+    public ResponseEntity<List<FavoriteDTO>> getFavoritegitList(@RequestHeader String jwt) {
         String userId = jwtProvider.getUserID(jwt);
         List<FavoriteDTO> favoriteList = favoriteService.getFavoriteList(userId);
 
