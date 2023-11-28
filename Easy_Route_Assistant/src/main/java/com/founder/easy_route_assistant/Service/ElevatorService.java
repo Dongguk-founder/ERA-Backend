@@ -1,5 +1,5 @@
 package com.founder.easy_route_assistant.Service;
-import com.founder.easy_route_assistant.DTO.ElevatorDTO;
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -27,7 +27,7 @@ public class ElevatorService {
     private String SEOUL_KEY;
 
 
-    public List<ElevatorDTO> requestElevatorAPI(String sw_cd) {
+    public List<ConvenientDTO> requestElevatorAPI(String sgg_nm) {
 
         //UriBulider 설정을 해주는 DefaultUriBuilderFactory
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SEOUL_URL);
@@ -54,21 +54,22 @@ public class ElevatorService {
                 .bodyToMono(String.class)
                 .block();
 
-        List<ElevatorDTO> elevatorDTOList = new ArrayList<>();
+        List<ConvenientDTO> elevatorDTOList = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
         JSONArray row = null;
         try {
             JSONObject object = (JSONObject) jsonParser.parse(getstring);
             JSONObject fullObject = (JSONObject) object.get("tbTraficElvtr");
             row = (JSONArray) fullObject.get("row");
-            for(int i = 0 ; i<row.size() ; i++){
-                JSONObject element = (JSONObject) row.get(i);
-                String subwayCode = (String) element.get("SW_CD");
-                if (Objects.equals(subwayCode, sw_cd)){
+            for (Object o : row) {
+                JSONObject element = (JSONObject) o;
+                String SGG_NM = (String) element.get("SGG_NM");
+                if (Objects.equals(SGG_NM, sgg_nm)) {
                     String s = (String) element.get("NODE_WKT");
+                    String station = (String) element.get("SW_NM");
 
                     //정규 표현식 패턴 ( - :문자 혹은 숫자가 있고, ? : 앞의 표현식이 없거나 최대 한개만, \d : 0-9사이의 숫자 ,+: 앞의 표현식이 1개 이상,...)
-                    String pattern =  "-?\\d+\\.?\\d*";
+                    String pattern = "-?\\d+\\.?\\d*";
                     //패턴 컴파일
                     Pattern p = Pattern.compile(pattern);
                     //매처 생성
@@ -78,17 +79,21 @@ public class ElevatorService {
                     Double longtitude = 0.0;
 
                     int count = 0;
-                    while (m.find()){
-                        if (count == 0){
+                    while (m.find()) {
+                        if (count == 0) {
                             latitude = Double.parseDouble(m.group());
-                        }else {
+                        } else {
                             longtitude = Double.parseDouble(m.group());
                         }
                         count++;
                     }
-                    Point point = new Point(latitude,longtitude);
+                    Point point = new Point(latitude, longtitude);
 
-                    ElevatorDTO elevatorDTO = ElevatorDTO.builder().sw_cd(sw_cd).point(point).build();
+                    ConvenientDTO elevatorDTO = ConvenientDTO.builder()
+                            .convenientType("elevator")
+                            .point(point)
+                            .description(station)
+                            .build();
                     elevatorDTOList.add(elevatorDTO);
                 }
 

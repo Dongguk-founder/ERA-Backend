@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.ChargerDTO;
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.Service.ChargerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class ChargerController {
     private final ChargerService chargerService;
 
     @GetMapping("/get/{target}")
-    public ResponseEntity<List<ChargerDTO>> requestChargerAPI(@PathVariable("target") String target) {
-        List<ChargerDTO> chargerDTOS = chargerService.requestChargerAPI(target);
+    public ResponseEntity<List<ConvenientDTO>> requestChargerAPI(@PathVariable("target") String target) {
+        List<ConvenientDTO> chargerDTOS = chargerService.requestChargerAPI(target);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(chargerDTOS);
     }

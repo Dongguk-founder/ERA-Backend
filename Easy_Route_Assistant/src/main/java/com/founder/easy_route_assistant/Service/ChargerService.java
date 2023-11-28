@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
 import com.founder.easy_route_assistant.DTO.ChargerDTO;
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,7 +24,7 @@ public class ChargerService {
     @Value("${SEOUL_KEY}")
     private String SEOUL_APPKEY;
 
-    public List<ChargerDTO> requestChargerAPI(String target) { // target = 시군구코드
+    public List<ConvenientDTO> requestChargerAPI(String target) { // target = 시군구코드
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SEOUL_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -48,17 +49,18 @@ public class ChargerService {
                 .bodyToMono(String.class)
                 .block();
 
-        List<ChargerDTO> chargerDTOList = new ArrayList<>();
+        // List<ChargerDTO> chargerDTOList = new ArrayList<>();
+        List<ConvenientDTO> convenientDTOS = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
         JSONArray row = null;
         try {
             JSONObject object = (JSONObject) jsonParser.parse(getstring);
             JSONObject fullObject = (JSONObject) object.get("tbElecWheelChrCharge");
             row = (JSONArray) fullObject.get("row");
-            for(int i=0; i < row.size(); i++) {
-                JSONObject element = (JSONObject) row.get(i);
+            for (Object o : row) {
+                JSONObject element = (JSONObject) o;
                 String signgunm = (String) element.get("SIGNGUNM");
-                if(Objects.equals(target, signgunm)) {
+                if (Objects.equals(target, signgunm)) {
                     String latitude = (String) element.get("LATITUDE"); // 위도
                     String longitude = (String) element.get("LONGITUDE"); // 경도
                     String placeDescript = (String) element.get("INSTLLCDESC");
@@ -69,11 +71,26 @@ public class ChargerService {
                     String holiStart = (String) element.get("HOLIDAYOPEROPENHHMM");
                     String holiEnd = (String) element.get("HOLIDAYCLOSEOPENHHMM");
 
+                    String weekday = weekStart + " - " + weekEnd;
+                    String saturday = satStart + " - " + satEnd;
+                    String holiday = holiStart + " - " + holiEnd;
+
                     double lat = Double.parseDouble(latitude);
                     double lon = Double.parseDouble(longitude);
-                    Point point = new Point(lat, lon);
+                    Point point = new Point(lon, lat);
 
-                    ChargerDTO chargerDTO = ChargerDTO.builder()
+                    ConvenientDTO convenientDTO = ConvenientDTO.builder()
+                            .convenientType("charger")
+                            .point(point)
+                            .description(placeDescript)
+                            .weekday(weekday)
+                            .saturday(saturday)
+                            .holiday(holiday)
+                            .build();
+
+                    convenientDTOS.add(convenientDTO);
+
+                    /*ChargerDTO chargerDTO = ChargerDTO.builder()
                             .point(point)
                             .placeDescript(placeDescript)
                             .weekStart(weekStart)
@@ -84,13 +101,13 @@ public class ChargerService {
                             .holiEnd(holiEnd)
                             .build();
 
-                    chargerDTOList.add(chargerDTO);
+                    chargerDTOList.add(chargerDTO);*/
                 }
             }
         } catch(Exception e) {
             e.printStackTrace();
         }
 
-        return chargerDTOList;
+        return convenientDTOS;
     }
 }

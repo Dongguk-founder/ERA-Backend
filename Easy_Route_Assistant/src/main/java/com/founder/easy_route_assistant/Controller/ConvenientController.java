@@ -17,15 +17,15 @@ public class ConvenientController {
 
     private final ConvenientService convenientService;
 
-    @PostMapping("/add")
+    /*@PostMapping("/add")
     public ResponseEntity<ConvenientDTO> createConvenient(@RequestBody ConvenientDTO convenientDTO) {
-        convenientService.save(convenientDTO);
+        convenientService.update(convenientDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(convenientDTO);
-    }
+    }*/
 
-    @GetMapping("/get")
-    public ResponseEntity<List<ConvenientDTO>> getConvenientList() {
-        List<ConvenientDTO> convenientDTOList = convenientService.getConvenientList();
+    @GetMapping("/get-{convenientType}")
+    public ResponseEntity<List<ConvenientDTO>> getConvenientList(@PathVariable String convenientType) {
+        List<ConvenientDTO> convenientDTOList = convenientService.getConvenientList(convenientType);
         if (!convenientDTOList.isEmpty()){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(convenientDTOList);
         } else {

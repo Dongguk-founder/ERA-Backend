@@ -2,14 +2,11 @@ package com.founder.easy_route_assistant.Entity;
 
 import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.geo.Point;
 
 @Entity
-@Getter
+@Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor @Builder
 @Table(name="convenient")
@@ -19,22 +16,24 @@ public class ConvenientEntity {
     private int id;
 
     @Column
-    private String convenientName;
+    private String convenientType; // elevator, charger, bathroom
+
+    /*@Column
+    private String roadAddr;*/
 
     @Column
-    private String content;
+    private String description;
 
     @Column
-    private Point point; // 얘도 유일한 멤버
+    private Point point;
 
-    @Builder
-    public static ConvenientEntity toConvenientEntity(ConvenientDTO convenientDTO) {
-        ConvenientEntity convenientEntity = new ConvenientEntity();
+    // charger에만 있는 것
+    @Column
+    private String weekday;
 
-        convenientEntity.convenientName = convenientDTO.getConvenientName();
-        convenientEntity.content = convenientDTO.getContent();
-        convenientEntity.point = convenientDTO.getPoint();
+    @Column
+    private String holiday;
 
-        return convenientEntity;
-    }
+    @Column
+    private String saturday;
 }

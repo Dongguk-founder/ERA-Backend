@@ -23,7 +23,7 @@ public class RequestController {
     public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
         requestService.createRequest(jwt, requestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/get")
@@ -41,6 +41,6 @@ public class RequestController {
     public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
         HttpStatus status = requestService.updateRequest(jwt, requestDTO);
 
-        return ResponseEntity.status(status).body(requestDTO);
+        return ResponseEntity.status(status).build();
     }
 }

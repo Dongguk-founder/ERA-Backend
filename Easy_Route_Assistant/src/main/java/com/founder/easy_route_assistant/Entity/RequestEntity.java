@@ -15,13 +15,25 @@ public class RequestEntity {
     private int id;
 
     @Column
-    private String convenientName;
+    private String convenientType;
 
     @Column
     private Point point;
 
     @Column
-    private String content;
+    private String roadAddr;
+
+    @Column
+    private String description;
+
+    @Column
+    private String weekday;
+
+    @Column
+    private String saturday;
+
+    @Column
+    private String holiday;
 
     @Column
     private Boolean accepted = false;

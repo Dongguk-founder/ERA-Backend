@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Controller;
 
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.ElevatorDTO;
 import com.founder.easy_route_assistant.Service.ElevatorService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +18,9 @@ public class ElevatorController {
 
     private final ElevatorService elevatorService;
 
-    @GetMapping("/find-elevator/{SW_CD}")
-    public ResponseEntity<List<ElevatorDTO>> findElevator(@PathVariable("SW_CD") String sw_cd) {
-        List<ElevatorDTO> result = elevatorService.requestElevatorAPI(sw_cd);
+    @GetMapping("/find-elevator/{SGG_NM}")
+    public ResponseEntity<List<ConvenientDTO>> findElevator(@PathVariable("SGG_NM") String sgg_nm) {
+        List<ConvenientDTO> result = elevatorService.requestElevatorAPI(sgg_nm);
         return ResponseEntity.ok().body(result);
     }
 }
