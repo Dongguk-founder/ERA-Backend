@@ -16,11 +16,10 @@ spring:
     mode: HTML
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL57Dialect
-    open-in-view: false
-    show-sql: true
-    hibernate:
-      ddl-auto: update
     properties:
       hibernate:
+        ddl-auto: update
+        dialect: org.hibernate.dialect.MySQLDialect
         use_sql_comments: true
+    open-in-view: false
+    show-sql: true
