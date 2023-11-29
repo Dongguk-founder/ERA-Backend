@@ -37,7 +37,7 @@ public class FavoriteService {
                     .point(favoriteDTO.getPoint())
                     .user(userEntity.get())
                     .build());
-            favoriteListDTO.setFavoriteDTOList(getFavoriteList(userId));
+            favoriteListDTO.setFavoriteList(getFavoriteList(userId));
 
         } else {
             System.out.println("중복된 값을 넣을 수 없음");
