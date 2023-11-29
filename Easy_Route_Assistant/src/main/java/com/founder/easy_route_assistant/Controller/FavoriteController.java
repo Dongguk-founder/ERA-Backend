@@ -36,13 +36,12 @@ public class FavoriteController {
     }
 
     @GetMapping(value = "/find")
-    public ResponseEntity<List<FavoriteDTO>> getFavoriteList(@RequestHeader String jwt) {
+    public ResponseEntity<FaviriteListDTO> getFavoriteList(@RequestHeader String jwt) {
         String userId = jwtProvider.getUserID(jwt);
-        List<FavoriteDTO> favoriteList = favoriteService.getFavoriteList(userId);
+        FaviriteListDTO favoriteList = favoriteService.getFavoriteList(userId);
 
 
-        if (!favoriteList.isEmpty()) {
-
+        if (!favoriteList.getFavoriteList().isEmpty()) {
             return ResponseEntity.status(HttpStatus.OK).body(favoriteList);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -51,10 +50,10 @@ public class FavoriteController {
     }
 
     @DeleteMapping(value = "/delete/{favoriteId}")
-    public ResponseEntity<List<FavoriteDTO>> deleteFavorite(@RequestHeader String jwt, @PathVariable Long favoriteId) {
+    public ResponseEntity<FaviriteListDTO> deleteFavorite(@RequestHeader String jwt, @PathVariable Long favoriteId) {
         String userId = jwtProvider.getUserID(jwt);
         favoriteService.deleteFavorite(favoriteId);
-        List<FavoriteDTO> favoriteList = favoriteService.getFavoriteList(userId);
+        FaviriteListDTO favoriteList = favoriteService.getFavoriteList(userId);
         return ResponseEntity.ok().body(favoriteList);
     }
 
