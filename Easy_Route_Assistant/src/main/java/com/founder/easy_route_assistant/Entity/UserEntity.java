@@ -21,10 +21,10 @@ public class UserEntity {
     @Id // primary key
     private String userID;
 
-    @Column(length = 100)
+    @Column
     private String pwd;
 
-    @Column(length = 100)
+    @Column
     private String userName;
 
     @Column
