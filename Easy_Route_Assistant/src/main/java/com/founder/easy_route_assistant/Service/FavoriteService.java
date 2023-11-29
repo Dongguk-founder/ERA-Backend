@@ -20,10 +20,12 @@ public class FavoriteService {
 
     private final UserRepository userRepository;
 
-    public FavoriteDTO savefavorite(String userId, FavoriteDTO favoriteDTO) {
+    public  List<FavoriteDTO> savefavorite(String userId, FavoriteDTO favoriteDTO) {
         // Returns whether an entity with the given id exists.
         // 객체 생성 (부모테이블에 먼저 데이터를 삽입해야 자식테이블에 데이터삽입 가능)
         Optional<UserEntity> userEntity = userRepository.findById(userId);
+
+        List<FavoriteDTO> favoriteDTOList = new ArrayList<>();
         // 해당 유저가 없는 경우
 
         // 즐겨찾기 중복 값 처리
@@ -34,10 +36,12 @@ public class FavoriteService {
                     .point(favoriteDTO.getPoint())
                     .user(userEntity.get())
                     .build());
+
         } else {
             System.out.println("중복된 값을 넣을 수 없음");
         }
-        return favoriteDTO;
+        favoriteDTOList = getFavoriteList(userId);
+        return favoriteDTOList;
     }
 
     public List<FavoriteDTO> getFavoriteList(String userId) {
