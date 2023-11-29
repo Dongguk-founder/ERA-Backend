@@ -10,5 +10,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class FaviriteListDTO {
-    List<FavoriteDTO> favoriteDTOList;
+    List<FavoriteDTO> favoriteList;
 }
