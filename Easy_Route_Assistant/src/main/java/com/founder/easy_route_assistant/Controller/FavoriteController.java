@@ -1,9 +1,13 @@
 package com.founder.easy_route_assistant.Controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.founder.easy_route_assistant.DTO.FaviriteListDTO;
 import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.Service.FavoriteService;
 import com.founder.easy_route_assistant.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +23,15 @@ public class FavoriteController {
     private final JwtProvider jwtProvider;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<List<FavoriteDTO>> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
+    public ResponseEntity<Object> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
+
+        JSONObject res = new JSONObject();
 
         String userId = jwtProvider.getUserID(jwt);
-        List<FavoriteDTO> dto = favoriteService.savefavorite(userId, favoriteDTO);
+
+        FaviriteListDTO dto = favoriteService.savefavorite(userId, favoriteDTO);
+
+
         return ResponseEntity.ok().body(dto);
     }
 
