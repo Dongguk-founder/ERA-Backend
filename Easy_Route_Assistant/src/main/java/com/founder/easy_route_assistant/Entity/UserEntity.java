@@ -27,7 +27,7 @@ public class UserEntity {
     @Column(length = 100)
     private String userName;
 
-    @Column(length = 100)
+    @Column
     private String userEmail;
 
     // enum 이름을 DB에 저장
