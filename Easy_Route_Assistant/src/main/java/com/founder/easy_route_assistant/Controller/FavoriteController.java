@@ -23,13 +23,13 @@ public class FavoriteController {
     private final JwtProvider jwtProvider;
 
     @PostMapping(value = "/add")
-    public ResponseEntity<Object> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
+    public ResponseEntity<FavoriteDTO> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
 
         JSONObject res = new JSONObject();
 
         String userId = jwtProvider.getUserID(jwt);
 
-        FaviriteListDTO dto = favoriteService.savefavorite(userId, favoriteDTO);
+        FavoriteDTO dto = favoriteService.savefavorite(userId, favoriteDTO);
 
 
         return ResponseEntity.ok().body(dto);
