@@ -155,8 +155,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/FavoriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/FavoriteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" afterDir="false" />
-    </list>
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.pro
+    <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="" />
+
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -239,13 +240,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "link/transferMovementAPI",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
+    "nodejs_kage_manager_path": "npm",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -260,6 +261,14 @@
 }]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Easy_Route_Assistant" />
+      <recent name="$PROJECT_DIR$/Easy_Route_Assistant/src" />
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/.github" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">

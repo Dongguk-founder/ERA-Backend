@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.security;
+package com.founder.easy_route_assistant.config;
 
 import lombok.Getter;
 import com.founder.easy_route_assistant.Entity.UserEntity;
@@ -28,7 +28,7 @@ public class PrincipalDetails implements UserDetails, Serializable {
 
     @Override
     public String getUsername() {
-        return userEntity.getPwd();
+        return userEntity.getUserID();
     }
 
     @Override

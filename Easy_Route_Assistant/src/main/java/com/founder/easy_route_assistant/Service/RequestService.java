@@ -6,9 +6,10 @@ import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.RequestRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -24,29 +25,28 @@ public class RequestService {
 
     private final ConvenientService convenientService;
 
-
+    @Autowired
     private JwtProvider jwtProvider;
 
-    public RequestDTO createRequest(String userID, RequestDTO requestDTO) {
-        requestDTO.setUserID(userID);
-        RequestEntity requestEntity = converToEntity(requestDTO);
+    public void createRequest(String jwt, RequestDTO requestDTO) {
+        String userID = jwtProvider.getUserID(jwt);
+        UserEntity userEntity = userRepository.findById(userID).orElseThrow(
+                () -> new IllegalArgumentException("가입되지 않은 사용자입니다.")
+        );
+
+        RequestEntity requestEntity = RequestEntity
+                .builder()
+                .convenientType(requestDTO.getConvenientType())
+                .point(requestDTO.getPoint())
+                .description(requestDTO.getDescription())
+                .weekday(requestDTO.getWeekday())
+                .saturday(requestDTO.getSaturday())
+                .holiday(requestDTO.getHoliday())
+                .userEntity(userEntity)
+                .accepted(false)
+                .build();
 
         requestRepository.save(requestEntity);
-
-        return requestDTO;
-    }
-
-    // 이거 코드 수정해야 할듯 service에서 엔티티를 다루지 않게 하도록 함
-    private RequestEntity converToEntity(RequestDTO requestDTO) {
-        RequestEntity requestEntity = new RequestEntity();
-
-        requestEntity.setConvenientName(requestDTO.getConvenientName());
-        requestEntity.setContent(requestDTO.getContent());
-        UserEntity userEntity = userRepository.findById(requestDTO.getUserID())
-                .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
-        requestEntity.setUserEntity(userEntity);
-
-        return requestEntity;
     }
 
     public List<RequestDTO> getAllRequests(String jwt) {
@@ -59,7 +59,7 @@ public class RequestService {
         UserEntity userEntity = new UserEntity();
 
         if (role.equals("USER")) {
-           userEntity = userRepository.findById(userID)
+            userEntity = userRepository.findById(userID)
                     .orElseThrow(() -> new IllegalArgumentException("가입되지 않은 사용자입니다."));
             requestEntities = requestRepository.findByUserEntity(userEntity);
         } else if(role.equals("ADMIN")) {
@@ -70,9 +70,13 @@ public class RequestService {
             RequestDTO requestDTO = RequestDTO
                     .builder()
                     .id(requestEntity.getId())
-                    .convenientName(requestEntity.getConvenientName())
+                    .convenientType(requestEntity.getConvenientType())
                     .point(requestEntity.getPoint())
-                    .content(requestEntity.getContent())
+                    .roadAddr(requestEntity.getRoadAddr())
+                    .description(requestEntity.getDescription())
+                    .weekday(requestEntity.getWeekday())
+                    .saturday(requestEntity.getSaturday())
+                    .holiday(requestEntity.getHoliday())
                     .accepted(requestEntity.getAccepted())
                     .userID(userEntity.getUserID())
                     .build();
@@ -83,23 +87,31 @@ public class RequestService {
         return requestDTOList;
     }
 
-    public void updateRequest(String jwt, RequestDTO requestDTO) {
+    public HttpStatus updateRequest(String jwt, RequestDTO requestDTO) {
         String role = jwtProvider.getRole(jwt);
         if (role.equals("ADMIN")) {
             RequestEntity requestEntity = requestRepository.findById(requestDTO.getId())
                     .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 요청입니다."));
 
-            if (requestDTO.isAccepted()) { // request에서 accepted가 true일 경우
+            if (requestDTO.isAccepted()) { // request에서 accepted가 true일 경우 request를 convenient로 변환 후 convenient table에 save
                 ConvenientDTO convenientDTO = ConvenientDTO.builder()
-                        .convenientName(requestDTO.getConvenientName())
-                        .content(requestDTO.getContent())
+                        .convenientType(requestDTO.getConvenientType())
+                        // .roadAddr(requestDTO.getRoadAddr())
+                        .description(requestDTO.getDescription())
                         .point(requestDTO.getPoint())
-                        .build(); // 요청 받은 변경 사항 그대로 등록
+                        .weekday(requestDTO.getWeekday())
+                        .saturday(requestDTO.getSaturday())
+                        .holiday(requestDTO.getHoliday())
+                        .build();
 
-                convenientService.save(convenientDTO);
+                convenientService.update(convenientDTO);
             }
 
             requestRepository.delete(requestEntity); // request에서 accepted가 false일 경우
+            return HttpStatus.ACCEPTED;
+        }
+        else {
+            return HttpStatus.BAD_REQUEST;
         }
     }
 

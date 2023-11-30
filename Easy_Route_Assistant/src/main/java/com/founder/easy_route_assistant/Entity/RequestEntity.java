@@ -1,15 +1,13 @@
 package com.founder.easy_route_assistant.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.*;
 import org.springframework.data.geo.Point;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
+@AllArgsConstructor @Builder
 @Table(name="request")
 public class RequestEntity {
     @Id
@@ -17,19 +15,29 @@ public class RequestEntity {
     private int id;
 
     @Column
-    private String convenientName;
+    private String convenientType;
 
     @Column
     private Point point;
 
     @Column
-    private String content;
+    private String roadAddr;
 
     @Column
-    // @ColumnDefault("false")
+    private String description;
+
+    @Column
+    private String weekday;
+
+    @Column
+    private String saturday;
+
+    @Column
+    private String holiday;
+
+    @Column
     private Boolean accepted = false;
 
-    // @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ManyToOne
     @JoinColumn(name="userid")
     private UserEntity userEntity;

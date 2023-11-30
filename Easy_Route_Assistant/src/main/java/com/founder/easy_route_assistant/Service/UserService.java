@@ -4,18 +4,17 @@ import com.founder.easy_route_assistant.DTO.LoginDTO;
 import com.founder.easy_route_assistant.DTO.UserDTO;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.UserRepository;
-import com.founder.easy_route_assistant.security.Role;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.Role;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.ManyToAny;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +28,8 @@ public class UserService {
     @Autowired
     private JwtProvider jwtProvider;
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
 
     public UserDTO join(UserDTO userDTO) {
 
@@ -63,6 +64,8 @@ public class UserService {
             throw new IllegalArgumentException("잘못된 비밀번호입니다.");
         }
 
+        // redisTemplate.opsForValue().set("userID:"+userEntity.getUserID(), jwt, jwtProvider.getExpiration(jwt));
+
         return jwtProvider.createToken(userEntity.getUserID(), userEntity.getRole());
     }
 
@@ -70,5 +73,10 @@ public class UserService {
         Optional<UserEntity> userEntity = userRepository.findById(userID);
 
         return userEntity;
+    }
+
+    @Transactional
+    public void logout(String jwt) {
+        redisTemplate.opsForValue().set(jwt, "logout", jwtProvider.getExpiration(jwt), TimeUnit.MILLISECONDS);
     }
 }
