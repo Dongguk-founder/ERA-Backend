@@ -3,6 +3,9 @@ package com.founder.easy_route_assistant.Service;
 import com.founder.easy_route_assistant.DTO.RouteRequestDTO;
 import com.founder.easy_route_assistant.DTO.TransferMovementDTO;
 import lombok.RequiredArgsConstructor;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,7 +26,10 @@ public class TransferMovementService {
     private String TRANSFERMOVEMENT_APPKEY;
 
 
-    public void findTransferMovement(RouteRequestDTO routeDTO){
+
+
+    public JSONObject findTransferMovement(RouteRequestDTO routeRequestDTO) {
+
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(TRANSFERMOVEMENT_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -46,5 +52,13 @@ public class TransferMovementService {
                 .bodyToMono(String.class)
                 .block();
 
+        JSONParser jsonParser = new JSONParser();
+        JSONObject full = new JSONObject();
+        try {
+            full = (JSONObject) jsonParser.parse(getstring);
+        }catch (Exception p){
+            p.printStackTrace();
+        }
+        return full;
     }
 }
