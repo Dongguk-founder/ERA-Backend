@@ -1,9 +1,17 @@
 spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://era-server-database.cqdhf53pi1e5.ap-northeast-2.rds.amazonaws.com:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: admin
+#    password: founders2021!
+#    hikari:
+#      minimum-idle: 10
+#      maximum-pool-size: 10
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://era-server-database.cqdhf53pi1e5.ap-northeast-2.rds.amazonaws.com:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: admin
-    password: founders2021!
+    url: jdbc:mysql://127.0.0.1:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: abcd1234@
     hikari:
       minimum-idle: 10
       maximum-pool-size: 10
