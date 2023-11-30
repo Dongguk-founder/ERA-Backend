@@ -16,5 +16,4 @@ public class RequestDTO {
     private String content;
     private boolean accepted;
     private String userID;
-
 }

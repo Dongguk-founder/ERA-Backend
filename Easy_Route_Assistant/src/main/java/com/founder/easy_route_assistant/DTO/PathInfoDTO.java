@@ -2,14 +2,12 @@ package com.founder.easy_route_assistant.DTO;
 
 import lombok.*;
 
-import java.net.URL;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TransferMovementDTO {
+public class PathInfoDTO {
     //환승이동유형순서
     Double chtnMvTpOrdr;
     //도착지
