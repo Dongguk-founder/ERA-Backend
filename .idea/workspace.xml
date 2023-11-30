@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="2118b46f-3010-43f3-a8b4-4eb4e8d64b27" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Convenient/ConvenientListDTO.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Request/RequestDTOList.java" afterDir="false" />
@@ -35,6 +36,12 @@
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/TransferMovementService.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/UserService.java" afterDir="false" />
+=======
+    <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" afterDir="false" />
+>>>>>>> main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +49,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
     <projectState path="$PROJECT_DIR$/Easy_Route_Assistant">
       <ProjectState />
     </projectState>
@@ -49,6 +59,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/Easy_Route_Assistant">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -61,6 +74,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+<<<<<<< HEAD
+=======
+        <option value="Interface" />
+        <option value="Record" />
+>>>>>>> main
         <option value="Class" />
       </list>
     </option>
@@ -68,13 +86,40 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;eundeang&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="a7a0202a-1ff3-4066-9c45-800227e1b8f8" />
+        <option name="url" value="https://github.com/Dongguk-founder/ERA-Backend" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/lang/ClassNotFoundException.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/HashMap.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/Map.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/regex/Matcher.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1.1/15bba08e3a239d54b68209c001f9c911559d2fed/json-simple-1.1.1-sources.jar!/org/json/simple/parser/JSONParser.java" root0="SKIP_INSPECTION" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
+<<<<<<< HEAD
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2YtQiNOTYbyAtFWOiMATo1fsuH2" />
+=======
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2YHbHeSxKqzrTBTwYuuGlz9a9Zf" />
+>>>>>>> main
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -88,8 +133,8 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
+<<<<<<< HEAD
     "git-widget-placeholder": "feature/bathroomAPI",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "C:/Users/elena/Desktop/ERA-backend",
@@ -97,20 +142,48 @@
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.0",
+=======
+    "git-widget-placeholder": "fix/request",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "SDKs",
+    "project.structure.proportion": "0.15",
+>>>>>>> main
     "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
   }
 }]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
+<<<<<<< HEAD
       <module name="ERA-backend" />
+=======
+      <module name="Easy_Route_Assistant.test" />
+>>>>>>> main
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+<<<<<<< HEAD
       <module name="ERA-backend" />
+=======
+      <module name="Easy_Route_Assistant.test" />
+>>>>>>> main
       <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -127,18 +200,45 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="2118b46f-3010-43f3-a8b4-4eb4e8d64b27" name="Changes" comment="" />
-      <created>1701342521652</created>
+      <changelist id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="" />
+      <created>1700185365442</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1701342521652</updated>
-      <workItem from="1701342522660" duration="302000" />
+      <updated>1700185365442</updated>
+      <workItem from="1700185366579" duration="111000" />
+      <workItem from="1700185493778" duration="38000" />
+      <workItem from="1700188076109" duration="1498000" />
+      <workItem from="1700312194937" duration="53444000" />
+      <workItem from="1700739910420" duration="2665000" />
+      <workItem from="1700742585544" duration="52997000" />
+      <workItem from="1700991886357" duration="5914000" />
+      <workItem from="1701062276676" duration="6297000" />
+      <workItem from="1701142418054" duration="1427000" />
+      <workItem from="1701351604065" duration="467000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+<<<<<<< HEAD
+=======
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+>>>>>>> main
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Easy_Route_Assistant$build_gradle_kts.ic" NAME="build.gradle.kts Coverage Results" MODIFIED="1700992026228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>

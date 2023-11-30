@@ -38,7 +38,6 @@ public class ConvenientService {
             ConvenientEntity newConvenient = ConvenientEntity.builder()
                     .convenientType(convenientDTO.getConvenientType())
                     .point(convenientDTO.getPoint())
-                    // .roadAddr(convenientDTO.getRoadAddr())
                     .description(convenientDTO.getDescription())
                     .weekday(convenientDTO.getWeekday())
                     .saturday(convenientDTO.getSaturday())
@@ -47,12 +46,9 @@ public class ConvenientService {
 
             convenientRepository.save(newConvenient);
         }
-
-        // convenientRepository.save(convenientEntity);
     }
 
     public ConvenientListDTO getConvenientList(String convenientType) {
-        // List<ConvenientEntity> convenientEntities = convenientRepository.findAll();
         List<ConvenientEntity> convenientEntities = convenientRepository.findAllByConvenientType(convenientType);
         List<ConvenientDTO> convenientDTOS = new ArrayList<>();
 
