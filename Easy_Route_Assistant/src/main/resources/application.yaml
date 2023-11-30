@@ -32,3 +32,11 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+<<<<<<< HEAD
+=======
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+>>>>>>> main

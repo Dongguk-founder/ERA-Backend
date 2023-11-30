@@ -1,7 +1,5 @@
 package com.founder.easy_route_assistant.DTO;
 
-import com.founder.easy_route_assistant.Entity.ConvenientEntity;
-import com.founder.easy_route_assistant.Entity.RequestEntity;
 import lombok.*;
 import org.springframework.data.geo.Point;
 
@@ -10,7 +8,12 @@ import org.springframework.data.geo.Point;
 @AllArgsConstructor @Builder
 @ToString
 public class ConvenientDTO {
-    private String convenientName;
-    private String content;
+    private String convenientType;
+    // private String roadAddr;
+    private String description;
     private Point point;
+
+    private String weekday;
+    private String holiday;
+    private String saturday;
 }

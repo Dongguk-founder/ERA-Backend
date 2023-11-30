@@ -1,21 +1,14 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.RequestDTO;
-import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Service.RequestService;
-import com.founder.easy_route_assistant.token.JwtProvider;
-import lombok.Getter;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,14 +21,12 @@ public class RequestController {
 
     @PostMapping("/send")
     public ResponseEntity<RequestDTO> createRequest(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
-        String userID = jwtProvider.getUserID(jwt);
-        requestService.createRequest(userID, requestDTO);
+        requestService.createRequest(jwt, requestDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(requestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/get")
-    // @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
         List<RequestDTO> requestDTOList = requestService.getAllRequests(jwt);
         if(!requestDTOList.isEmpty()){
@@ -48,8 +39,8 @@ public class RequestController {
 
     @PatchMapping("/update")
     public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
-        requestService.updateRequest(jwt, requestDTO);
+        HttpStatus status = requestService.updateRequest(jwt, requestDTO);
 
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTO);
+        return ResponseEntity.status(status).build();
     }
 }

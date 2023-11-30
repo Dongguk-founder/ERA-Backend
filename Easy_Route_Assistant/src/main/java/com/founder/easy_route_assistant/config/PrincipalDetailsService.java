@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.security;
+package com.founder.easy_route_assistant.config;
 
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.UserRepository;

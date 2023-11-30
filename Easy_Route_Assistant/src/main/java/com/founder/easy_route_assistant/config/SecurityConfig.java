@@ -1,12 +1,11 @@
-package com.founder.easy_route_assistant.security;
+package com.founder.easy_route_assistant.config;
 
-import com.founder.easy_route_assistant.token.JwtAuthenticationFilter;
-import com.founder.easy_route_assistant.token.JwtProvider;
+import com.founder.easy_route_assistant.config.token.JwtAuthenticationFilter;
+import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final JwtProvider jwtProvider;
+    private final RedisTemplate<String, String> redisTemplate;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -36,7 +37,11 @@ public class SecurityConfig {
                 .sessionManagement((sessionManagement) -> // Spring Security가 Session을 아예 배재(생성, 사용 X)
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .formLogin(AbstractHttpConfigurer::disable)
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class);
+                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+                        .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/convenient/**")).permitAll()
+                        .anyRequest().authenticated())
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

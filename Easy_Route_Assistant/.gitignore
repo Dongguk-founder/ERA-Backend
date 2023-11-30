@@ -35,4 +35,8 @@ out/
 
 ### VS Code ###
 .vscode/
+<<<<<<< HEAD
 ERA-Backend/Easy_Route_Assitant/.idea
+=======
+../.idea/
+>>>>>>> main
