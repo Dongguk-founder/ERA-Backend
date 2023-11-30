@@ -5,19 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e049f62c-4780-42f0-be8a-3e38bbe43e1a.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/RequestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/RequestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/TransferMovementController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/TransferMovementController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/RequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/RequestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/RequestEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/RequestEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/ConvenientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/ConvenientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/TransferMovementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/TransferMovementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/token/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/token/JwtAuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/token/JwtProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/token/JwtProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,6 +92,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "fix/request",
+    "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -162,6 +153,7 @@
       <workItem from="1700991886357" duration="5914000" />
       <workItem from="1701062276676" duration="6297000" />
       <workItem from="1701142418054" duration="1427000" />
+      <workItem from="1701351604065" duration="467000" />
     </task>
     <servers />
   </component>
