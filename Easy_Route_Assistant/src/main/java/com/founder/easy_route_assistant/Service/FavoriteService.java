@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Service;
 
+import com.founder.easy_route_assistant.DTO.FaviriteListDTO;
 import com.founder.easy_route_assistant.DTO.FavoriteDTO;
 import com.founder.easy_route_assistant.Entity.FavoriteEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
@@ -24,6 +25,7 @@ public class FavoriteService {
         // Returns whether an entity with the given id exists.
         // 객체 생성 (부모테이블에 먼저 데이터를 삽입해야 자식테이블에 데이터삽입 가능)
         Optional<UserEntity> userEntity = userRepository.findById(userId);
+
         // 해당 유저가 없는 경우
 
         // 즐겨찾기 중복 값 처리
@@ -31,17 +33,20 @@ public class FavoriteService {
             favoriteRepository.save(FavoriteEntity.builder()
                     .placeName(favoriteDTO.getPlaceName())
                     .roadNameAddress(favoriteDTO.getRoadNameAddress())
-                    .longitude(favoriteDTO.getLongitude())
-                    .latitude(favoriteDTO.getLatitude())
+                    .point(favoriteDTO.getPoint())
                     .user(userEntity.get())
                     .build());
+
         } else {
             System.out.println("중복된 값을 넣을 수 없음");
         }
-        return  favoriteDTO;
+        return favoriteDTO;
     }
 
-    public List<FavoriteDTO> getFavoriteList(String userId) {
+    public FaviriteListDTO getFavoriteList(String userId) {
+
+        FaviriteListDTO favoriteListDTO = new FaviriteListDTO();
+
         Optional<UserEntity> userEntity = userRepository.findById(userId);
         List<FavoriteEntity> favoritecollection = favoriteRepository.findAllByUser(userEntity);
 
@@ -51,16 +56,19 @@ public class FavoriteService {
 
         for (FavoriteEntity f : favoritecollection) {
             FavoriteDTO favoriteDTO = FavoriteDTO.builder()
+                    .id(f.getId())
                     .placeName(f.getPlaceName())
                     .roadNameAddress(f.getRoadNameAddress())
-                    .latitude(f.getLatitude())
-                    .longitude(f.getLongitude())
+                    .point(f.getPoint())
                     .build();
 
             favoriteDTOList.add(favoriteDTO);
         }
-        return favoriteDTOList;
+        favoriteListDTO.setFavoriteList(favoriteDTOList);
+        return favoriteListDTO;
     }
 
-
+    public void deleteFavorite(Long favoriteId) {
+        favoriteRepository.deleteById(favoriteId);
+    }
 }

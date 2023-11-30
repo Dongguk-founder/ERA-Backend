@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.test.iml" filepath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.test.iml" />
     </modules>
   </component>
 </project>

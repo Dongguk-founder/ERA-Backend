@@ -79,11 +79,11 @@ public class ElevatorService {
                     Double longtitude = 0.0;
 
                     int count = 0;
-                    while (m.find()) {
-                        if (count == 0) {
-                            latitude = Double.parseDouble(m.group());
-                        } else {
+                    while (m.find()){
+                        if (count == 0){
                             longtitude = Double.parseDouble(m.group());
+                        }else {
+                            latitude = Double.parseDouble(m.group());
                         }
                         count++;
                     }

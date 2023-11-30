@@ -5,6 +5,10 @@ plugins {
     kotlin("jvm") version "1.9.20"
 }
 
+tasks.getByName<Jar>("jar") {
+    enabled = false
+}
+
 group = "com.founder"
 version = "0.0.1-SNAPSHOT"
 
@@ -31,7 +35,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     //JSON 파싱 라이브러리
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
-
+    //m1 노트북
+    implementation("io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64")
     // JWT
     implementation("io.jsonwebtoken:jjwt:0.9.1")
     implementation("com.sun.xml.bind:jaxb-impl:4.0.1")

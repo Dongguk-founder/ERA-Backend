@@ -18,13 +18,13 @@ public class UserEntity {
     @Id // primary key
     private String userID;
 
-    @Column(length = 100)
+    @Column
     private String pwd;
 
-    @Column(length = 100)
+    @Column
     private String userName;
 
-    @Column(length = 100)
+    @Column
     private String userEmail;
 
     // enum 이름을 DB에 저장
