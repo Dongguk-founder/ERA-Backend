@@ -1,7 +1,7 @@
 package com.founder.easy_route_assistant.Controller;
 
-import com.founder.easy_route_assistant.DTO.LoginDTO;
-import com.founder.easy_route_assistant.DTO.UserDTO;
+import com.founder.easy_route_assistant.DTO.User.LoginDTO;
+import com.founder.easy_route_assistant.DTO.User.UserDTO;
 import com.founder.easy_route_assistant.Service.UserService;
 import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;

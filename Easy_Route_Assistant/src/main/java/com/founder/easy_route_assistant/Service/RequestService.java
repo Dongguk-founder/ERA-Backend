@@ -1,7 +1,8 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
-import com.founder.easy_route_assistant.DTO.RequestDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
+import com.founder.easy_route_assistant.DTO.Request.RequestDTO;
+import com.founder.easy_route_assistant.DTO.Request.RequestDTOList;
 import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.RequestRepository;
@@ -49,12 +50,14 @@ public class RequestService {
         requestRepository.save(requestEntity);
     }
 
-    public List<RequestDTO> getAllRequests(String jwt) {
+    public RequestDTOList getAllRequests(String jwt) {
         String role = jwtProvider.getRole(jwt);
         String userID = jwtProvider.getUserID(jwt);
 
         List<RequestEntity> requestEntities = new ArrayList<>();
-        List<RequestDTO> requestDTOList = new ArrayList<>();
+        List<RequestDTO> requestDTOS = new ArrayList<>();
+
+        RequestDTOList requestDTOList = new RequestDTOList();
 
         UserEntity userEntity = new UserEntity();
 
@@ -81,8 +84,10 @@ public class RequestService {
                     .userID(userEntity.getUserID())
                     .build();
 
-            requestDTOList.add(requestDTO);
+            requestDTOS.add(requestDTO);
         }
+
+        requestDTOList.setRequestDTOList(requestDTOS);
 
         return requestDTOList;
     }

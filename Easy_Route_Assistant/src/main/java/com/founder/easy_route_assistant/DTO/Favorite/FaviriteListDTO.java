@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.DTO;
+package com.founder.easy_route_assistant.DTO.Favorite;
 
 import lombok.*;
 

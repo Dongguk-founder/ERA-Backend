@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ERA-backend.iml" filepath="$PROJECT_DIR$/.idea/ERA-backend.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.iml" filepath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" />
     </modules>
   </component>
 </project>
