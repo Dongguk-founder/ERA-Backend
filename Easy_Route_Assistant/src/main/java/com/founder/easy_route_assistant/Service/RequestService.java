@@ -38,10 +38,7 @@ public class RequestService {
                 .builder()
                 .convenientType(requestDTO.getConvenientType())
                 .point(requestDTO.getPoint())
-                .description(requestDTO.getDescription())
-                .weekday(requestDTO.getWeekday())
-                .saturday(requestDTO.getSaturday())
-                .holiday(requestDTO.getHoliday())
+                .content(requestDTO.getContent())
                 .userEntity(userEntity)
                 .accepted(false)
                 .build();
@@ -73,11 +70,7 @@ public class RequestService {
                     .convenientType(requestEntity.getConvenientType())
                     .point(requestEntity.getPoint())
                     .roadAddr(requestEntity.getRoadAddr())
-                    .description(requestEntity.getDescription())
-                    .weekday(requestEntity.getWeekday())
-                    .saturday(requestEntity.getSaturday())
-                    .holiday(requestEntity.getHoliday())
-                    .accepted(requestEntity.getAccepted())
+                    .content(requestEntity.getContent())
                     .userID(userEntity.getUserID())
                     .build();
 
@@ -87,31 +80,17 @@ public class RequestService {
         return requestDTOList;
     }
 
-    public HttpStatus updateRequest(String jwt, RequestDTO requestDTO) {
+    public void updateRequest(String jwt, int id, boolean accepted, ConvenientDTO convenientDTO) {
         String role = jwtProvider.getRole(jwt);
         if (role.equals("ADMIN")) {
-            RequestEntity requestEntity = requestRepository.findById(requestDTO.getId())
+            RequestEntity requestEntity = requestRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("등록되지 않은 요청입니다."));
 
-            if (requestDTO.isAccepted()) { // request에서 accepted가 true일 경우 request를 convenient로 변환 후 convenient table에 save
-                ConvenientDTO convenientDTO = ConvenientDTO.builder()
-                        .convenientType(requestDTO.getConvenientType())
-                        // .roadAddr(requestDTO.getRoadAddr())
-                        .description(requestDTO.getDescription())
-                        .point(requestDTO.getPoint())
-                        .weekday(requestDTO.getWeekday())
-                        .saturday(requestDTO.getSaturday())
-                        .holiday(requestDTO.getHoliday())
-                        .build();
-
+            if (accepted) { // request에서 accepted가 true일 경우 ConvenientService로 보내버리기
                 convenientService.update(convenientDTO);
             }
 
             requestRepository.delete(requestEntity); // request에서 accepted가 false일 경우
-            return HttpStatus.ACCEPTED;
-        }
-        else {
-            return HttpStatus.BAD_REQUEST;
         }
     }
 

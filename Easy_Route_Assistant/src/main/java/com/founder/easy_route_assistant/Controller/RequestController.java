@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Controller;
 
+import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.RequestDTO;
 import com.founder.easy_route_assistant.Service.RequestService;
 import com.founder.easy_route_assistant.config.token.JwtProvider;
@@ -37,10 +38,17 @@ public class RequestController {
 
     }
 
-    @PatchMapping("/update")
+    /*@PatchMapping("/update")
     public ResponseEntity<RequestDTO> requestAccept(@RequestHeader String jwt, @RequestBody RequestDTO requestDTO) {
         HttpStatus status = requestService.updateRequest(jwt, requestDTO);
 
         return ResponseEntity.status(status).build();
+    }*/
+
+    @PatchMapping("/update/{id}/{accepted}")
+    public ResponseEntity<ConvenientDTO> requestAccept(@PathVariable int id, @PathVariable boolean accepted, @RequestHeader String jwt, @RequestBody ConvenientDTO convenientDTO) {
+        requestService.updateRequest(jwt, id, accepted, convenientDTO);
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 }

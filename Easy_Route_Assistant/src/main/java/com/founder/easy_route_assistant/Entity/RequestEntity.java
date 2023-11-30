@@ -24,16 +24,7 @@ public class RequestEntity {
     private String roadAddr;
 
     @Column
-    private String description;
-
-    @Column
-    private String weekday;
-
-    @Column
-    private String saturday;
-
-    @Column
-    private String holiday;
+    private String content;
 
     @Column
     private Boolean accepted = false;

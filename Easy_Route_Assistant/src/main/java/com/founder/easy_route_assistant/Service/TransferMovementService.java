@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Service;
 
+import com.founder.easy_route_assistant.DTO.RouteRequestDTO;
 import com.founder.easy_route_assistant.DTO.TransferMovementDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,14 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransferMovementService {
 
-    @Value("${TRANSFERMOVEMENT_URL}")
+    @Value("${TRANSFETMOVEMENT_URL}")
     private String TRANSFERMOVEMENT_URL;
 
-    @Value("${TRANSFERMOVEMENT_APPKEY}")
+    @Value("${TRANSFETMOVEMENT_APPKEY}")
     private String TRANSFERMOVEMENT_APPKEY;
 
 
-    public List<TransferMovementDTO> findTransferMovement(RouteDTO routeDTO){
+    public void findTransferMovement(RouteRequestDTO routeDTO){
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(TRANSFERMOVEMENT_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
