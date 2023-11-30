@@ -19,6 +19,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+.idea
 *.iws
 *.iml
 *.ipr
@@ -35,4 +36,4 @@ out/
 
 ### VS Code ###
 .vscode/
-ERA-Backend/Easy_Route_Assitant/.idea
+../.idea/
