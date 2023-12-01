@@ -42,10 +42,14 @@ public class TransferMovementService {
 
         String getstring = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(TRANSFERMOVEMENT_URL)
                         .queryParam("serviceKey",TRANSFERMOVEMENT_APPKEY)
                         .queryParam("format","json")
                         .queryParam("railOprIsttCd", "S1")
+                        .queryParam("lnCd", "3")
+                        .queryParam("stinCd", "321")
+                        .queryParam("prevStinCd", "422")
+                        .queryParam("chthTgtLn", "4")
+                        .queryParam("chtnNextStinCd", "424")
                         // 여기에 요청인자 추가해야 함
                         .build())
                 .retrieve()

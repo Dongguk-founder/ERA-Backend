@@ -49,4 +49,9 @@ public class UserController {
 
         return HttpStatus.OK;
     }
+
+    @GetMapping("/health")
+    public ResponseEntity<Void> healthCheck() {
+        return ResponseEntity.ok().build();
+    }
 }
