@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Controller;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientListDTO;
 import com.founder.easy_route_assistant.Service.ConvenientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -24,9 +25,11 @@ public class ConvenientController {
     }*/
 
     @GetMapping("/get-{convenientType}")
-    public ResponseEntity<List<ConvenientDTO>> getConvenientList(@PathVariable String convenientType) {
-        List<ConvenientDTO> convenientDTOList = convenientService.getConvenientList(convenientType);
-        if (!convenientDTOList.isEmpty()){
+    public ResponseEntity<ConvenientListDTO> getConvenientList(@PathVariable String convenientType) {
+        // List<ConvenientDTO> convenientDTOList = convenientService.getConvenientList(convenientType);
+        ConvenientListDTO convenientDTOList = convenientService.getConvenientList(convenientType);
+
+        if (!convenientDTOList.getConvenientDTOList().isEmpty()){
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(convenientDTOList);
         } else {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

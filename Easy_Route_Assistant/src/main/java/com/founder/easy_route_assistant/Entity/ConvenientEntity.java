@@ -1,6 +1,5 @@
 package com.founder.easy_route_assistant.Entity;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.geo.Point;
