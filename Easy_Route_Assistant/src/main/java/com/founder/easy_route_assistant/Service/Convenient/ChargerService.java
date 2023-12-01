@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.Service;
+package com.founder.easy_route_assistant.Service.Convenient;
 
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
 import org.json.simple.JSONArray;

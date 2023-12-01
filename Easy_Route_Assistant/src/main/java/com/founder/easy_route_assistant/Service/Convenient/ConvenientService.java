@@ -1,5 +1,6 @@
-package com.founder.easy_route_assistant.Service;
+package com.founder.easy_route_assistant.Service.Convenient;
 
+import com.founder.easy_route_assistant.DTO.Convenient.BathroomDTO;
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientListDTO;
 import com.founder.easy_route_assistant.Entity.ConvenientEntity;
@@ -17,6 +18,7 @@ public class ConvenientService {
     private final ConvenientRepository convenientRepository;
     private final ElevatorService elevatorService;
     private final ChargerService chargerService;
+    private final BathroomService bathroomService;
 
     public void update(ConvenientDTO convenientDTO) {
         ConvenientEntity convenientEntity = convenientRepository.findByPoint(convenientDTO.getPoint());
@@ -76,7 +78,8 @@ public class ConvenientService {
             convenientDTOS.addAll(chargerDTOS);
         }
         else {
-            // bathroom api
+            List<ConvenientDTO> bathroomDTOS = bathroomService.requestBathroomAPI();
+            convenientDTOS.addAll(bathroomDTOS);
         }
 
         convenientListDTO.setConvenientDTOList(convenientDTOS);
