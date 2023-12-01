@@ -27,7 +27,7 @@ public class RequestEntity {
     private String content;
 
     @Column
-    private Boolean accepted = false;
+    private Boolean accepted;
 
     @ManyToOne
     @JoinColumn(name="userid")
