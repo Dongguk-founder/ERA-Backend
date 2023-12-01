@@ -1,7 +1,8 @@
 package com.founder.easy_route_assistant.Controller;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
-import com.founder.easy_route_assistant.DTO.RequestDTO;
+import com.founder.easy_route_assistant.DTO.Request.RequestDTO;
+import com.founder.easy_route_assistant.DTO.Request.RequestDTOList;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
 import com.founder.easy_route_assistant.Service.RequestService;
 import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -28,11 +29,11 @@ public class RequestController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<List<RequestDTO>> requestDTOS(@RequestHeader String jwt) {
-        List<RequestDTO> requestDTOList = requestService.getAllRequests(jwt);
-        if(!requestDTOList.isEmpty()){
+    public ResponseEntity<RequestDTOList> requestDTOS(@RequestHeader String jwt) {
+        RequestDTOList requestDTOList = requestService.getAllRequests(jwt);
+        if(!requestDTOList.getRequestDTOList().isEmpty()) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(requestDTOList);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 

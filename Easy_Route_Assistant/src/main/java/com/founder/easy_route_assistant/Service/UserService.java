@@ -1,7 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.DTO.LoginDTO;
-import com.founder.easy_route_assistant.DTO.UserDTO;
+import com.founder.easy_route_assistant.DTO.User.LoginDTO;
+import com.founder.easy_route_assistant.DTO.User.UserDTO;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.UserRepository;
 import com.founder.easy_route_assistant.config.Role;
