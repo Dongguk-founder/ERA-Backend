@@ -35,5 +35,5 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: era-server-database.cqdhf53pi1e5.ap-northeast-2.rds.amazonaws.com
       port: 6379
