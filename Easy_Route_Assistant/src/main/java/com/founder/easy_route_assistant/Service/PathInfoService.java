@@ -39,11 +39,12 @@ public class PathInfoService {
         //WebClient.get() Returns: a spec for specifying the target URL
         String getstring = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .queryParam("ServiceKey", PATHINFO_APPKEY)
+                        .queryParam("serviceKey", PATHINFO_APPKEY)
                         .queryParam("startX",routeRequestDTO.getStart().getX())
                         .queryParam("startY",routeRequestDTO.getStart().getY())
                         .queryParam("endX",routeRequestDTO.getEnd().getX())
                         .queryParam("endY",routeRequestDTO.getEnd().getY())
+                        .queryParam("resultType","json")
                         .build())
                 .retrieve()
                 .bodyToMono(String.class)
