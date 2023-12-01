@@ -1,4 +1,5 @@
 HELP.md
+../.idea/
 .gradle
 build/
 !**/src/main/**/build/
@@ -18,6 +19,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
+*.xml
 *.iws
 *.iml
 *.ipr
@@ -34,4 +36,3 @@ out/
 
 ### VS Code ###
 .vscode/
-../.idea/
