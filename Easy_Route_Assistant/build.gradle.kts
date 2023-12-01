@@ -35,6 +35,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     //WebClient 라이브러리
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+    // Redis cache
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     //JSON 파싱 라이브러리
     implementation("com.googlecode.json-simple:json-simple:1.1.1")
     //m1 노트북
@@ -46,8 +48,6 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     // implementation("javax.xml.bind:jaxb-api:2.3.1")
 
-    // Redis cache
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")
