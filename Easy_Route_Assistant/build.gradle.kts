@@ -12,7 +12,9 @@ tasks.getByName<Jar>("jar") {
 group = "com.founder"
 version = "0.0.1-SNAPSHOT"
 
+
 java {
+    sourceCompatibility = JavaVersion.VERSION_17
 }
 
 configurations {
