@@ -48,6 +48,8 @@ dependencies {
     implementation("javax.xml.bind:jaxb-api:2.4.0-b180830.0359")
     // implementation("javax.xml.bind:jaxb-api:2.3.1")
 
+    // okhttp
+    implementation("com.squareup.okhttp3:okhttp")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")
