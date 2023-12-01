@@ -69,7 +69,6 @@ public class ConvenientService {
 
         if (convenientType.equals("elevator")) { // elevator api
             List<ConvenientDTO> elevatorDTOS = elevatorService.requestElevatorAPI("중구");
-            System.out.println("api: " + elevatorDTOS);
             convenientDTOS.addAll(elevatorDTOS);
         }
         else if (convenientType.equals("charger")) {
