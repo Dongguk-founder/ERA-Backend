@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Controller;
 
+import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
 import com.founder.easy_route_assistant.DTO.TmapDTO;
 import com.founder.easy_route_assistant.Service.TmapService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +20,9 @@ public class TmapController {
     private final TmapService tmapService;
 
     @PostMapping("/find")
-    public ResponseEntity<TmapDTO> findRoute(@RequestBody TmapDTO tmapDTO) throws IOException {
-        tmapService.searchRoute(tmapDTO);
+    public ResponseEntity<RouteDTOList> findRoute(@RequestBody TmapDTO tmapDTO) throws IOException {
+        RouteDTOList routeDTOList = tmapService.searchRoute(tmapDTO);
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).body(routeDTOList);
     }
 }
