@@ -5,9 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/RequestEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/RequestEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,9 +97,10 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
     "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "feat/lowFloorBus",
+    "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend",
     "node.js.detected.package.eslint": "true",
@@ -155,6 +163,7 @@
       <workItem from="1701062276676" duration="6297000" />
       <workItem from="1701142418054" duration="1427000" />
       <workItem from="1701351604065" duration="467000" />
+      <workItem from="1701467620690" duration="1869000" />
     </task>
     <servers />
   </component>
@@ -171,6 +180,17 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/PathInfoService.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
