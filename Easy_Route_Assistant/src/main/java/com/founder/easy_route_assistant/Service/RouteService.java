@@ -3,7 +3,7 @@ package com.founder.easy_route_assistant.Service;
 import com.founder.easy_route_assistant.DTO.Route.RouteDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteElementDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
-import com.founder.easy_route_assistant.DTO.TmapDTO;
+import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
 import okhttp3.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,27 +17,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class TmapService {
+public class RouteService {
     @Value("${TMAP_URL}")
     private String TMAP_URL;
 
     @Value("${TMAP_APPKEY}")
     private String TMAP_APPKEY;
 
-    public RouteDTOList searchRoute(TmapDTO tmapDTO) throws IOException {
+    public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
-        String startX = String.valueOf(tmapDTO.getStart().getX());
-        String startY = String.valueOf(tmapDTO.getStart().getY());
-        String endX = String.valueOf(tmapDTO.getEnd().getX());
-        String endY = String.valueOf(tmapDTO.getEnd().getY());
+        String startX = String.valueOf(routeRequestDTO.getStart().getX());
+        String startY = String.valueOf(routeRequestDTO.getStart().getY());
+        String endX = String.valueOf(routeRequestDTO.getEnd().getX());
+        String endY = String.valueOf(routeRequestDTO.getEnd().getY());
 
         String bodyString = String.format("{\"startX\":\"%s\",\"startY\":\"%s\",\"endX\":\"%s\",\"endY\":\"%s\"}", startX, startY, endX, endY);
 
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody body = RequestBody.create(mediaType, bodyString);
         Request request = new Request.Builder()
-                .url("https://apis.openapi.sk.com/transit/routes")
+                .url(TMAP_URL)
                 .post(body)
                 .addHeader("accept", "application/json")
                 .addHeader("appKey", TMAP_APPKEY)
@@ -60,6 +60,7 @@ public class TmapService {
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
 
+            int id = 0;
             for (Object full : fullRoutes) {
                 JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
                 Long totalTime = (Long) route.get("totalTime");

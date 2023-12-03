@@ -1,8 +1,8 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
-import com.founder.easy_route_assistant.DTO.TmapDTO;
-import com.founder.easy_route_assistant.Service.TmapService;
+import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
+import com.founder.easy_route_assistant.Service.RouteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,12 @@ import java.io.IOException;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/map")
-public class TmapController {
-    private final TmapService tmapService;
+public class RouteController {
+    private final RouteService routeService;
 
     @PostMapping("/find")
-    public ResponseEntity<RouteDTOList> findRoute(@RequestBody TmapDTO tmapDTO) throws IOException {
-        RouteDTOList routeDTOList = tmapService.searchRoute(tmapDTO);
+    public ResponseEntity<RouteDTOList> findRoute(@RequestBody RouteRequestDTO routeRequestDTO) throws IOException {
+        RouteDTOList routeDTOList = routeService.searchRoute(routeRequestDTO);
 
         return ResponseEntity.status(HttpStatus.OK).body(routeDTOList);
     }
