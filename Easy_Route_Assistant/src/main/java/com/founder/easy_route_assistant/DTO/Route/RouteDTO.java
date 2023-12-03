@@ -8,10 +8,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor @Builder
 public class RouteDTO {
-<<<<<<< HEAD
+
     private Long id;
-=======
->>>>>>> 1e818e5 ([Feat] parsing json, get simple route)
     private Long totalTime;
     private List<RouteElementDTO> routeElements;
 }
