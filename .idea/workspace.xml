@@ -6,15 +6,28 @@
   <component name="ChangeListManager">
     <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/Easy_Route_Assistant.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/era.VIkBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/era_db.SXfNsg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application-dev.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application-local.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -159,6 +172,18 @@
     </configuration>
     <configuration name="EasyRouteAssistantApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
+      <envs>
+        <env name="BATHROOM_APPKEY" value="6w0XqMP6lUJtobm9g6BdudLKxpvbHQ4MIQvrbfDehRyLocesuEQNxQz0Li/mzAKCjh00ju6b+r+ZQNtZeqHoVA==" />
+        <env name="BATHROOM_URL" value="https://api.odcloud.kr/api/15118705/v1/uddi:5fb8ec36-ae8a-48ed-ace8-88374daabeaf" />
+        <env name="ELEVATOR_APPKEY" value="6d7448626868656f373565645a6d7a" />
+        <env name="ELEVATOR_URL" value="http://openapi.seoul.go.kr:8088/" />
+        <env name="PATHINFO_APPKEY" value="%2FsMe1iHKpeiPqZqaYoMtKa7ukKox8SUhXep3UNzDKDZiAxrivzp5AnF7%2BI9f5Q%2B%2F16q8Ii6LHbj2mnspHxs72Q%3D%3D" />
+        <env name="PATHINFO_URL" value="http://ws.bus.go.kr/api/rest/pathinfo/getPathInfoByBusNSub" />
+        <env name="SEOUL_KEY" value=" 6d7448626868656f373565645a6d7a" />
+        <env name="SEOUL_URL" value="http://openapi.seoul.go.kr:8088/" />
+        <env name="TRANSFETMOVEMENT_APPKEY" value="$2a$10$gUcQG2E3kqa0Ozj/5icaBeMY/hEAd9BGYGEsdQ.pPi91GMSjo6I3q" />
+        <env name="TRANSFETMOVEMENT_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement?" />
+      </envs>
       <module name="Easy_Route_Assistant.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.founder.easy_route_assistant.EasyRouteAssistantApplication" />
       <method v="2">
@@ -189,7 +214,7 @@
       <workItem from="1701142418054" duration="1427000" />
       <workItem from="1701351604065" duration="467000" />
       <workItem from="1701467620690" duration="6579000" />
-      <workItem from="1701599576241" duration="4141000" />
+      <workItem from="1701599576241" duration="6204000" />
     </task>
     <servers />
   </component>
