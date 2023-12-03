@@ -50,6 +50,8 @@ dependencies {
 
     // okhttp
     implementation("com.squareup.okhttp3:okhttp")
+    // SpringBoot Cache
+    implementation("org.springframework.boot:spring-boot-starter-cache")
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")

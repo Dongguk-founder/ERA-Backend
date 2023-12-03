@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor @Builder
 public class RouteDTO {
-    private int id;
+    private Long id;
     private Long totalTime;
     private List<RouteElementDTO> routeElements;
 }

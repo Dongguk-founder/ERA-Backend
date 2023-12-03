@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.config;
+package com.founder.easy_route_assistant.config.Security;
 
 import com.founder.easy_route_assistant.config.token.JwtAuthenticationFilter;
 import com.founder.easy_route_assistant.config.token.JwtProvider;

@@ -1,7 +1,8 @@
-package com.founder.easy_route_assistant.config;
+package com.founder.easy_route_assistant.config.Security;
 
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.UserRepository;
+import com.founder.easy_route_assistant.config.Security.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

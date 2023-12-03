@@ -1,28 +1,40 @@
 package com.founder.easy_route_assistant.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.founder.easy_route_assistant.DTO.Route.RouteDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteElementDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
 import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
+import com.founder.easy_route_assistant.Repository.RouteRepository;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class RouteService {
     @Value("${TMAP_URL}")
     private String TMAP_URL;
 
     @Value("${TMAP_APPKEY}")
     private String TMAP_APPKEY;
+
+    private final RouteRepository routeRepository;
 
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -60,7 +72,7 @@ public class RouteService {
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
 
-            int id = 0;
+            Long id = 0L;
             for (Object full : fullRoutes) {
                 JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
                 Long totalTime = (Long) route.get("totalTime");
@@ -92,10 +104,16 @@ public class RouteService {
                 }
 
                 RouteDTO routeDTO = RouteDTO.builder()
+                        .id(id++)
                         .totalTime(totalTime)
                         .routeElements(singleRoute)
                         .build();
                 routeDTOS.add(routeDTO);
+
+                /*Map<Long, Object> data = new HashMap<>();
+                data.put(routeDTO.getId(), routeDTO);*/
+                String jsonString = new ObjectMapper().writeValueAsString(routeDTO);
+                routeRepository.save(routeDTO.getId(), jsonString);
             }
             fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
@@ -103,5 +121,37 @@ public class RouteService {
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String mapRoute(Long id) {
+        String strRoute = routeRepository.findById(id);
+
+        JSONParser jsonParser = new JSONParser();
+        Object obj = null;
+        try {
+            obj = jsonParser.parse(strRoute);
+            JSONObject route = (JSONObject) obj;
+
+            Long totalTime = (Long) route.get("totalTime");
+            JSONArray elements = (JSONArray) route.get("routeElements");
+            for(Object o : elements) {
+                JSONObject tmp = (JSONObject) o; // RouteElementDTO
+
+                String start = (String) tmp.get("start");
+                String end = (String) tmp.get("end");
+                String mode = (String) tmp.get("mode");
+                String routeColor = (String) tmp.get("routeColor");
+                String name = (String) tmp.get("name");
+
+                if (mode.equals("SUBWAY")) {
+
+                }
+            }
+
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
+        return "";
     }
 }
