@@ -82,7 +82,7 @@ public class JwtProvider {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
 
             String black = redisTemplate.opsForValue().get(jwt);
-            System.out.println("let's check: " + black);
+
             if (StringUtils.hasText(black)) {
                 throw new IllegalAccessException();
             }

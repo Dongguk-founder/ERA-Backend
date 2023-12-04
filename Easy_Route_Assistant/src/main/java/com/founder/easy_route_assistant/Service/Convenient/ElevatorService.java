@@ -1,5 +1,5 @@
-package com.founder.easy_route_assistant.Service;
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
+package com.founder.easy_route_assistant.Service.Convenient;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

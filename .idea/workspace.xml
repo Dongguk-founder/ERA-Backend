@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/era.VIkBAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/era_db.SXfNsg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/information_schema.FNRwLQ.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/mysql.osA4Bg.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/performance_schema.kIw0nw.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/d84a1534-c6a6-479c-be51-94b05156f2da/storage_v2/_src_/schema/sys.zb4BAA.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application-dev.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application-local.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources/application.yaml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/Easy_Route_Assistant">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$/Easy_Route_Assistant">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Record" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="develop/error" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;eundeang&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="a7a0202a-1ff3-4066-9c45-800227e1b8f8" />
+        <option name="url" value="https://github.com/Dongguk-founder/ERA-Backend" />
+      </UrlAndAccount>
+    </option>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/lang/ClassNotFoundException.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/HashMap.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/Map.java" root0="SKIP_INSPECTION" />
+    <setting file="jar:///Library/Java/JavaVirtualMachines/corretto-17.0.9/Contents/Home/lib/src.zip!/java.base/java/util/regex/Matcher.java" root0="SKIP_INSPECTION" />
+    <setting file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1.1/15bba08e3a239d54b68209c001f9c911559d2fed/json-simple-1.1.1-sources.jar!/org/json/simple/parser/JSONParser.java" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2YHbHeSxKqzrTBTwYuuGlz9a9Zf" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend/Easy_Route_Assistant/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql",
+      "redis"
+    ]
+  }
+}]]></component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Easy_Route_Assistant/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Spring Boot.EasyRouteAssistantApplication">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Easy_Route_Assistant.test" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Easy_Route_Assistant.test" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EasyRouteAssistantApplication-dev" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <option name="ACTIVE_PROFILES" value="dev" />
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <module name="Easy_Route_Assistant.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.founder.easy_route_assistant.EasyRouteAssistantApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="EasyRouteAssistantApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="ACTIVE_PROFILES" value="local" />
+      <envs>
+        <env name="BATHROOM_APPKEY" value="6w0XqMP6lUJtobm9g6BdudLKxpvbHQ4MIQvrbfDehRyLocesuEQNxQz0Li/mzAKCjh00ju6b+r+ZQNtZeqHoVA==" />
+        <env name="BATHROOM_URL" value="https://api.odcloud.kr/api/15118705/v1/uddi:5fb8ec36-ae8a-48ed-ace8-88374daabeaf" />
+        <env name="ELEVATOR_APPKEY" value="6d7448626868656f373565645a6d7a" />
+        <env name="ELEVATOR_URL" value="http://openapi.seoul.go.kr:8088/" />
+        <env name="PATHINFO_APPKEY" value="%2FsMe1iHKpeiPqZqaYoMtKa7ukKox8SUhXep3UNzDKDZiAxrivzp5AnF7%2BI9f5Q%2B%2F16q8Ii6LHbj2mnspHxs72Q%3D%3D" />
+        <env name="PATHINFO_URL" value="http://ws.bus.go.kr/api/rest/pathinfo/getPathInfoByBusNSub" />
+        <env name="SEOUL_KEY" value=" 6d7448626868656f373565645a6d7a" />
+        <env name="SEOUL_URL" value="http://openapi.seoul.go.kr:8088/" />
+        <env name="TRANSFETMOVEMENT_APPKEY" value="$2a$10$gUcQG2E3kqa0Ozj/5icaBeMY/hEAd9BGYGEsdQ.pPi91GMSjo6I3q" />
+        <env name="TRANSFETMOVEMENT_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement?" />
+      </envs>
+      <module name="Easy_Route_Assistant.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.founder.easy_route_assistant.EasyRouteAssistantApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Spring Boot.EasyRouteAssistantApplication" />
+      <item itemvalue="Spring Boot.EasyRouteAssistantApplication-dev" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="887796ab-ea15-43a0-a962-301760ae91f4" name="Changes" comment="" />
+      <created>1700185365442</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1700185365442</updated>
+      <workItem from="1700185366579" duration="111000" />
+      <workItem from="1700185493778" duration="38000" />
+      <workItem from="1700188076109" duration="1498000" />
+      <workItem from="1700312194937" duration="53444000" />
+      <workItem from="1700739910420" duration="2665000" />
+      <workItem from="1700742585544" duration="52997000" />
+      <workItem from="1700991886357" duration="5914000" />
+      <workItem from="1701062276676" duration="6297000" />
+      <workItem from="1701142418054" duration="1427000" />
+      <workItem from="1701351604065" duration="467000" />
+      <workItem from="1701467620690" duration="6579000" />
+      <workItem from="1701599576241" duration="6204000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/PathInfoService.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.data.redis.RedisConnectionFailureException" package="org.springframework.data.redis" />
+          <option name="timeStamp" value="5" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/Easy_Route_Assistant$EasyRouteAssistantApplication.ic" NAME="EasyRouteAssistantApplication Coverage Results" MODIFIED="1701359255843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Easy_Route_Assistant$build_gradle_kts.ic" NAME="build.gradle.kts Coverage Results" MODIFIED="1700992026228" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>

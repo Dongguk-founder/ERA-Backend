@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.DTO;
+package com.founder.easy_route_assistant.DTO.User;
 
 import com.founder.easy_route_assistant.config.Role;
 import lombok.*;

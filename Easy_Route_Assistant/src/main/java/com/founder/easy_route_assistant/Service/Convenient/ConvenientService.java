@@ -1,6 +1,8 @@
-package com.founder.easy_route_assistant.Service;
+package com.founder.easy_route_assistant.Service.Convenient;
 
-import com.founder.easy_route_assistant.DTO.ConvenientDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.BathroomDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
+import com.founder.easy_route_assistant.DTO.Convenient.ConvenientListDTO;
 import com.founder.easy_route_assistant.Entity.ConvenientEntity;
 import com.founder.easy_route_assistant.Repository.ConvenientRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class ConvenientService {
     private final ConvenientRepository convenientRepository;
     private final ElevatorService elevatorService;
     private final ChargerService chargerService;
+    private final BathroomService bathroomService;
 
     public void update(ConvenientDTO convenientDTO) {
         ConvenientEntity convenientEntity = convenientRepository.findByPoint(convenientDTO.getPoint());
@@ -37,7 +40,6 @@ public class ConvenientService {
             ConvenientEntity newConvenient = ConvenientEntity.builder()
                     .convenientType(convenientDTO.getConvenientType())
                     .point(convenientDTO.getPoint())
-                    // .roadAddr(convenientDTO.getRoadAddr())
                     .description(convenientDTO.getDescription())
                     .weekday(convenientDTO.getWeekday())
                     .saturday(convenientDTO.getSaturday())
@@ -46,14 +48,13 @@ public class ConvenientService {
 
             convenientRepository.save(newConvenient);
         }
-
-        // convenientRepository.save(convenientEntity);
     }
 
-    public List<ConvenientDTO> getConvenientList(String convenientType) {
-        // List<ConvenientEntity> convenientEntities = convenientRepository.findAll();
+    public ConvenientListDTO getConvenientList(String convenientType) {
         List<ConvenientEntity> convenientEntities = convenientRepository.findAllByConvenientType(convenientType);
         List<ConvenientDTO> convenientDTOS = new ArrayList<>();
+
+        ConvenientListDTO convenientListDTO = new ConvenientListDTO();
 
         for (ConvenientEntity convenientEntity : convenientEntities) {
             ConvenientDTO convenientDTO = ConvenientDTO.builder()
@@ -70,7 +71,6 @@ public class ConvenientService {
 
         if (convenientType.equals("elevator")) { // elevator api
             List<ConvenientDTO> elevatorDTOS = elevatorService.requestElevatorAPI("중구");
-            System.out.println("api: " + elevatorDTOS);
             convenientDTOS.addAll(elevatorDTOS);
         }
         else if (convenientType.equals("charger")) {
@@ -78,9 +78,12 @@ public class ConvenientService {
             convenientDTOS.addAll(chargerDTOS);
         }
         else {
-            // bathroom api
+            List<ConvenientDTO> bathroomDTOS = bathroomService.requestBathroomAPI();
+            convenientDTOS.addAll(bathroomDTOS);
         }
 
-        return convenientDTOS;
+        convenientListDTO.setConvenientDTOList(convenientDTOS);
+
+        return convenientListDTO;
     }
 }

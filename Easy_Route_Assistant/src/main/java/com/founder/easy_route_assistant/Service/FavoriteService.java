@@ -1,7 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
-import com.founder.easy_route_assistant.DTO.FaviriteListDTO;
-import com.founder.easy_route_assistant.DTO.FavoriteDTO;
+import com.founder.easy_route_assistant.DTO.Favorite.FaviriteListDTO;
+import com.founder.easy_route_assistant.DTO.Favorite.FavoriteDTO;
 import com.founder.easy_route_assistant.Entity.FavoriteEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.FavoriteRepository;

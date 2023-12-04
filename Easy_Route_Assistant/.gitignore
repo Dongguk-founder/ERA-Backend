@@ -1,7 +1,6 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 application.properties
@@ -35,4 +34,5 @@ out/
 
 ### VS Code ###
 .vscode/
-ERA-Backend/Easy_Route_Assitant/.idea
+../.idea
+!/.idea/

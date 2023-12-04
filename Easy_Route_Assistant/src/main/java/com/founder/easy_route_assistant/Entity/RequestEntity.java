@@ -24,19 +24,10 @@ public class RequestEntity {
     private String roadAddr;
 
     @Column
-    private String description;
+    private String content;
 
     @Column
-    private String weekday;
-
-    @Column
-    private String saturday;
-
-    @Column
-    private String holiday;
-
-    @Column
-    private Boolean accepted = false;
+    private Boolean accepted;
 
     @ManyToOne
     @JoinColumn(name="userid")

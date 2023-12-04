@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="dataSourceStorageLocal" created-in="IU-232.10227.8">
-    <data-source name="era" uuid="e049f62c-4780-42f0-be8a-3e38bbe43e1a">
+    <data-source name="@era-server-database.cqdhf53pi1e5.ap-northeast-2.rds.amazonaws.com" uuid="d84a1534-c6a6-479c-be51-94b05156f2da">
       <database-info product="MySQL" version="8.0.33" jdbc-version="4.2" driver-name="MySQL Connector/J" driver-version="mysql-connector-java-8.0.25 (Revision: 08be9e9b4cba6aa115f9b27b215887af40b159e0)" dbms="MYSQL" exact-version="8.0.33" exact-driver-version="8.0">
         <extra-name-characters>#@</extra-name-characters>
         <identifier-quote-string>`</identifier-quote-string>
@@ -13,8 +13,21 @@
         <introspection-scope>
           <node kind="schema">
             <name qname="@" />
-            <name qname="era_db" />
+            <name qname="era" />
           </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="redis_era" uuid="6c902d65-5254-4b54-8406-709d1d807b01">
+      <database-info product="Redis Standalone" version="7.2.3" jdbc-version="4.2" driver-name="Redis JDBC Driver" driver-version="1.4" dbms="REDIS" exact-version="7.2.3" exact-driver-version="1.4">
+        <jdbc-catalog-is-schema>true</jdbc-catalog-is-schema>
+      </database-info>
+      <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>heoeunjeong</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node kind="schema" qname="@" />
         </introspection-scope>
       </schema-mapping>
     </data-source>
