@@ -11,7 +11,10 @@
         <module name="Easy_Route_Assistant.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17">
+    <bytecodeTargetLevel>
+      <module name="Easy_Route_Assistant" target="17" />
+      <module name="Easy_Route_Assistant.main" target="17" />
+      <module name="Easy_Route_Assistant.test" target="17" />
       <module name="main" target="" />
     </bytecodeTargetLevel>
   </component>
