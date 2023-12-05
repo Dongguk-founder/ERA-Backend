@@ -52,6 +52,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     // SpringBoot Cache
     implementation("org.springframework.boot:spring-boot-starter-cache")
+    // apache poi
+    implementation("org.apache.poi:poi:4.1.2")
+    implementation("org.apache.poi:poi-ooxml:4.1.2");
 
     compileOnly("org.projectlombok:lombok")
     runtimeOnly("com.mysql:mysql-connector-j")
