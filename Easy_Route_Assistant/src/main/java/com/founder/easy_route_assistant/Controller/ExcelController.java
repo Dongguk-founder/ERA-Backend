@@ -36,6 +36,7 @@ public class ExcelController {
             Row row = worksheet.getRow(i);
             ExcelEntity excelEntity = ExcelEntity.builder()
                     .opr_code(row.getCell(0).getStringCellValue())
+                    .lineCode(row.getCell(2).getStringCellValue())
                     .lineNum(row.getCell(3).getStringCellValue())
                     .stationCode(row.getCell(4).getStringCellValue())
                     .stationName(row.getCell(5).getStringCellValue())
