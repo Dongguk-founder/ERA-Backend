@@ -8,7 +8,6 @@ import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
 import com.founder.easy_route_assistant.Entity.ExcelEntity;
 import com.founder.easy_route_assistant.Repository.ExcelRepository;
 import com.founder.easy_route_assistant.Repository.RouteRepository;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
@@ -16,7 +15,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -26,9 +24,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -39,14 +35,17 @@ public class RouteService {
     @Value("${TMAP_APPKEY}")
     private String TMAP_APPKEY;
 
-    @Value("${SUBWAY_URL}")
-    private String SUBWAY_URL;
+    @Value("${SUBWAYTRANSFER_URL}")
+    private String SUBWAYTRANSFER_URL;
+    @Value("${SUBWAYENEX_URL}")
+    private String SUBWAYENEX_URL;
     @Value("${SUBWAY_KEY}")
     private String SUBWAY_KEY;
 
     private final RouteRepository routeRepository;
     private final ExcelRepository excelRepository;
 
+    // 요약 경로
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
@@ -134,6 +133,7 @@ public class RouteService {
         }
     }
 
+    // 상세 경로
     public String mapRoute(Long id) {
         String strRoute = routeRepository.findById(id);
 
@@ -145,29 +145,74 @@ public class RouteService {
 
             Long totalTime = (Long) route.get("totalTime");
             JSONArray elements = (JSONArray) route.get("routeElements");
-            for(int i=1; i<elements.size()-1; i++) {
-                JSONObject r = (JSONObject) elements.get(i);
+            for(int i=0; i<elements.size()-1; i++) {
+                JSONObject current = (JSONObject) elements.get(i);
+                JSONObject after = (JSONObject) elements.get(i+1);
 
-                String start = (String) r.get("start");
-                String end = (String) r.get("end");
-                if(start.equals(end)) { // 출발지와 도착지 명이 같으면 지하철 환승임
-                    JSONObject before = (JSONObject) elements.get(i-1);
-                    JSONObject after = (JSONObject) elements.get(i+1);
+                String startCurrent = (String) current.get("start");
+                String endCurrent = (String) current.get("end");
+                String modeCurrent = (String) current.get("mode");
 
+                String startAfter = (String) after.get("start");
+                String endAfter = (String) after.get("end");
+                String modeAfter = (String) after.get("mode");
+                String lineAfter = (String) after.get("name");
+
+                // 출발지와 도착지 명이 같으면 지하철 환승임
+                if (startCurrent.equals(endCurrent)) {
+                    JSONObject before = (JSONObject) elements.get(i - 1);
                     String endBefore = (String) before.get("end");
-                    String nameBefore = (String) before.get("name"); // lnCd
-                    List<String> codeBefore = getStationCode(endBefore, nameBefore); // railOprIsttCd, stinCd
+                    String lineBefore = (String) before.get("name");
+                    List<String> codeBefore = getStationCode(endBefore, lineBefore); // railOprIsttCd, stinCd, lnCd
 
-                    String startAfter = (String) after.get("start");
-                    String endAfter = (String) after.get("end");
-                    String nameAfter = (String) after.get("name"); // chthTgtLn
+                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter);
+                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter); // X, chtnNextStinCd, chthTgtLn
 
-                    List<String> codeStartAfter = getStationCode(startAfter, nameAfter);
-                    List<String> codeEndAfter = getStationCode(endAfter, nameAfter); // chtnNextStinCd
-                    int dif = Integer.parseInt(codeEndAfter.get(1)) - Integer.parseInt(codeStartAfter.get(1));
-                    String prevStinCd = String.valueOf(Integer.parseInt(codeStartAfter.get(1))-dif); // prevStinCd
+                    int tmp1 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
+                    tmp2 -= tmp1 - tmp2;
+                    String prevStinCd; // prevStinCd
+                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
+                        prevStinCd = codeEndAfter.get(1).charAt(0) + String.valueOf(tmp2);
+                    } else {
+                        prevStinCd = String.valueOf(tmp2);
+                    }
 
-                    List<String> transfer = getSubwayTransferRoute(nameBefore, codeBefore.get(1), codeBefore.get(0), nameAfter, prevStinCd, codeEndAfter.get(1));
+                    JSONObject transfer = getSubwayTransferRoute(codeBefore.get(2), codeBefore.get(1), codeBefore.get(0), codeEndAfter.get(2), prevStinCd, codeEndAfter.get(1));
+                    System.out.println("\ntransfer route: " + transfer + "\n");
+                } else if (modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
+                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter); // opr, stin, line
+                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter);
+
+                    int tmp1 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
+                    int tmp = ((tmp2-tmp1)>0) ? (tmp1+1) : (tmp1-1);
+                    String nextStinCd;
+                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
+                        nextStinCd = codeStartAfter.get(1).charAt(0) + String.valueOf(tmp);
+                    }
+                    else {
+                        nextStinCd = String.valueOf(tmp);
+                    }
+
+                    JSONObject enEx = getSubwayEnEx(codeStartAfter.get(2), codeStartAfter.get(1), codeStartAfter.get(0), nextStinCd);
+                    System.out.println("\nentranceInfo: " + enEx + "\n");
+                } else if (!(startAfter.equals(endAfter))&&(modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK"))) {
+                    String lineCurrent = (String) current.get("name");
+                    List<String> codeEndCurrent = getStationCode(endCurrent, lineCurrent);
+                    List<String> codeStartCurrent = getStationCode(startCurrent, lineCurrent);
+                    int tmp1 = Integer.parseInt(codeStartCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codeEndCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp = ((tmp2-tmp1)>0) ? (tmp2+1) : (tmp2-1);
+                    String nextStinCd;
+                    if (Character.isLetter(codeEndCurrent.get(1).charAt(0))) {
+                        nextStinCd = codeEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
+                    }
+                    else {
+                        nextStinCd = String.valueOf(tmp);
+                    }
+                    JSONObject enEx = getSubwayEnEx(codeEndCurrent.get(2), codeEndCurrent.get(1), codeEndCurrent.get(0), nextStinCd);
+                    System.out.println("\nexitInfo: " + enEx + "\n");
                 }
             }
 
@@ -181,22 +226,25 @@ public class RouteService {
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
         List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
         List<String> answer = new ArrayList<>();
-        String opr_code = null, stationCode = null;
+        String opr_code, stationCode, lineCode;
         for (ExcelEntity o : excelEntities) {
             if (lineNm.contains(o.getLineNum())) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
+                lineCode = o.getLineCode();
                 answer.add(opr_code);
                 answer.add(stationCode);
-                break;
+                answer.add(lineCode);
+                return answer;
             }
         }
 
-        return answer;
+        return null;
     }
 
-    private List<String> getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
-        DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAY_URL);
+    // 지하철 입출구
+    private JSONObject getSubwayEnEx(String lnCd, String stinCd, String railOprIsttCd, String nextStinCd) throws ParseException {
+        DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYENEX_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
 
@@ -207,7 +255,7 @@ public class RouteService {
         WebClient webClient = WebClient.builder()
                 .exchangeStrategies(exchangeStrategies)
                 .uriBuilderFactory(factory)
-                .baseUrl(SUBWAY_URL)
+                .baseUrl(SUBWAYENEX_URL)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
                 .build();
 
@@ -215,10 +263,78 @@ public class RouteService {
                 .uri(uriBuilder -> uriBuilder
                         .queryParam("serviceKey", SUBWAY_KEY)
                         .queryParam("format", "JSON")
-                        .queryParam("lnCd", lnCd.charAt(3))
+                        .queryParam("lnCd", lnCd)
                         .queryParam("stinCd", stinCd)
                         .queryParam("railOprIsttCd", railOprIsttCd)
-                        .queryParam("chthTgtLn", chthTgtLn.charAt(3))
+                        .queryParam("nextStinCd", nextStinCd)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
+        JSONArray body = (JSONArray) jsonObject.get("body");
+
+        JSONObject enExInfo = new JSONObject();
+        List<String> d = new ArrayList<>();
+
+        int cnt = 1;
+        for(int i=0; i<body.size()-1; i++) {
+            JSONObject obj = (JSONObject) body.get(i);
+
+            String description = (String) obj.get("mvContDtl");
+            d.add(description);
+
+            JSONObject tmp = (JSONObject) body.get(i+1);
+            Long nextOrder = (Long) tmp.get("exitMvTpOrdr");
+            if (nextOrder == 1L) {
+                String imgPath = (String) obj.get("imgPath");
+                JSONObject save = new JSONObject();
+                save.put("imgPath", imgPath);
+                save.put("descriptions", d);
+
+                enExInfo.put(String.valueOf(cnt++), save);
+                d = new ArrayList<>();
+            }
+        }
+        JSONObject lastObj = (JSONObject) body.get(body.size()-1);
+        String lastDes = (String) lastObj.get("mvContDtl");
+        d.add(lastDes);
+        String lastImg = (String) lastObj.get("imgPath");
+        JSONObject lastSave = new JSONObject();
+        lastSave.put("imgPath", lastImg);
+        lastSave.put("descriptions", d);
+        enExInfo.put(String.valueOf(cnt), lastSave);
+
+        return enExInfo;
+    }
+
+    // 지하철 환승
+    private JSONObject getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
+        DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYTRANSFER_URL);
+
+        factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+        ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1))
+                .build();
+
+        WebClient webClient = WebClient.builder()
+                .exchangeStrategies(exchangeStrategies)
+                .uriBuilderFactory(factory)
+                .baseUrl(SUBWAYTRANSFER_URL)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+                .build();
+
+        String getstring = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("serviceKey", SUBWAY_KEY)
+                        .queryParam("format", "JSON")
+                        .queryParam("lnCd", lnCd)
+                        .queryParam("stinCd", stinCd)
+                        .queryParam("railOprIsttCd", railOprIsttCd)
+                        .queryParam("chthTgtLn", chthTgtLn)
                         .queryParam("prevStinCd", prevStinCd)
                         .queryParam("chtnNextStinCd", chtnNextStinCd)
                         .build())
@@ -230,13 +346,37 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        List<String> descriptions = new ArrayList<>();
-        for (Object o : body) {
-            JSONObject obj = (JSONObject) o;
-            String description = (String) obj.get("mvContDtl");
-            descriptions.add(description);
-        }
+        JSONObject transferInfo = new JSONObject();
+        List<String> d = new ArrayList<>();
 
-        return descriptions;
+        int cnt = 1;
+        for(int i=0; i<body.size()-1; i++) {
+            JSONObject currentObj = (JSONObject) body.get(i);
+
+            String description = (String) currentObj.get("mvContDtl");
+            d.add(description);
+
+            JSONObject nextObj = (JSONObject) body.get(i+1);
+            Long nextOrder = (Long) nextObj.get("chtnMvTpOrdr");
+            if (nextOrder == 1L) {
+                String imgPath = (String) currentObj.get("imgPath");
+                JSONObject save = new JSONObject();
+                save.put("imgPath", imgPath);
+                save.put("descriptions", d);
+
+                transferInfo.put(String.valueOf(cnt++), save);
+                d = new ArrayList<>();
+            }
+        }
+        JSONObject lastObj = (JSONObject) body.get(body.size()-1);
+        String lastDes = (String) lastObj.get("mvContDtl");
+        d.add(lastDes);
+        String lastImg = (String) lastObj.get("imgPath");
+        JSONObject lastSave = new JSONObject();
+        lastSave.put("imgPath", lastImg);
+        lastSave.put("descriptions", d);
+        transferInfo.put(String.valueOf(cnt), lastSave);
+
+        return transferInfo;
     }
 }
