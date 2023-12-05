@@ -158,7 +158,7 @@ public class RouteService {
                 String modeAfter = (String) after.get("mode");
                 String lineAfter = (String) after.get("name");
 
-                // 출발지와 도착지 명이 같으면 지하철 환승임
+                // 출발지와 도착지 명이 같으면 지하철 환승
                 if (startCurrent.equals(endCurrent)) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
                     String endBefore = (String) before.get("end");
