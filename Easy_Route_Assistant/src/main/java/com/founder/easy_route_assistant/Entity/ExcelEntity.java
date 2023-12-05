@@ -20,6 +20,4 @@ public class ExcelEntity {
     private String stationName;
     @Column
     private String lineNum;
-    @Column
-    private String lineCode;
 }
