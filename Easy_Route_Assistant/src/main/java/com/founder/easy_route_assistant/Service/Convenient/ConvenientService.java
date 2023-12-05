@@ -24,7 +24,8 @@ public class ConvenientService {
         ConvenientEntity convenientEntity = convenientRepository.findByPoint(convenientDTO.getPoint());
 
         if (convenientEntity != null) { // 기존 항목 수정일 때
-            if (convenientDTO.getConvenientType() != null) convenientEntity.setConvenientType(convenientDTO.getConvenientType());
+            if (convenientDTO.getConvenientType() != null)
+                convenientEntity.setConvenientType(convenientDTO.getConvenientType());
             if (convenientDTO.getDescription() != null) convenientEntity.setDescription(convenientDTO.getDescription());
             if (convenientDTO.getWeekday() != null) convenientEntity.setWeekday(convenientDTO.getWeekday());
             if (convenientDTO.getSaturday() != null) convenientEntity.setSaturday(convenientDTO.getSaturday());
@@ -35,8 +36,7 @@ public class ConvenientService {
             if (convenientDTO.getPoint() != null) convenientEntity.setPoint(convenientDTO.getPoint());*/
 
             convenientRepository.save(convenientEntity);
-        }
-        else { // 새로 등록일 때
+        } else { // 새로 등록일 때
             ConvenientEntity newConvenient = ConvenientEntity.builder()
                     .convenientType(convenientDTO.getConvenientType())
                     .point(convenientDTO.getPoint())
@@ -69,21 +69,22 @@ public class ConvenientService {
             convenientDTOS.add(convenientDTO);
         }
 
+
         if (convenientType.equals("elevator")) { // elevator api
             List<ConvenientDTO> elevatorDTOS = elevatorService.requestElevatorAPI("중구");
             convenientDTOS.addAll(elevatorDTOS);
-        }
-        else if (convenientType.equals("charger")) {
+        } else if (convenientType.equals("charger")) {
             List<ConvenientDTO> chargerDTOS = chargerService.requestChargerAPI("중구");
             convenientDTOS.addAll(chargerDTOS);
-        }
-        else {
+        } else if ( convenientType.equals("bathroom")) {
             List<ConvenientDTO> bathroomDTOS = bathroomService.requestBathroomAPI();
             convenientDTOS.addAll(bathroomDTOS);
+        } else {
+            System.out.println("잘못된 편의시설 타입을 입력하였습니다.");
         }
 
         convenientListDTO.setConvenientDTOList(convenientDTOS);
 
         return convenientListDTO;
-    }
+}
 }
