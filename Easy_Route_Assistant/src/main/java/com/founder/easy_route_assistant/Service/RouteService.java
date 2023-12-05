@@ -5,6 +5,8 @@ import com.founder.easy_route_assistant.DTO.Route.RouteDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteElementDTO;
 import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
 import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
+import com.founder.easy_route_assistant.Entity.ExcelEntity;
+import com.founder.easy_route_assistant.Repository.ExcelRepository;
 import com.founder.easy_route_assistant.Repository.RouteRepository;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.ExchangeStrategies;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.DefaultUriBuilderFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,11 +36,16 @@ import java.util.Map;
 public class RouteService {
     @Value("${TMAP_URL}")
     private String TMAP_URL;
-
     @Value("${TMAP_APPKEY}")
     private String TMAP_APPKEY;
 
+    @Value("${SUBWAY_URL}")
+    private String SUBWAY_URL;
+    @Value("${SUBWAY_KEY}")
+    private String SUBWAY_KEY;
+
     private final RouteRepository routeRepository;
+    private final ExcelRepository excelRepository;
 
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
@@ -134,17 +145,29 @@ public class RouteService {
 
             Long totalTime = (Long) route.get("totalTime");
             JSONArray elements = (JSONArray) route.get("routeElements");
-            for(Object o : elements) {
-                JSONObject tmp = (JSONObject) o; // RouteElementDTO
+            for(int i=1; i<elements.size()-1; i++) {
+                JSONObject r = (JSONObject) elements.get(i);
 
-                String start = (String) tmp.get("start");
-                String end = (String) tmp.get("end");
-                String mode = (String) tmp.get("mode");
-                String routeColor = (String) tmp.get("routeColor");
-                String name = (String) tmp.get("name");
+                String start = (String) r.get("start");
+                String end = (String) r.get("end");
+                if(start.equals(end)) { // 출발지와 도착지 명이 같으면 지하철 환승임
+                    JSONObject before = (JSONObject) elements.get(i-1);
+                    JSONObject after = (JSONObject) elements.get(i+1);
 
-                if (mode.equals("SUBWAY")) {
+                    String endBefore = (String) before.get("end");
+                    String nameBefore = (String) before.get("name"); // lnCd
+                    List<String> codeBefore = getStationCode(endBefore, nameBefore); // railOprIsttCd, stinCd
 
+                    String startAfter = (String) after.get("start");
+                    String endAfter = (String) after.get("end");
+                    String nameAfter = (String) after.get("name"); // chthTgtLn
+
+                    List<String> codeStartAfter = getStationCode(startAfter, nameAfter);
+                    List<String> codeEndAfter = getStationCode(endAfter, nameAfter); // chtnNextStinCd
+                    int dif = Integer.parseInt(codeEndAfter.get(1)) - Integer.parseInt(codeStartAfter.get(1));
+                    String prevStinCd = String.valueOf(Integer.parseInt(codeStartAfter.get(1))-dif); // prevStinCd
+
+                    List<String> transfer = getSubwayTransferRoute(nameBefore, codeBefore.get(1), codeBefore.get(0), nameAfter, prevStinCd, codeEndAfter.get(1));
                 }
             }
 
@@ -153,5 +176,67 @@ public class RouteService {
         }
 
         return "";
+    }
+
+    private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
+        List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
+        List<String> answer = new ArrayList<>();
+        String opr_code = null, stationCode = null;
+        for (ExcelEntity o : excelEntities) {
+            if (lineNm.contains(o.getLineNum())) {
+                opr_code = o.getOpr_code();
+                stationCode = o.getStationCode();
+                answer.add(opr_code);
+                answer.add(stationCode);
+                break;
+            }
+        }
+
+        return answer;
+    }
+
+    private List<String> getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
+        DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAY_URL);
+
+        factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
+
+        ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
+                .codecs(configurer -> configurer.defaultCodecs().maxInMemorySize(-1))
+                .build();
+
+        WebClient webClient = WebClient.builder()
+                .exchangeStrategies(exchangeStrategies)
+                .uriBuilderFactory(factory)
+                .baseUrl(SUBWAY_URL)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, org.springframework.http.MediaType.APPLICATION_JSON_VALUE)
+                .build();
+
+        String getstring = webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .queryParam("serviceKey", SUBWAY_KEY)
+                        .queryParam("format", "JSON")
+                        .queryParam("lnCd", lnCd.charAt(3))
+                        .queryParam("stinCd", stinCd)
+                        .queryParam("railOprIsttCd", railOprIsttCd)
+                        .queryParam("chthTgtLn", chthTgtLn.charAt(3))
+                        .queryParam("prevStinCd", prevStinCd)
+                        .queryParam("chtnNextStinCd", chtnNextStinCd)
+                        .build())
+                .retrieve()
+                .bodyToMono(String.class)
+                .block();
+
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
+        JSONArray body = (JSONArray) jsonObject.get("body");
+
+        List<String> descriptions = new ArrayList<>();
+        for (Object o : body) {
+            JSONObject obj = (JSONObject) o;
+            String description = (String) obj.get("mvContDtl");
+            descriptions.add(description);
+        }
+
+        return descriptions;
     }
 }
