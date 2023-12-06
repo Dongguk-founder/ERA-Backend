@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2d6dac9-f6d9-4d79-ad42-8152adc9953e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/FavoriteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/FavoriteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Favorite/FavoriteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Favorite/FavoriteDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Repository/FavoriteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Repository/FavoriteRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/FavoriteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/FavoriteService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RequestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/RouteDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/RouteDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,12 +39,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "eundeang"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;eundeang&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -79,16 +74,15 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "android.gradle.sync.needed": "true",
-    "git-widget-placeholder": "refactoring",
+    "git-widget-placeholder": "main",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "SDKs",
     "project.structure.proportion": "0.28444445",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
