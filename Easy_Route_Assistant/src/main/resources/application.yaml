@@ -1,21 +1,4 @@
 spring:
-  # datasource:
-    # driver-class-name: com.mysql.cj.jdbc.Driver
-    # url: jdbc:mysql://era-server-database.cqdhf53pi1e5.ap-northeast-2.rds.amazonaws.com:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    # username: admin
-    # password: founders2021!
-    # hikari:
-      # minimum-idle: 10
-      # maximum-pool-size: 10
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/era?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: abcd1234@
-    hikari:
-      minimum-idle: 10
-      maximum-pool-size: 10
-
   thymeleaf:
     cache: false # default는 true. 개발 시에 false로 두면 수정 시 바로 반영.
     prefix: classpath:templates/
@@ -32,8 +15,3 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
-
-  data:
-    redis:
-      host: localhost
-      port: 6379

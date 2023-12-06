@@ -83,6 +83,7 @@ public class RouteService {
             List<RouteDTO> routeDTOS = new ArrayList<>();
 
             Long id = 0L;
+
             for (Object full : fullRoutes) {
                 JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
                 Long totalTime = (Long) route.get("totalTime");
