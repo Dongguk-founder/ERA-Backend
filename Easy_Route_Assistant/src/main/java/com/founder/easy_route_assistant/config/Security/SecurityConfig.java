@@ -39,9 +39,6 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers(new AntPathRequestMatcher("/user/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/convenient/**")).permitAll()
-
-                        .requestMatchers(new AntPathRequestMatcher("/transfer/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, redisTemplate), UsernamePasswordAuthenticationFilter.class);
