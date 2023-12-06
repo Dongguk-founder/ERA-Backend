@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ExcelRepository extends JpaRepository<ExcelEntity, Long> {
     public List<ExcelEntity> findAllByStationName(String stationName);
+    public ExcelEntity findByStationCode(String stationCode);
 }
