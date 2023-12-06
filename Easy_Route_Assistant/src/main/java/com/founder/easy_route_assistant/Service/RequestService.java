@@ -35,8 +35,7 @@ public class RequestService {
                 () -> new IllegalArgumentException("가입되지 않은 사용자입니다.")
         );
 
-        RequestEntity requestEntity = RequestEntity
-                .builder()
+        RequestEntity requestEntity = RequestEntity.builder()
                 .convenientType(requestDTO.getConvenientType())
                 .point(requestDTO.getPoint())
                 .content(requestDTO.getContent())
