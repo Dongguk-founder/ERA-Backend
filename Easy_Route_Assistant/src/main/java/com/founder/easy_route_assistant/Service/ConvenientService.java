@@ -1,4 +1,4 @@
-package com.founder.easy_route_assistant.Service.Convenient;
+package com.founder.easy_route_assistant.Service;
 
 import com.founder.easy_route_assistant.DTO.Convenient.BathroomDTO;
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;

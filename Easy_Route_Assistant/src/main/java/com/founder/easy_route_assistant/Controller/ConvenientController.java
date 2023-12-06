@@ -1,14 +1,14 @@
 package com.founder.easy_route_assistant.Controller;
 
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientListDTO;
-import com.founder.easy_route_assistant.Service.Convenient.ConvenientService;
+import com.founder.easy_route_assistant.Service.ConvenientService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping(value="/convenient")
 public class ConvenientController {

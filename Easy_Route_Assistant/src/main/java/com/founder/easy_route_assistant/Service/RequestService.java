@@ -7,7 +7,6 @@ import com.founder.easy_route_assistant.Entity.RequestEntity;
 import com.founder.easy_route_assistant.Entity.UserEntity;
 import com.founder.easy_route_assistant.Repository.RequestRepository;
 import com.founder.easy_route_assistant.Repository.UserRepository;
-import com.founder.easy_route_assistant.Service.Convenient.ConvenientService;
 import com.founder.easy_route_assistant.config.token.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
