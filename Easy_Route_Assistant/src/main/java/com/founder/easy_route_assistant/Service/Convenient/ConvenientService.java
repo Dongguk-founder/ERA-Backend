@@ -27,10 +27,12 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Primary
+
 @Service
 @RequiredArgsConstructor
 public class ConvenientService {
+
+    private final ConvenientRepository convenientRepository;
 
     @Value("${SEOUL_URL}")
     private String SEOUL_URL;
@@ -45,10 +47,6 @@ public class ConvenientService {
 
     @Value("${BATHROOM_APPKEY}")
     private String BATHROOM_APPKEY;
-
-    private final ConvenientRepository convenientRepository;
-
-
 
     public void update(ConvenientDTO convenientDTO) {
         ConvenientEntity convenientEntity = convenientRepository.findByPoint(convenientDTO.getPoint());
