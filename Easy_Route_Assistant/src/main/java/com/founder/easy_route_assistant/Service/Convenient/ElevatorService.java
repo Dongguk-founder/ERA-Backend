@@ -19,7 +19,6 @@ import java.util.regex.Pattern;
 
 
 @Service
-@Primary
 @RequiredArgsConstructor
 public class ElevatorService {
 

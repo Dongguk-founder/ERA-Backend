@@ -8,17 +8,18 @@ import com.founder.easy_route_assistant.Repository.ConvenientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Primary
 @Service
 @RequiredArgsConstructor
 public class ConvenientService {
 
     private final ConvenientRepository convenientRepository;
-
     private final ElevatorService elevatorService;
     private final ChargerService chargerService;
     private final BathroomService bathroomService;
