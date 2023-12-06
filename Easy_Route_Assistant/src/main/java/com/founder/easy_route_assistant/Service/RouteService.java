@@ -82,6 +82,7 @@ public class RouteService {
             List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
+
             try {
                 for (Object full : fullRoutes) {
                     JSONObject route = (JSONObject) full; // 모든 경로 검색 결과

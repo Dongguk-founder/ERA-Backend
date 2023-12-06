@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2d6dac9-f6d9-4d79-ad42-8152adc9953e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Controller/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/Security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/config/Security/SecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -82,16 +82,18 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "fix/subwayRoute",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Global Libraries",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.28444445",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -101,17 +103,6 @@
   }
 }]]></component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="EasyRouteAssistantApplication.local" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <option name="ACTIVE_PROFILES" value="local" />
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
@@ -124,9 +115,11 @@
         <env name="ELEVATOR_URL" value="http://openapi.seoul.go.kr:8088/" />
         <env name="ELEVATOR_APPKEY" value="6d7448626868656f373565645a6d7a" />
         <env name="TRANSFETMOVEMENT_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement?" />
-        <env name="TRANSFETMOVEMENT_APPKEY" value="$2a$10$gUcQG2E3kqa0Ozj/5icaBeMY/hEAd9BGYGEsdQ.pPi91GMSjo6I3q" />
-        <env name="PATHINFO_URL" value="http://ws.bus.go.kr/api/rest/pathinfo/getPathInfoByBusNSub" />
-        <env name="PATHINFO_APPKEY" value="%2FsMe1iHKpeiPqZqaYoMtKa7ukKox8SUhXep3UNzDKDZiAxrivzp5AnF7%2BI9f5Q%2B%2F16q8Ii6LHbj2mnspHxs72Q%3D%3D" />
+        <env name="TMAP_URL" value="https://apis.openapi.sk.com/transit/routes" />
+        <env name="TMAP_APPKEY" value="e8wHh2tya84M88aReEpXCa5XTQf3xgo01aZG39k5" />
+        <env name="SUBWAYTRANSFER_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement" />
+        <env name="SUBWAYENEX_URL" value=" https://openapi.kric.go.kr/openapi/handicapped/stationMovement" />
+        <env name="SUBWAY_KEY" value=" $2a$10$a/.Cn3ik/SbSnsjtoRpoD.A1kMEztIApTCK5nVkDuf4Iq49LL6x56" />
       </envs>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="Easy_Route_Assistant.main" />
@@ -135,6 +128,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-17.0.9-corretto-17.0.9-3183f394aec4-5f3ff201" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -147,6 +147,7 @@
       <workItem from="1701739731404" duration="1494000" />
       <workItem from="1701745626498" duration="1605000" />
       <workItem from="1701747237106" duration="14702000" />
+      <workItem from="1701884235838" duration="226000" />
     </task>
     <servers />
   </component>
