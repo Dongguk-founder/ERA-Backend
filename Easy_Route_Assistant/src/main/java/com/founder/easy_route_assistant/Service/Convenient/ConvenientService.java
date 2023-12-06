@@ -6,6 +6,8 @@ import com.founder.easy_route_assistant.DTO.Convenient.ConvenientListDTO;
 import com.founder.easy_route_assistant.Entity.ConvenientEntity;
 import com.founder.easy_route_assistant.Repository.ConvenientRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ import java.util.List;
 public class ConvenientService {
 
     private final ConvenientRepository convenientRepository;
+
     private final ElevatorService elevatorService;
     private final ChargerService chargerService;
     private final BathroomService bathroomService;

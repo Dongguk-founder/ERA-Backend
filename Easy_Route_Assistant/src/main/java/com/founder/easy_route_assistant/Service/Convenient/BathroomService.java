@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Service.Convenient;
 
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BathroomService {
     @Value("${BATHROOM_URL}")
     private String BATHROOM_URL;

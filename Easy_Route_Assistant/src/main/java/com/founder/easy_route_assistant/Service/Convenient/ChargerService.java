@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Service.Convenient;
 
 import com.founder.easy_route_assistant.DTO.Convenient.ConvenientDTO;
+import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +17,7 @@ import org.springframework.web.util.DefaultUriBuilderFactory;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class ChargerService {
     @Value("${SEOUL_URL}")
     private String SEOUL_URL;
