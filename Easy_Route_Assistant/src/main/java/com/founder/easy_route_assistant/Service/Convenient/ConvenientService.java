@@ -279,7 +279,7 @@ public class ConvenientService {
 
         String getstring = webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(SEOUL_APPKEY)
+                        .path(SEOUL_KEY)
                         .path("/json/tbElecWheelChrCharge/1/500/")
                         .build())
                 .retrieve()
