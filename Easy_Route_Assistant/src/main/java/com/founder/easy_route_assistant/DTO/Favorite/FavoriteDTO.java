@@ -5,7 +5,8 @@ import org.springframework.data.geo.Point;
 
 @Getter @Setter
 @NoArgsConstructor
-@AllArgsConstructor @Builder
+@AllArgsConstructor
+@Builder
 @ToString
 public class FavoriteDTO {
     private Long id;

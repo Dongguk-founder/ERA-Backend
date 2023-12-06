@@ -22,12 +22,8 @@ public class FavoriteController {
     public ResponseEntity<FavoriteDTO> saveFavorite(@RequestHeader String jwt, @RequestBody FavoriteDTO favoriteDTO){
 
         JSONObject res = new JSONObject();
-
         String userId = jwtProvider.getUserID(jwt);
-
         FavoriteDTO dto = favoriteService.savefavorite(userId, favoriteDTO);
-
-
         return ResponseEntity.ok().body(dto);
     }
 
@@ -36,8 +32,6 @@ public class FavoriteController {
 
         String userId = jwtProvider.getUserID(jwt);
         FaviriteListDTO favoriteList = favoriteService.getFavoriteList(userId);
-
-
         if (!favoriteList.getFavoriteList().isEmpty()) {
             return ResponseEntity.status(HttpStatus.OK).body(favoriteList);
         } else {
@@ -48,10 +42,15 @@ public class FavoriteController {
 
     @DeleteMapping(value = "/delete/{favoriteId}")
     public ResponseEntity<FaviriteListDTO> deleteFavorite(@RequestHeader String jwt, @PathVariable Long favoriteId) {
+
         String userId = jwtProvider.getUserID(jwt);
         favoriteService.deleteFavorite(favoriteId);
         FaviriteListDTO favoriteList = favoriteService.getFavoriteList(userId);
-        return ResponseEntity.ok().body(favoriteList);
+        if(!favoriteList.getFavoriteList().isEmpty()){
+            return ResponseEntity.ok().body(favoriteList);
+        }else {
+            return ResponseEntity.noContent().build();
+        }
     }
 
 
