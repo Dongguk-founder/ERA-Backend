@@ -9,6 +9,4 @@ import org.springframework.data.geo.Point;
 public class RouteRequestDTO {
     private Point start;
     private Point end;
-    private String startName;
-    private String endName;
 }

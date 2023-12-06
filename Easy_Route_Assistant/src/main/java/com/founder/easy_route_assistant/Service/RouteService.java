@@ -49,9 +49,6 @@ public class RouteService {
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
-        String departure = routeRequestDTO.getStartName();
-        String destination = routeRequestDTO.getEndName();
-
         String startX = String.valueOf(routeRequestDTO.getStart().getX());
         String startY = String.valueOf(routeRequestDTO.getStart().getY());
         String endX = String.valueOf(routeRequestDTO.getEnd().getX());
@@ -106,6 +103,9 @@ public class RouteService {
                     String endName = (String) end.get("name");
                     String routeColor = (String) element.get("routeColor"); // BUS, SUBWAY
                     String name = (String) element.get("route"); // 버스 번호, 지하철 호선
+                    /*if (mode.equals("SUBWAY")) { // name = 지하철 방향
+
+                    }*/
 
                     RouteElementDTO elementDTO = RouteElementDTO.builder()
                             .start(startName)
@@ -117,14 +117,6 @@ public class RouteService {
 
                     singleRoute.add(elementDTO);
                 }
-                RouteElementDTO firstElement = singleRoute.get(0);
-                RouteElementDTO lastElement = singleRoute.get(singleRoute.size()-1);
-                firstElement.setStart(departure);
-                lastElement.setEnd(destination);
-                RouteElementDTO realLast = RouteElementDTO.builder()
-                        .start(destination)
-                        .build();
-                singleRoute.add(realLast);
 
                 RouteDTO routeDTO = RouteDTO.builder()
                         .id(id++)
