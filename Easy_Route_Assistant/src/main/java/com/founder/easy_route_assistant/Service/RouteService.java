@@ -49,6 +49,9 @@ public class RouteService {
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
         OkHttpClient client = new OkHttpClient();
 
+        String departure = routeRequestDTO.getStartName();
+        String destination = routeRequestDTO.getEndName();
+
         String startX = String.valueOf(routeRequestDTO.getStart().getX());
         String startY = String.valueOf(routeRequestDTO.getStart().getY());
         String endX = String.valueOf(routeRequestDTO.getEnd().getX());
@@ -93,12 +96,14 @@ public class RouteService {
                 for (Object r : routes) {
                     JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
 
+                    String mode = (String) element.get("mode");
+                    if (mode.equals("WALK")) continue;
+
                     JSONObject start = (JSONObject) element.get("start");
                     JSONObject end = (JSONObject) element.get("end");
 
                     String startName = (String) start.get("name");
                     String endName = (String) end.get("name");
-                    String mode = (String) element.get("mode");
                     String routeColor = (String) element.get("routeColor"); // BUS, SUBWAY
                     String name = (String) element.get("route"); // 버스 번호, 지하철 호선
 
@@ -112,6 +117,14 @@ public class RouteService {
 
                     singleRoute.add(elementDTO);
                 }
+                RouteElementDTO firstElement = singleRoute.get(0);
+                RouteElementDTO lastElement = singleRoute.get(singleRoute.size()-1);
+                firstElement.setStart(departure);
+                lastElement.setEnd(destination);
+                RouteElementDTO realLast = RouteElementDTO.builder()
+                        .start(destination)
+                        .build();
+                singleRoute.add(realLast);
 
                 RouteDTO routeDTO = RouteDTO.builder()
                         .id(id++)
@@ -120,10 +133,8 @@ public class RouteService {
                         .build();
                 routeDTOS.add(routeDTO);
 
-                /*Map<Long, Object> data = new HashMap<>();
-                data.put(routeDTO.getId(), routeDTO);*/
-                String jsonString = new ObjectMapper().writeValueAsString(routeDTO);
-                routeRepository.save(routeDTO.getId(), jsonString);
+                // String jsonString = new ObjectMapper().writeValueAsString(routeDTO);
+                // routeRepository.save(routeDTO.getId(), jsonString);
             }
             fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
