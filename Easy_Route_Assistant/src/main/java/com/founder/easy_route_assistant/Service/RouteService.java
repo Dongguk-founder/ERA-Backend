@@ -1,10 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.founder.easy_route_assistant.DTO.Route.RouteDTO;
-import com.founder.easy_route_assistant.DTO.Route.RouteElementDTO;
-import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
-import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
+import com.founder.easy_route_assistant.DTO.Route.*;
 import com.founder.easy_route_assistant.Entity.ExcelEntity;
 import com.founder.easy_route_assistant.Repository.ExcelRepository;
 import com.founder.easy_route_assistant.Repository.RouteRepository;
@@ -79,54 +76,104 @@ public class RouteService {
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
             RouteDTOList fullRoute = new RouteDTOList();
+            RouteDTOList fullRoute_ = new RouteDTOList();
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
+            List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
 
-            for (Object full : fullRoutes) {
-                JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
-                Long totalTime = (Long) route.get("totalTime");
+            try {
+                for (Object full : fullRoutes) {
+                    JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
+                    Long totalTime = (Long) route.get("totalTime");
 
-                List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
+                    List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
+                    List<RouteElementDTO> singleRoute_ = new ArrayList<>();
 
-                JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
-                for (Object r : routes) {
-                    JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
+                    JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
+                    for (Object r : routes) {
+                        JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
 
-                    JSONObject start = (JSONObject) element.get("start");
-                    JSONObject end = (JSONObject) element.get("end");
+                        JSONObject start = (JSONObject) element.get("start");
+                        JSONObject end = (JSONObject) element.get("end");
 
-                    String startName = (String) start.get("name");
-                    String endName = (String) end.get("name");
-                    String mode = (String) element.get("mode");
-                    String routeColor = (String) element.get("routeColor"); // BUS, SUBWAY
-                    String name = (String) element.get("route"); // 버스 번호, 지하철 호선
+                        String startName = (String) start.get("name");
+                        String endName = (String) end.get("name");
+                        String routeColor = (String) element.get("routeColor"); // BUS, SUBWAY
+                        String mode = (String) element.get("mode");
+                        Long distance = (Long) element.get("distance");
+                        Long sectionTime = (Long) element.get("sectionTime");
+                        String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
+                        String line = null;
+                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
+                            List<String> startStationCodes = getStationCode(startName, name);
+                            List<String> endStationCodes = getStationCode(endName, name);
 
-                    RouteElementDTO elementDTO = RouteElementDTO.builder()
-                            .start(startName)
-                            .end(endName)
-                            .mode(mode)
-                            .routeColor(routeColor)
-                            .name(name)
+                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
+                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
+                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
+                            String after;
+                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
+                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
+                            }
+                            else {
+                                after = String.valueOf(dif);
+                            }
+                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
+                            if (excelEntity == null) {
+                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
+                                excelEntity = excelRepository.findByStationCode(after);
+                            }
+                            name = excelEntity.getStationName();
+                            line = startStationCodes.get(2);
+                        }
+
+                        RouteElementDTO elementDTO = RouteElementDTO.builder()
+                                .start(startName)
+                                .end(endName)
+                                .mode(mode)
+                                .routeColor(routeColor)
+                                .name(name)
+                                .line(line)
+                                .distance(distance)
+                                .sectionTime(sectionTime)
+                                .build();
+
+                        if (mode.equals("WALK")) {
+                            singleRoute_.add(elementDTO);
+                            continue;
+                        }
+                        singleRoute.add(elementDTO);
+                        singleRoute_.add(elementDTO);
+                    }
+
+                    RouteElementDTO tmp = singleRoute.get(singleRoute.size()-1);
+                    RouteElementDTO lastElement = RouteElementDTO.builder()
+                            .start(tmp.getEnd())
+                            .routeColor(tmp.getRouteColor())
+                            .build();
+                    singleRoute.add(lastElement);
+
+                    RouteDTO routeDTO = RouteDTO.builder()
+                            .id(id)
+                            .totalTime(totalTime)
+                            .routeElements(singleRoute)
+                            .build();
+                    routeDTOS.add(routeDTO);
+                    RouteDTO routeDTO_ = RouteDTO.builder()
+                            .id(id++)
+                            .totalTime(totalTime)
+                            .routeElements(singleRoute_)
                             .build();
 
-                    singleRoute.add(elementDTO);
+                    String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
+                    routeRepository.save(routeDTO_.getId(), jsonString);
                 }
-
-                RouteDTO routeDTO = RouteDTO.builder()
-                        .id(id++)
-                        .totalTime(totalTime)
-                        .routeElements(singleRoute)
-                        .build();
-                routeDTOS.add(routeDTO);
-
-                /*Map<Long, Object> data = new HashMap<>();
-                data.put(routeDTO.getId(), routeDTO);*/
-                String jsonString = new ObjectMapper().writeValueAsString(routeDTO);
-                routeRepository.save(routeDTO.getId(), jsonString);
-            }
-            fullRoute.setRouteDTOS(routeDTOS);
+            } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
 
         } catch (ParseException e) {
@@ -135,7 +182,7 @@ public class RouteService {
     }
 
     // 상세 경로
-    public String mapRoute(Long id) {
+    public DetailRouteDTO mapRoute(Long id) {
         String strRoute = routeRepository.findById(id);
 
         JSONParser jsonParser = new JSONParser();
@@ -144,92 +191,158 @@ public class RouteService {
             obj = jsonParser.parse(strRoute);
             JSONObject route = (JSONObject) obj;
 
+            List<DetailElementDTO> detailElementDTOS = new ArrayList<>();
+
             Long totalTime = (Long) route.get("totalTime");
             JSONArray elements = (JSONArray) route.get("routeElements");
             for(int i=0; i<elements.size()-1; i++) {
                 JSONObject current = (JSONObject) elements.get(i);
-                JSONObject after = (JSONObject) elements.get(i+1);
 
+                DetailElementDTO detailElementDTO = DetailElementDTO.builder()
+                        .start((String) current.get("start"))
+                        .end((String) current.get("end"))
+                        .mode((String) current.get("mode"))
+                        .routeColor((String) current.get("routeColor"))
+                        .name((String) current.get("name"))
+                        .line((String) current.get("line"))
+                        .distance((Long) current.get("distance"))
+                        .sectionTime((Long) current.get("sectionTime"))
+                        .build();
+                detailElementDTOS.add(detailElementDTO);
+
+                JSONObject after = (JSONObject) elements.get(i + 1);
+
+                String modeCurrent = (String) current.get("mode");
                 String startCurrent = (String) current.get("start");
                 String endCurrent = (String) current.get("end");
-                String modeCurrent = (String) current.get("mode");
 
+                String modeAfter = (String) after.get("mode");
                 String startAfter = (String) after.get("start");
                 String endAfter = (String) after.get("end");
-                String modeAfter = (String) after.get("mode");
-                String lineAfter = (String) after.get("name");
+                String nameAfter = (String) after.get("name");
+                String lineAfter = (String) after.get("line");
 
-                // 출발지와 도착지 명이 같으면 지하철 환승
-                if (startCurrent.equals(endCurrent)) {
+                // 출발지==도착지, mode==WALK -> 지하철 환승
+                if (startCurrent.equals(endCurrent) && modeCurrent.equals("WALK")) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
-                    String endBefore = (String) before.get("end");
-                    String lineBefore = (String) before.get("name");
-                    List<String> codeBefore = getStationCode(endBefore, lineBefore); // railOprIsttCd, stinCd, lnCd
+                    String lineBefore = (String) before.get("line");
+                    // stinNm == startCurrent, endCurrent
+                    List<String> codesCurrent = getStationCode(startCurrent, lineBefore);
+                    String lnCd = codesCurrent.get(2);
+                    String stinCd = codesCurrent.get(1);
+                    String railOprIsttCd = codesCurrent.get(0);
 
-                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter);
-                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter); // X, chtnNextStinCd, chthTgtLn
-
-                    int tmp1 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
-                    tmp2 -= tmp1 - tmp2;
-                    String prevStinCd; // prevStinCd
-                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
-                        prevStinCd = codeEndAfter.get(1).charAt(0) + String.valueOf(tmp2);
-                    } else {
-                        prevStinCd = String.valueOf(tmp2);
+                    List<String> codesStartAfter = getStationCode(startAfter, lineAfter);
+                    List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
+                    String chthTgtLn = codesStartAfter.get(2);
+                    String chtnNextStinCd = codesNameAfter.get(1);
+                    int tmp1 = Integer.parseInt(codesStartAfter.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codesNameAfter.get(1).replaceAll("[^0-9]", ""));
+                    int prev = ((tmp2-tmp1)>0) ? tmp1-1 : tmp1+1;
+                    String prevStinCd;
+                    if (Character.isLetter(codesStartAfter.get(1).charAt(0))) {
+                        prevStinCd = codesStartAfter.get(1).charAt(0) + String.valueOf(prev);
+                    }
+                    else {
+                        prevStinCd = String.valueOf(prev);
                     }
 
-                    JSONObject transfer = getSubwayTransferRoute(codeBefore.get(2), codeBefore.get(1), codeBefore.get(0), codeEndAfter.get(2), prevStinCd, codeEndAfter.get(1));
+                    JSONObject transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(transfer)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\ntransfer route: " + transfer + "\n");
-                } else if (modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
-                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter); // opr, stin, line
-                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter);
+                } else if (!startCurrent.equals(endCurrent) && modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
+                    // 쟈철 들어가는 길
+                    List<String> codesStartAfter = getStationCode(startAfter, lineAfter);
+                    String lnCd = codesStartAfter.get(2);
+                    String stinCd = codesStartAfter.get(1);
+                    String railOprIsttCd = codesStartAfter.get(0);
 
-                    int tmp1 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp = ((tmp2-tmp1)>0) ? (tmp1+1) : (tmp1-1);
-                    String nextStinCd;
-                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
-                        nextStinCd = codeStartAfter.get(1).charAt(0) + String.valueOf(tmp);
-                    }
-                    else {
-                        nextStinCd = String.valueOf(tmp);
-                    }
+                    List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
+                    String nextStinCd = codesNameAfter.get(1);
 
-                    JSONObject enEx = getSubwayEnEx(codeStartAfter.get(2), codeStartAfter.get(1), codeStartAfter.get(0), nextStinCd);
+                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(enEx)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\nentranceInfo: " + enEx + "\n");
-                } else if (!(startAfter.equals(endAfter))&&(modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK"))) {
-                    String lineCurrent = (String) current.get("name");
-                    List<String> codeEndCurrent = getStationCode(endCurrent, lineCurrent);
-                    List<String> codeStartCurrent = getStationCode(startCurrent, lineCurrent);
-                    int tmp1 = Integer.parseInt(codeStartCurrent.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeEndCurrent.get(1).replaceAll("[^0-9]", ""));
-                    int tmp = ((tmp2-tmp1)>0) ? (tmp2+1) : (tmp2-1);
+                } else if (!startAfter.equals(endAfter) && modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK")) {
+                    // 쟈철 나가는 길
+                    String lineCurrent = (String) current.get("line");
+                    List<String> codesEndCurrent = getStationCode(endCurrent, lineCurrent);
+                    List<String> codesStartCurrent = getStationCode(startCurrent, lineCurrent);
+
+                    String lnCd = codesEndCurrent.get(2);
+                    String stinCd = codesEndCurrent.get(1);
+                    String railOprIsttCd = codesEndCurrent.get(0);
+
+                    int tmp1 = Integer.parseInt(codesEndCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codesStartCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp = ((tmp1-tmp2)>0) ? tmp1+1 : tmp1-1;
                     String nextStinCd;
-                    if (Character.isLetter(codeEndCurrent.get(1).charAt(0))) {
-                        nextStinCd = codeEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
+                    if (Character.isLetter(codesEndCurrent.get(1).charAt(0))) {
+                        nextStinCd = codesEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
                     }
                     else {
                         nextStinCd = String.valueOf(tmp);
                     }
-                    JSONObject enEx = getSubwayEnEx(codeEndCurrent.get(2), codeEndCurrent.get(1), codeEndCurrent.get(0), nextStinCd);
+
+                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(enEx)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\nexitInfo: " + enEx + "\n");
                 }
             }
 
+            JSONObject lastElement = (JSONObject) elements.get(elements.size()-1);
+            DetailElementDTO lastDetail = DetailElementDTO.builder()
+                    .start((String) lastElement.get("start"))
+                    .end((String) lastElement.get("end"))
+                    .mode((String) lastElement.get("mode"))
+                    .routeColor((String) lastElement.get("routeColor"))
+                    .name((String) lastElement.get("name"))
+                    .line((String) lastElement.get("line"))
+                    .distance((Long) lastElement.get("distance"))
+                    .sectionTime((Long) lastElement.get("sectionTime"))
+                    .build();
+            detailElementDTOS.add(lastDetail);
+
+            DetailRouteDTO detailRouteDTO = DetailRouteDTO.builder()
+                    .totalTime(totalTime)
+                    .detailElements(detailElementDTOS)
+                    .build();
+
+            return detailRouteDTO;
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
-        return "";
     }
 
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
+        // ex) stationNm = "옥수", lineNm = "3" or "수도권3호선"
         List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
         List<String> answer = new ArrayList<>();
         String opr_code, stationCode, lineCode;
         for (ExcelEntity o : excelEntities) {
-            if (lineNm.contains(o.getLineNum())) {
+            String lineNum = o.getLineNum();
+            if ((lineNum.length()>lineNm.length()) && o.getLineNum().contains(lineNm)) {
+                opr_code = o.getOpr_code();
+                stationCode = o.getStationCode();
+                lineCode = o.getLineCode();
+                answer.add(opr_code);
+                answer.add(stationCode);
+                answer.add(lineCode);
+                return answer;
+            } else if ((lineNum.length()<lineNm.length()) && lineNm.contains(lineNum)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
                 lineCode = o.getLineCode();

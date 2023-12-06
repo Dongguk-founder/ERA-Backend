@@ -35,6 +35,7 @@ public class UserService {
 
         if (userRepository.findById(userDTO.getUserID()).isPresent()) {
             System.out.println("아이디가 이미 존재합니다.");
+            return null;
         }
         String rawPwd = userDTO.getPwd();
         String encodedPwd = passwordEncoder.encode(rawPwd);

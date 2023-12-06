@@ -25,7 +25,12 @@ public class UserController {
     @PostMapping("/join")
     public ResponseEntity<UserDTO> join(@RequestBody UserDTO userDTO) {
         userDTO = userService.join(userDTO);
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
+        if (userDTO == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(userDTO);
+        }
     }
 
     // 로그인

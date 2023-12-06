@@ -8,7 +8,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor @Builder
 public class RouteDTOList {
-    /*private String start;
-    private String end;*/
     private List<RouteDTO> routeDTOS;
 }
