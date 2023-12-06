@@ -91,9 +91,9 @@ public class ConvenientService {
                     // .roadAddr(convenientEntity.getRoadAddr())
                     .description(convenientEntity.getDescription())
                     .point(convenientEntity.getPoint())
-                    .weekday(convenientEntity.getWeekday())
-                    .saturday(convenientEntity.getSaturday())
-                    .holiday(convenientEntity.getHoliday())
+                    .weekday("")
+                    .saturday("")
+                    .holiday("")
                     .build();
             convenientDTOS.add(convenientDTO);
         }
