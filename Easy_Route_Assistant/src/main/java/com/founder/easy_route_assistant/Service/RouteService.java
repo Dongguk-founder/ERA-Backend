@@ -79,8 +79,10 @@ public class RouteService {
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
             RouteDTOList fullRoute = new RouteDTOList();
+            RouteDTOList fullRoute_ = new RouteDTOList();
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
+            List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
             try {
@@ -89,13 +91,11 @@ public class RouteService {
                     Long totalTime = (Long) route.get("totalTime");
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
+                    List<RouteElementDTO> singleRoute_ = new ArrayList<>();
 
                     JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
                     for (Object r : routes) {
                         JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
-
-                        String mode = (String) element.get("mode");
-                        if (mode.equals("WALK")) continue;
 
                         JSONObject start = (JSONObject) element.get("start");
                         JSONObject end = (JSONObject) element.get("end");
@@ -103,6 +103,9 @@ public class RouteService {
                         String startName = (String) start.get("name");
                         String endName = (String) end.get("name");
                         String routeColor = (String) element.get("routeColor"); // BUS, SUBWAY
+                        String mode = (String) element.get("mode");
+                        Long distance = (Long) element.get("distance");
+                        Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
                         if (mode.equals("SUBWAY")) { // name = 지하철 방향
@@ -135,9 +138,16 @@ public class RouteService {
                                 .routeColor(routeColor)
                                 .name(name)
                                 .line(line)
+                                .distance(distance)
+                                .sectionTime(sectionTime)
                                 .build();
 
+                        if (mode.equals("WALK")) {
+                            singleRoute_.add(elementDTO);
+                            continue;
+                        }
                         singleRoute.add(elementDTO);
+                        singleRoute_.add(elementDTO);
                     }
 
                     RouteElementDTO tmp = singleRoute.get(singleRoute.size()-1);
@@ -148,14 +158,19 @@ public class RouteService {
                     singleRoute.add(lastElement);
 
                     RouteDTO routeDTO = RouteDTO.builder()
-                            .id(id++)
+                            .id(id)
                             .totalTime(totalTime)
                             .routeElements(singleRoute)
                             .build();
                     routeDTOS.add(routeDTO);
+                    RouteDTO routeDTO_ = RouteDTO.builder()
+                            .id(id++)
+                            .totalTime(totalTime)
+                            .routeElements(singleRoute_)
+                            .build();
 
-                    // String jsonString = new ObjectMapper().writeValueAsString(routeDTO);
-                    // routeRepository.save(routeDTO.getId(), jsonString);
+                    String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
+                    routeRepository.save(routeDTO_.getId(), jsonString);
                 }
             } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -177,6 +192,7 @@ public class RouteService {
         try {
             obj = jsonParser.parse(strRoute);
             JSONObject route = (JSONObject) obj;
+            System.out.println(route);
 
             Long totalTime = (Long) route.get("totalTime");
             JSONArray elements = (JSONArray) route.get("routeElements");
