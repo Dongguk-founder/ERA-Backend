@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.DTO.Route;
 
 import lombok.*;
+import org.json.simple.JSONObject;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -15,5 +16,5 @@ public class DetailElementDTO {
     private Long distance;
     private Long sectionTime;
 
-    private String description;
+    private JSONObject description;
 }

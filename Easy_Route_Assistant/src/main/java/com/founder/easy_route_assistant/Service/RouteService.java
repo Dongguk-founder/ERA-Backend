@@ -1,10 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.founder.easy_route_assistant.DTO.Route.RouteDTO;
-import com.founder.easy_route_assistant.DTO.Route.RouteElementDTO;
-import com.founder.easy_route_assistant.DTO.Route.RouteDTOList;
-import com.founder.easy_route_assistant.DTO.Route.RouteRequestDTO;
+import com.founder.easy_route_assistant.DTO.Route.*;
 import com.founder.easy_route_assistant.Entity.ExcelEntity;
 import com.founder.easy_route_assistant.Repository.ExcelRepository;
 import com.founder.easy_route_assistant.Repository.RouteRepository;
@@ -184,7 +181,7 @@ public class RouteService {
     }
 
     // 상세 경로
-    public String mapRoute(Long id) {
+    public DetailRouteDTO mapRoute(Long id) {
         String strRoute = routeRepository.findById(id);
 
         JSONParser jsonParser = new JSONParser();
@@ -192,12 +189,26 @@ public class RouteService {
         try {
             obj = jsonParser.parse(strRoute);
             JSONObject route = (JSONObject) obj;
-            System.out.println(route);
+
+            List<DetailElementDTO> detailElementDTOS = new ArrayList<>();
 
             Long totalTime = (Long) route.get("totalTime");
             JSONArray elements = (JSONArray) route.get("routeElements");
             for(int i=0; i<elements.size()-1; i++) {
                 JSONObject current = (JSONObject) elements.get(i);
+
+                DetailElementDTO detailElementDTO = DetailElementDTO.builder()
+                        .start((String) current.get("start"))
+                        .end((String) current.get("end"))
+                        .mode((String) current.get("mode"))
+                        .routeColor((String) current.get("routeColor"))
+                        .name((String) current.get("name"))
+                        .line((String) current.get("line"))
+                        .distance((Long) current.get("distance"))
+                        .sectionTime((Long) current.get("sectionTime"))
+                        .build();
+                detailElementDTOS.add(detailElementDTO);
+
                 JSONObject after = (JSONObject) elements.get(i + 1);
 
                 String modeCurrent = (String) current.get("mode");
@@ -236,6 +247,11 @@ public class RouteService {
                     }
 
                     JSONObject transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(transfer)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\ntransfer route: " + transfer + "\n");
                 } else if (!startCurrent.equals(endCurrent) && modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
                     // 쟈철 들어가는 길
@@ -248,6 +264,11 @@ public class RouteService {
                     String nextStinCd = codesNameAfter.get(1);
 
                     JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(enEx)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\nentranceInfo: " + enEx + "\n");
                 } else if (!startAfter.equals(endAfter) && modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK")) {
                     // 쟈철 나가는 길
@@ -271,15 +292,38 @@ public class RouteService {
                     }
 
                     JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    DetailElementDTO elevator = DetailElementDTO.builder()
+                            .mode("elevator")
+                            .description(enEx)
+                            .build();
+                    detailElementDTOS.add(elevator);
                     System.out.println("\nexitInfo: " + enEx + "\n");
                 }
             }
 
+            JSONObject lastElement = (JSONObject) elements.get(elements.size()-1);
+            DetailElementDTO lastDetail = DetailElementDTO.builder()
+                    .start((String) lastElement.get("start"))
+                    .end((String) lastElement.get("end"))
+                    .mode((String) lastElement.get("mode"))
+                    .routeColor((String) lastElement.get("routeColor"))
+                    .name((String) lastElement.get("name"))
+                    .line((String) lastElement.get("line"))
+                    .distance((Long) lastElement.get("distance"))
+                    .sectionTime((Long) lastElement.get("sectionTime"))
+                    .build();
+            detailElementDTOS.add(lastDetail);
+
+            DetailRouteDTO detailRouteDTO = DetailRouteDTO.builder()
+                    .totalTime(totalTime)
+                    .detailElements(detailElementDTOS)
+                    .build();
+
+            return detailRouteDTO;
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
-
-        return "";
     }
 
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
