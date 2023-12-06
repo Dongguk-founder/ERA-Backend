@@ -127,7 +127,7 @@ public class RouteService {
                                 after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
                                 excelEntity = excelRepository.findByStationCode(after);
                             }
-                            name = excelEntity.getStationName() + " 방면";
+                            name = excelEntity.getStationName();
                             line = startStationCodes.get(2);
                         }
 
@@ -198,71 +198,79 @@ public class RouteService {
             JSONArray elements = (JSONArray) route.get("routeElements");
             for(int i=0; i<elements.size()-1; i++) {
                 JSONObject current = (JSONObject) elements.get(i);
-                JSONObject after = (JSONObject) elements.get(i+1);
+                JSONObject after = (JSONObject) elements.get(i + 1);
 
+                String modeCurrent = (String) current.get("mode");
                 String startCurrent = (String) current.get("start");
                 String endCurrent = (String) current.get("end");
-                String modeCurrent = (String) current.get("mode");
 
+                String modeAfter = (String) after.get("mode");
                 String startAfter = (String) after.get("start");
                 String endAfter = (String) after.get("end");
-                String modeAfter = (String) after.get("mode");
-                String lineAfter = (String) after.get("name");
+                String nameAfter = (String) after.get("name");
+                String lineAfter = (String) after.get("line");
 
-                // 출발지와 도착지 명이 같으면 지하철 환승
-                if (startCurrent.equals(endCurrent)) {
+                // 출발지==도착지, mode==WALK -> 지하철 환승
+                if (startCurrent.equals(endCurrent) && modeCurrent.equals("WALK")) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
-                    String endBefore = (String) before.get("end");
-                    String lineBefore = (String) before.get("name");
-                    List<String> codeBefore = getStationCode(endBefore, lineBefore); // railOprIsttCd, stinCd, lnCd
+                    String lineBefore = (String) before.get("line");
+                    // stinNm == startCurrent, endCurrent
+                    List<String> codesCurrent = getStationCode(startCurrent, lineBefore);
+                    String lnCd = codesCurrent.get(2);
+                    String stinCd = codesCurrent.get(1);
+                    String railOprIsttCd = codesCurrent.get(0);
 
-                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter);
-                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter); // X, chtnNextStinCd, chthTgtLn
-
-                    int tmp1 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
-                    tmp2 -= tmp1 - tmp2;
-                    String prevStinCd; // prevStinCd
-                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
-                        prevStinCd = codeEndAfter.get(1).charAt(0) + String.valueOf(tmp2);
-                    } else {
-                        prevStinCd = String.valueOf(tmp2);
+                    List<String> codesStartAfter = getStationCode(startAfter, lineAfter);
+                    List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
+                    String chthTgtLn = codesStartAfter.get(2);
+                    String chtnNextStinCd = codesNameAfter.get(1);
+                    int tmp1 = Integer.parseInt(codesStartAfter.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codesNameAfter.get(1).replaceAll("[^0-9]", ""));
+                    int prev = ((tmp2-tmp1)>0) ? tmp1-1 : tmp1+1;
+                    String prevStinCd;
+                    if (Character.isLetter(codesStartAfter.get(1).charAt(0))) {
+                        prevStinCd = codesStartAfter.get(1).charAt(0) + String.valueOf(prev);
+                    }
+                    else {
+                        prevStinCd = String.valueOf(prev);
                     }
 
-                    JSONObject transfer = getSubwayTransferRoute(codeBefore.get(2), codeBefore.get(1), codeBefore.get(0), codeEndAfter.get(2), prevStinCd, codeEndAfter.get(1));
+                    JSONObject transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
                     System.out.println("\ntransfer route: " + transfer + "\n");
-                } else if (modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
-                    List<String> codeStartAfter = getStationCode(startAfter, lineAfter); // opr, stin, line
-                    List<String> codeEndAfter = getStationCode(endAfter, lineAfter);
+                } else if (!startCurrent.equals(endCurrent) && modeCurrent.equals("WALK") && modeAfter.equals("SUBWAY")) {
+                    // 쟈철 들어가는 길
+                    List<String> codesStartAfter = getStationCode(startAfter, lineAfter);
+                    String lnCd = codesStartAfter.get(2);
+                    String stinCd = codesStartAfter.get(1);
+                    String railOprIsttCd = codesStartAfter.get(0);
 
-                    int tmp1 = Integer.parseInt(codeStartAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeEndAfter.get(1).replaceAll("[^0-9]", ""));
-                    int tmp = ((tmp2-tmp1)>0) ? (tmp1+1) : (tmp1-1);
-                    String nextStinCd;
-                    if (Character.isLetter(codeEndAfter.get(1).charAt(0))) {
-                        nextStinCd = codeStartAfter.get(1).charAt(0) + String.valueOf(tmp);
-                    }
-                    else {
-                        nextStinCd = String.valueOf(tmp);
-                    }
+                    List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
+                    String nextStinCd = codesNameAfter.get(1);
 
-                    JSONObject enEx = getSubwayEnEx(codeStartAfter.get(2), codeStartAfter.get(1), codeStartAfter.get(0), nextStinCd);
+                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     System.out.println("\nentranceInfo: " + enEx + "\n");
-                } else if (!(startAfter.equals(endAfter))&&(modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK"))) {
-                    String lineCurrent = (String) current.get("name");
-                    List<String> codeEndCurrent = getStationCode(endCurrent, lineCurrent);
-                    List<String> codeStartCurrent = getStationCode(startCurrent, lineCurrent);
-                    int tmp1 = Integer.parseInt(codeStartCurrent.get(1).replaceAll("[^0-9]", ""));
-                    int tmp2 = Integer.parseInt(codeEndCurrent.get(1).replaceAll("[^0-9]", ""));
-                    int tmp = ((tmp2-tmp1)>0) ? (tmp2+1) : (tmp2-1);
+                } else if (!startAfter.equals(endAfter) && modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK")) {
+                    // 쟈철 나가는 길
+                    String lineCurrent = (String) current.get("line");
+                    List<String> codesEndCurrent = getStationCode(endCurrent, lineCurrent);
+                    List<String> codesStartCurrent = getStationCode(startCurrent, lineCurrent);
+
+                    String lnCd = codesEndCurrent.get(2);
+                    String stinCd = codesEndCurrent.get(1);
+                    String railOprIsttCd = codesEndCurrent.get(0);
+
+                    int tmp1 = Integer.parseInt(codesEndCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp2 = Integer.parseInt(codesStartCurrent.get(1).replaceAll("[^0-9]", ""));
+                    int tmp = ((tmp1-tmp2)>0) ? tmp1+1 : tmp1-1;
                     String nextStinCd;
-                    if (Character.isLetter(codeEndCurrent.get(1).charAt(0))) {
-                        nextStinCd = codeEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
+                    if (Character.isLetter(codesEndCurrent.get(1).charAt(0))) {
+                        nextStinCd = codesEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
                     }
                     else {
                         nextStinCd = String.valueOf(tmp);
                     }
-                    JSONObject enEx = getSubwayEnEx(codeEndCurrent.get(2), codeEndCurrent.get(1), codeEndCurrent.get(0), nextStinCd);
+
+                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     System.out.println("\nexitInfo: " + enEx + "\n");
                 }
             }
@@ -275,11 +283,21 @@ public class RouteService {
     }
 
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
+        // ex) stationNm = "옥수", lineNm = "3" or "수도권3호선"
         List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
         List<String> answer = new ArrayList<>();
         String opr_code, stationCode, lineCode;
         for (ExcelEntity o : excelEntities) {
-            if (lineNm.contains(o.getLineNum())) {
+            String lineNum = o.getLineNum();
+            if ((lineNum.length()>lineNm.length()) && o.getLineNum().contains(lineNm)) {
+                opr_code = o.getOpr_code();
+                stationCode = o.getStationCode();
+                lineCode = o.getLineCode();
+                answer.add(opr_code);
+                answer.add(stationCode);
+                answer.add(lineCode);
+                return answer;
+            } else if ((lineNum.length()<lineNm.length()) && lineNm.contains(lineNum)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
                 lineCode = o.getLineCode();
