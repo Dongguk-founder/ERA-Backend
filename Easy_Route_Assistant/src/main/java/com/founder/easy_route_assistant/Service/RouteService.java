@@ -105,28 +105,28 @@ public class RouteService {
                         Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
-                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
-                            List<String> startStationCodes = getStationCode(startName, name);
-                            List<String> endStationCodes = getStationCode(endName, name);
-
-                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
-                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
-                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
-                            String after;
-                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
-                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                            }
-                            else {
-                                after = String.valueOf(dif);
-                            }
-                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
-                            if (excelEntity == null) {
-                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                                excelEntity = excelRepository.findByStationCode(after);
-                            }
-                            name = excelEntity.getStationName();
-                            line = startStationCodes.get(2);
-                        }
+//                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
+//                            List<String> startStationCodes = getStationCode(startName, name);
+//                            List<String> endStationCodes = getStationCode(endName, name);
+//
+//                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
+//                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
+//                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
+//                            String after;
+//                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
+//                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
+//                            }
+//                            else {
+//                                after = String.valueOf(dif);
+//                            }
+//                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
+//                            if (excelEntity == null) {
+//                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
+//                                excelEntity = excelRepository.findByStationCode(after);
+//                            }
+//                            name = excelEntity.getStationName();
+//                            line = startStationCodes.get(2);
+//                        }
 
                         RouteElementDTO elementDTO = RouteElementDTO.builder()
                                 .start(startName)
@@ -169,7 +169,7 @@ public class RouteService {
                     String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
                     routeRepository.save(routeDTO_.getId(), jsonString);
                 }
-            } catch (ParseException e) {
+            } catch (Exception e) {
             throw new RuntimeException(e);
         }
         fullRoute.setRouteDTOS(routeDTOS);
@@ -340,7 +340,6 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
-                return answer;
             } else if ((lineNum.length()<lineNm.length()) && lineNm.contains(lineNum)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
@@ -348,11 +347,10 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
-                return answer;
             }
         }
 
-        return null;
+        return answer;
     }
 
     // 지하철 입출구
