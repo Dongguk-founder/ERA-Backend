@@ -76,25 +76,23 @@ public class RouteService {
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
             RouteDTOList fullRoute = new RouteDTOList();
+            RouteDTOList fullRoute_ = new RouteDTOList();
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
+            List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
-
             try {
                 for (Object full : fullRoutes) {
                     JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
-                    Long tempTime = (Long) route.get("totalTime");
-                    String totalTime = tempTime/60 + "분 " + tempTime % 60 + "초";
+                    Long totalTime = (Long) route.get("totalTime");
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
 
                     JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
-
-
                     for (Object r : routes) {
-                        JSONObject element = (JSONObject) r;// 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
+                        JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
 
                         JSONObject start = (JSONObject) element.get("start");
                         JSONObject end = (JSONObject) element.get("end");
@@ -107,35 +105,34 @@ public class RouteService {
                         Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
+                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
+                            List<String> startStationCodes = getStationCode(startName, name);
+                            List<String> endStationCodes = getStationCode(endName, name);
 
-//                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
-//                            List<String> startStationCodes = getStationCode(startName, name);
-//                            List<String> endStationCodes = getStationCode(endName, name);
-//
-//                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
-//                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
-//                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
-//                            String after;
-//                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
-//                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
-//                            }
-//                            else {
-//                                after = String.valueOf(dif);
-//                            }
-//                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
-//                            if (excelEntity == null) {
-//                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-//                                excelEntity = excelRepository.findByStationCode(after);
-//                            }
-//                            name = excelEntity.getStationName();
-//                            line = startStationCodes.get(2);
-//                        }
+                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
+                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
+                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
+                            String after;
+                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
+                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
+                            }
+                            else {
+                                after = String.valueOf(dif);
+                            }
+                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
+                            if (excelEntity == null) {
+                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
+                                excelEntity = excelRepository.findByStationCode(after);
+                            }
+                            name = excelEntity.getStationName();
+                            line = startStationCodes.get(2);
+                        }
 
                         RouteElementDTO elementDTO = RouteElementDTO.builder()
                                 .start(startName)
                                 .end(endName)
                                 .mode(mode)
-                                .routeColor("#"+routeColor)
+                                .routeColor(routeColor)
                                 .name(name)
                                 .line(line)
                                 .distance(distance)
@@ -171,13 +168,13 @@ public class RouteService {
 
                     String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
                     routeRepository.save(routeDTO_.getId(), jsonString);
-                    }
-
-            } catch (Exception e) {
+                }
+            } catch (ParseException e) {
             throw new RuntimeException(e);
         }
         fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
+
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -343,6 +340,7 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
+                return answer;
             } else if ((lineNum.length()<lineNm.length()) && lineNm.contains(lineNum)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
@@ -350,10 +348,11 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
+                return answer;
             }
         }
 
-        return answer;
+        return null;
     }
 
     // 지하철 입출구
