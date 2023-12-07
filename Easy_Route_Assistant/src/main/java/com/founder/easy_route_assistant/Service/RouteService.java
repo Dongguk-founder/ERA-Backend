@@ -76,17 +76,16 @@ public class RouteService {
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
             RouteDTOList fullRoute = new RouteDTOList();
-            RouteDTOList fullRoute_ = new RouteDTOList();
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
-            List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
 
             try {
                 for (Object full : fullRoutes) {
                     JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
-                    Long totalTime = (Long) route.get("totalTime");
+                    Long tempTime = (Long) route.get("totalTime");
+                    String totalTime = tempTime/60 + "분 " + tempTime % 60 + "초";
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
