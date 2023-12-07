@@ -8,6 +8,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor @Builder
 public class DetailRouteDTO {
-    private Long totalTime;
+    private String totalTime;
     private List<DetailElementDTO> detailElements;
 }

@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "bus")
-public class BusEntity {
+public class LowBusEntity {
     @Id
     String busnum;
     String routeid;
