@@ -244,7 +244,7 @@ public class ConvenientService {
                 String detail = (String) element.get("화장실 상세위치");
 
                 Point point = new Point(longitude, latitude);
-                String description = String.valueOf(lineNm.intValue()) + "호선, " + detail;
+                String description = String.valueOf(lineNm.intValue()) + "호선 " + detail;
 
                 ConvenientDTO bathroomDTO = ConvenientDTO.builder()
                         .convenientType("bathroom")
