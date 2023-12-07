@@ -85,7 +85,8 @@ public class RouteService {
             try {
                 for (Object full : fullRoutes) {
                     JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
-                    Long totalTime = (Long) route.get("totalTime");
+                    Long tempTime = (Long) route.get("totalTime");
+                    String totalTime = tempTime / 60 + "분" ;
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
@@ -132,7 +133,7 @@ public class RouteService {
                                 .start(startName)
                                 .end(endName)
                                 .mode(mode)
-                                .routeColor(routeColor)
+                                .routeColor("#"+routeColor)
                                 .name(name)
                                 .line(line)
                                 .distance(distance)
