@@ -225,7 +225,7 @@ public class RouteService {
                 String lineAfter = (String) after.get("line");
 
                 // 출발지==도착지, mode==WALK -> 지하철 환승
-                if (startCurrent.equals(endCurrent) && modeCurrent.equals("WALK")) {
+                if (startCurrent.equals(endCurrent) && modeAfter.equals("SUBWAY") && modeCurrent.equals("WALK")) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
                     String lineBefore = (String) before.get("line");
                     // stinNm == startCurrent, endCurrent
