@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -113,7 +114,7 @@ public class RouteService {
                             int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
                             int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
                             int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
-                            String after;
+                            String after; // 다음 역 코드
                             if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
                                 after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
                             }
@@ -121,18 +122,12 @@ public class RouteService {
                                 after = String.valueOf(dif);
                             }
                             List<ExcelEntity> excelEntity = excelRepository.findAllByStationCode(after);
-                            ExcelEntity target = new ExcelEntity();
                             for (ExcelEntity e : excelEntity) {
-                                if (e.getStationCode().equals(startStationCodes.get(0))) {
-                                    target = e;
+                                if (e.getOpr_code().equals(startStationCodes.get(0))) {
+                                    name = e.getStationName(); // name 즉, 다음 역에 대한 정보를 가져오지 못할 때는?
                                     break;
                                 }
                             }
-                            if (excelEntity == null) {
-                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                                excelEntity = excelRepository.findAllByStationCode(after);
-                            }
-                            name = target.getStationName();
                             line = startStationCodes.get(2);
                         }
 
@@ -269,6 +264,9 @@ public class RouteService {
                     String lnCd = codesStartAfter.get(2);
                     String stinCd = codesStartAfter.get(1);
                     String railOprIsttCd = codesStartAfter.get(0);
+
+                    System.out.println(current);
+                    System.out.println(after);
 
                     List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
                     String nextStinCd = codesNameAfter.get(1);
