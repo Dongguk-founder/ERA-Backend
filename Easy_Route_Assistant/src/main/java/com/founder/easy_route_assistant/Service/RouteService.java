@@ -73,6 +73,12 @@ public class RouteService {
         try {
             JSONObject object = (JSONObject) jsonParser.parse(jsonData);
             JSONObject fullObject = (JSONObject) object.get("metaData");
+            if (fullObject == null) {
+                JSONObject result = (JSONObject) object.get("result");
+                if ((Long) result.get("status") == 11L) {
+                    return null;
+                }
+            }
             row = (JSONObject) fullObject.get("plan");
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
