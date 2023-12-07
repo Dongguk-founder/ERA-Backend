@@ -257,7 +257,7 @@ public class RouteService {
                         prevStinCd = String.valueOf(prev);
                     }
 
-                    JSONObject transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
+                    JSONArray transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(transfer)
@@ -277,7 +277,7 @@ public class RouteService {
                     List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
                     String nextStinCd = codesNameAfter.get(1);
 
-                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    JSONArray enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(enEx)
@@ -305,7 +305,7 @@ public class RouteService {
                         nextStinCd = String.valueOf(tmp);
                     }
 
-                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    JSONArray enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(enEx)
@@ -373,7 +373,7 @@ public class RouteService {
     }
 
     // 지하철 입출구
-    private JSONObject getSubwayEnEx(String lnCd, String stinCd, String railOprIsttCd, String nextStinCd) throws ParseException {
+    private JSONArray getSubwayEnEx(String lnCd, String stinCd, String railOprIsttCd, String nextStinCd) throws ParseException {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYENEX_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -406,7 +406,8 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        JSONObject enExInfo = new JSONObject();
+        // JSONObject enExInfo = new JSONObject();
+        JSONArray enExInfo = new JSONArray();
         List<String> d = new ArrayList<>();
 
         int cnt = 1;
@@ -424,7 +425,8 @@ public class RouteService {
                 save.put("imgPath", imgPath);
                 save.put("descriptions", d);
 
-                enExInfo.put(String.valueOf(cnt++), save);
+                // enExInfo.put(String.valueOf(cnt++), save);
+                enExInfo.add(save);
                 d = new ArrayList<>();
             }
         }
@@ -435,13 +437,14 @@ public class RouteService {
         JSONObject lastSave = new JSONObject();
         lastSave.put("imgPath", lastImg);
         lastSave.put("descriptions", d);
-        enExInfo.put(String.valueOf(cnt), lastSave);
+        // enExInfo.put(String.valueOf(cnt), lastSave);
+        enExInfo.add(lastSave);
 
         return enExInfo;
     }
 
     // 지하철 환승
-    private JSONObject getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
+    private JSONArray getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYTRANSFER_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -476,10 +479,11 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        JSONObject transferInfo = new JSONObject();
+        // JSONObject transferInfo = new JSONObject();
+        JSONArray transferInfo = new JSONArray();
         List<String> d = new ArrayList<>();
 
-        int cnt = 1;
+        // int cnt = 1;
         for(int i=0; i<body.size()-1; i++) {
             JSONObject currentObj = (JSONObject) body.get(i);
 
@@ -494,7 +498,8 @@ public class RouteService {
                 save.put("imgPath", imgPath);
                 save.put("descriptions", d);
 
-                transferInfo.put(String.valueOf(cnt++), save);
+                // transferInfo.put(String.valueOf(cnt++), save);
+                transferInfo.add(save);
                 d = new ArrayList<>();
             }
         }
@@ -505,7 +510,7 @@ public class RouteService {
         JSONObject lastSave = new JSONObject();
         lastSave.put("imgPath", lastImg);
         lastSave.put("descriptions", d);
-        transferInfo.put(String.valueOf(cnt), lastSave);
+        transferInfo.add(lastSave);
 
         return transferInfo;
     }
