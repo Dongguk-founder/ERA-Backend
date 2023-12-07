@@ -197,6 +197,8 @@ public class RouteService {
             JSONArray elements = (JSONArray) route.get("routeElements");
             for(int i=0; i<elements.size()-1; i++) {
                 JSONObject current = (JSONObject) elements.get(i);
+                Long tempSectionTime = (Long) current.get("sectionTime");
+                String sectionTime = tempSectionTime / 60 + "분" ;
 
                 DetailElementDTO detailElementDTO = DetailElementDTO.builder()
                         .start((String) current.get("start"))
@@ -206,7 +208,7 @@ public class RouteService {
                         .name((String) current.get("name"))
                         .line((String) current.get("line"))
                         .distance((Long) current.get("distance"))
-                        .sectionTime((Long) current.get("sectionTime"))
+                        .sectionTime(sectionTime)
                         .build();
                 detailElementDTOS.add(detailElementDTO);
 
