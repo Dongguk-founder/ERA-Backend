@@ -181,7 +181,7 @@ public class ConvenientService {
                         }
                         count++;
                     }
-                    Point point = new Point(latitude, longtitude);
+                    Point point = new Point(longtitude, latitude);
 
                     ConvenientDTO elevatorDTO = ConvenientDTO.builder()
                             .convenientType("elevator")
