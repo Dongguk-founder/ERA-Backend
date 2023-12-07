@@ -331,6 +331,8 @@ public class RouteService {
 
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
         // ex) stationNm = "옥수", lineNm = "3" or "수도권3호선"
+
+        stationNm = stationNm.replaceAll("\\([^)]*\\)", "");
         List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
         List<String> answer = new ArrayList<>();
         String opr_code, stationCode, lineCode;
