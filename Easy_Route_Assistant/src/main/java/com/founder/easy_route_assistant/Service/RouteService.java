@@ -76,24 +76,30 @@ public class RouteService {
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
             RouteDTOList fullRoute = new RouteDTOList();
-            RouteDTOList fullRoute_ = new RouteDTOList();
 
             List<RouteDTO> routeDTOS = new ArrayList<>();
-            List<RouteDTO> routeDTOS_ = new ArrayList<>();
 
             Long id = 0L;
 
             try {
                 for (Object full : fullRoutes) {
                     JSONObject route = (JSONObject) full; // 모든 경로 검색 결과
-                    Long totalTime = (Long) route.get("totalTime");
+                    Long tempTime = (Long) route.get("totalTime");
+                    String totalTime = tempTime/60 + "분 " + tempTime % 60 + "초";
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
 
+                    //경로 저장할 리스트
+                    List<RouteElementDTO> routeElementDTOList = new ArrayList<>();
+
                     JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
+//                    ArrayList tempRoutes = (ArrayList) routes;
+//                    // r의 원소가 몇 번째인지 알아 내기 위한 i
+//                    for (int i = 0 ;  (ArrayList)routes.size(); i++) {
+//
                     for (Object r : routes) {
-                        JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
+                        JSONObject element = (JSONObject) r;// 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
 
                         JSONObject start = (JSONObject) element.get("start");
                         JSONObject end = (JSONObject) element.get("end");
@@ -106,28 +112,57 @@ public class RouteService {
                         Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
-                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
-                            List<String> startStationCodes = getStationCode(startName, name);
-                            List<String> endStationCodes = getStationCode(endName, name);
 
-                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
-                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
-                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
-                            String after;
-                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
-                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                            }
-                            else {
-                                after = String.valueOf(dif);
-                            }
-                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
-                            if (excelEntity == null) {
-                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                                excelEntity = excelRepository.findByStationCode(after);
-                            }
-                            name = excelEntity.getStationName();
-                            line = startStationCodes.get(2);
-                        }
+//                        if (i == 1) startName = endName;
+//
+//                        else {
+//                            //이전 객체의 end값과 현재 값의 start값을 비교
+//                            JSONObject pre = (JSONObject) routes.get(i-1);
+//                            JSONObject preEnd = (JSONObject) pre.get("end");
+//                            String preEndName = (String) preEnd.get("name");
+//                            String preRouteColor = (String) pre.get("routeColor"); // BUS, SUBWAY
+//                            String preMode = (String) pre.get("mode");
+//                            Long preDistance = (Long) pre.get("distance");
+//                            Long preSectionTime = (Long) pre.get("sectionTime");
+//                            String preName = (String) pre.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
+//                            String preLine = null;
+//
+//                            if (!preEndName.equals(startName)){
+//                                RouteElementDTO elementDTO = RouteElementDTO.builder()
+//                                        .start(preEndName)
+//                                        .mode(preMode)
+//                                        .routeColor(preRouteColor)
+//                                        .name(preName)
+//                                        .line(preLine)
+//                                        .distance(preDistance)
+//                                        .sectionTime(preSectionTime)
+//                                        .build();
+//                                routeElementDTOList.add(elementDTO);
+//                            }
+//
+//                        }
+//                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
+//                            List<String> startStationCodes = getStationCode(startName, name);
+//                            List<String> endStationCodes = getStationCode(endName, name);
+//
+//                            int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
+//                            int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
+//                            int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
+//                            String after;
+//                            if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
+//                                after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
+//                            }
+//                            else {
+//                                after = String.valueOf(dif);
+//                            }
+//                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
+//                            if (excelEntity == null) {
+//                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
+//                                excelEntity = excelRepository.findByStationCode(after);
+//                            }
+//                            name = excelEntity.getStationName();
+//                            line = startStationCodes.get(2);
+//                        }
 
                         RouteElementDTO elementDTO = RouteElementDTO.builder()
                                 .start(startName)
@@ -169,13 +204,13 @@ public class RouteService {
 
                     String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
                     routeRepository.save(routeDTO_.getId(), jsonString);
-                }
-            } catch (ParseException e) {
+                    }
+
+            } catch (Exception e) {
             throw new RuntimeException(e);
         }
         fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
-
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
@@ -341,7 +376,6 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
-                return answer;
             } else if ((lineNum.length()<lineNm.length()) && lineNm.contains(lineNum)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
@@ -349,11 +383,10 @@ public class RouteService {
                 answer.add(opr_code);
                 answer.add(stationCode);
                 answer.add(lineCode);
-                return answer;
             }
         }
 
-        return null;
+        return answer;
     }
 
     // 지하철 입출구
