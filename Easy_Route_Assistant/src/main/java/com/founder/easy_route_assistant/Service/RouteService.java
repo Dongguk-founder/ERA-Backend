@@ -120,12 +120,19 @@ public class RouteService {
                             else {
                                 after = String.valueOf(dif);
                             }
-                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
+                            List<ExcelEntity> excelEntity = excelRepository.findAllByStationCode(after);
+                            ExcelEntity target = new ExcelEntity();
+                            for (ExcelEntity e : excelEntity) {
+                                if (e.getStationCode().equals(startStationCodes.get(0))) {
+                                    target = e;
+                                    break;
+                                }
+                            }
                             if (excelEntity == null) {
                                 after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                                excelEntity = excelRepository.findByStationCode(after);
+                                excelEntity = excelRepository.findAllByStationCode(after);
                             }
-                            name = excelEntity.getStationName();
+                            name = target.getStationName();
                             line = startStationCodes.get(2);
                         }
 
