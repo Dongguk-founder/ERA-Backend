@@ -90,9 +90,16 @@ public class RouteService {
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
 
+                    //경로 저장할 리스트
+                    List<RouteElementDTO> routeElementDTOList = new ArrayList<>();
+
                     JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
+//                    ArrayList tempRoutes = (ArrayList) routes;
+//                    // r의 원소가 몇 번째인지 알아 내기 위한 i
+//                    for (int i = 0 ;  (ArrayList)routes.size(); i++) {
+//
                     for (Object r : routes) {
-                        JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
+                        JSONObject element = (JSONObject) r;// 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
 
                         JSONObject start = (JSONObject) element.get("start");
                         JSONObject end = (JSONObject) element.get("end");
@@ -105,6 +112,35 @@ public class RouteService {
                         Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
+
+//                        if (i == 1) startName = endName;
+//
+//                        else {
+//                            //이전 객체의 end값과 현재 값의 start값을 비교
+//                            JSONObject pre = (JSONObject) routes.get(i-1);
+//                            JSONObject preEnd = (JSONObject) pre.get("end");
+//                            String preEndName = (String) preEnd.get("name");
+//                            String preRouteColor = (String) pre.get("routeColor"); // BUS, SUBWAY
+//                            String preMode = (String) pre.get("mode");
+//                            Long preDistance = (Long) pre.get("distance");
+//                            Long preSectionTime = (Long) pre.get("sectionTime");
+//                            String preName = (String) pre.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
+//                            String preLine = null;
+//
+//                            if (!preEndName.equals(startName)){
+//                                RouteElementDTO elementDTO = RouteElementDTO.builder()
+//                                        .start(preEndName)
+//                                        .mode(preMode)
+//                                        .routeColor(preRouteColor)
+//                                        .name(preName)
+//                                        .line(preLine)
+//                                        .distance(preDistance)
+//                                        .sectionTime(preSectionTime)
+//                                        .build();
+//                                routeElementDTOList.add(elementDTO);
+//                            }
+//
+//                        }
 //                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
 //                            List<String> startStationCodes = getStationCode(startName, name);
 //                            List<String> endStationCodes = getStationCode(endName, name);
@@ -168,13 +204,13 @@ public class RouteService {
 
                     String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
                     routeRepository.save(routeDTO_.getId(), jsonString);
-                }
+                    }
+
             } catch (Exception e) {
             throw new RuntimeException(e);
         }
         fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
-
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

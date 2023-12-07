@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2d6dac9-f6d9-4d79-ad42-8152adc9953e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java" afterDir="false" />
     </list>
@@ -45,6 +44,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="feat/lowbus" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
@@ -83,9 +87,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Spring Boot.EasyRouteAssistantApplication.local.executor": "Debug",
+    "Spring Boot.EasyRouteAssistantApplication.local.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "feat/lowbus",
+    "git-widget-placeholder": "65f69460",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend/Easy_Route_Assistant/src/main/resources",
     "node.js.detected.package.eslint": "true",
@@ -197,13 +201,8 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java</url>
-          <line>330</line>
+          <line>366</line>
           <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java</url>
-          <line>111</line>
-          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
