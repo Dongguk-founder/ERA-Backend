@@ -19,6 +19,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,12 @@ public class RouteService {
         try {
             JSONObject object = (JSONObject) jsonParser.parse(jsonData);
             JSONObject fullObject = (JSONObject) object.get("metaData");
+            if (fullObject == null) {
+                JSONObject result = (JSONObject) object.get("result");
+                if ((Long) result.get("status") == 11L) {
+                    return null;
+                }
+            }
             row = (JSONObject) fullObject.get("plan");
             JSONArray fullRoutes = (JSONArray) row.get("itineraries");
 
@@ -113,19 +120,20 @@ public class RouteService {
                             int tmp1 = Integer.parseInt(startStationCodes.get(1).replaceAll("[^0-9]", ""));
                             int tmp2 = Integer.parseInt(endStationCodes.get(1).replaceAll("[^0-9]", ""));
                             int dif = ((tmp2-tmp1)>0) ? tmp1+1 : tmp1-1;
-                            String after;
+                            String after; // 다음 역 코드
                             if (Character.isLetter(startStationCodes.get(1).charAt(0))) {
                                 after = startStationCodes.get(1).charAt(0) + String.valueOf(dif);
                             }
                             else {
                                 after = String.valueOf(dif);
                             }
-                            ExcelEntity excelEntity = excelRepository.findByStationCode(after);
-                            if (excelEntity == null) {
-                                after = endStationCodes.get(1).charAt(0) + String.valueOf(dif);
-                                excelEntity = excelRepository.findByStationCode(after);
+                            List<ExcelEntity> excelEntity = excelRepository.findAllByStationCode(after);
+                            for (ExcelEntity e : excelEntity) {
+                                if (e.getOpr_code().equals(startStationCodes.get(0))) {
+                                    name = e.getStationName(); // name 즉, 다음 역에 대한 정보를 가져오지 못할 때는?
+                                    break;
+                                }
                             }
-                            name = excelEntity.getStationName();
                             line = startStationCodes.get(2);
                         }
 
@@ -225,7 +233,7 @@ public class RouteService {
                 String lineAfter = (String) after.get("line");
 
                 // 출발지==도착지, mode==WALK -> 지하철 환승
-                if (startCurrent.equals(endCurrent) && modeCurrent.equals("WALK")) {
+                if (startCurrent.equals(endCurrent) && modeAfter.equals("SUBWAY") && modeCurrent.equals("WALK")) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
                     String lineBefore = (String) before.get("line");
                     // stinNm == startCurrent, endCurrent
@@ -249,7 +257,7 @@ public class RouteService {
                         prevStinCd = String.valueOf(prev);
                     }
 
-                    JSONObject transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
+                    JSONArray transfer = getSubwayTransferRoute(lnCd, stinCd, railOprIsttCd, chthTgtLn, prevStinCd, chtnNextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(transfer)
@@ -263,10 +271,13 @@ public class RouteService {
                     String stinCd = codesStartAfter.get(1);
                     String railOprIsttCd = codesStartAfter.get(0);
 
+                    System.out.println(current);
+                    System.out.println(after);
+
                     List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
                     String nextStinCd = codesNameAfter.get(1);
 
-                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    JSONArray enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(enEx)
@@ -294,7 +305,7 @@ public class RouteService {
                         nextStinCd = String.valueOf(tmp);
                     }
 
-                    JSONObject enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
+                    JSONArray enEx = getSubwayEnEx(lnCd, stinCd, railOprIsttCd, nextStinCd);
                     DetailElementDTO elevator = DetailElementDTO.builder()
                             .mode("elevator")
                             .description(enEx)
@@ -362,7 +373,7 @@ public class RouteService {
     }
 
     // 지하철 입출구
-    private JSONObject getSubwayEnEx(String lnCd, String stinCd, String railOprIsttCd, String nextStinCd) throws ParseException {
+    private JSONArray getSubwayEnEx(String lnCd, String stinCd, String railOprIsttCd, String nextStinCd) throws ParseException {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYENEX_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -395,7 +406,8 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        JSONObject enExInfo = new JSONObject();
+        // JSONObject enExInfo = new JSONObject();
+        JSONArray enExInfo = new JSONArray();
         List<String> d = new ArrayList<>();
 
         int cnt = 1;
@@ -413,7 +425,8 @@ public class RouteService {
                 save.put("imgPath", imgPath);
                 save.put("descriptions", d);
 
-                enExInfo.put(String.valueOf(cnt++), save);
+                // enExInfo.put(String.valueOf(cnt++), save);
+                enExInfo.add(save);
                 d = new ArrayList<>();
             }
         }
@@ -424,13 +437,14 @@ public class RouteService {
         JSONObject lastSave = new JSONObject();
         lastSave.put("imgPath", lastImg);
         lastSave.put("descriptions", d);
-        enExInfo.put(String.valueOf(cnt), lastSave);
+        // enExInfo.put(String.valueOf(cnt), lastSave);
+        enExInfo.add(lastSave);
 
         return enExInfo;
     }
 
     // 지하철 환승
-    private JSONObject getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
+    private JSONArray getSubwayTransferRoute(String lnCd, String stinCd, String railOprIsttCd, String chthTgtLn, String prevStinCd, String chtnNextStinCd) throws ParseException {
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SUBWAYTRANSFER_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -465,10 +479,11 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        JSONObject transferInfo = new JSONObject();
+        // JSONObject transferInfo = new JSONObject();
+        JSONArray transferInfo = new JSONArray();
         List<String> d = new ArrayList<>();
 
-        int cnt = 1;
+        // int cnt = 1;
         for(int i=0; i<body.size()-1; i++) {
             JSONObject currentObj = (JSONObject) body.get(i);
 
@@ -483,7 +498,8 @@ public class RouteService {
                 save.put("imgPath", imgPath);
                 save.put("descriptions", d);
 
-                transferInfo.put(String.valueOf(cnt++), save);
+                // transferInfo.put(String.valueOf(cnt++), save);
+                transferInfo.add(save);
                 d = new ArrayList<>();
             }
         }
@@ -494,7 +510,7 @@ public class RouteService {
         JSONObject lastSave = new JSONObject();
         lastSave.put("imgPath", lastImg);
         lastSave.put("descriptions", d);
-        transferInfo.put(String.valueOf(cnt), lastSave);
+        transferInfo.add(lastSave);
 
         return transferInfo;
     }

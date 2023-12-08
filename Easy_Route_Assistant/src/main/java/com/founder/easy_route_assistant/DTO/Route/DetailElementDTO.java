@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.DTO.Route;
 
 import lombok.*;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 @Getter @Setter
@@ -16,5 +17,5 @@ public class DetailElementDTO {
     private Long distance;
     private String sectionTime;
 
-    private JSONObject description;
+    private JSONArray description;
 }
