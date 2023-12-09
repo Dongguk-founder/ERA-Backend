@@ -4,6 +4,7 @@ import com.founder.easy_route_assistant.DTO.RealTimeParamDTO;
 import com.founder.easy_route_assistant.Entity.BusStationEntity;
 import com.founder.easy_route_assistant.Repository.BusStationRepository;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +34,7 @@ public class BusStationService {
     private String REALTIMEBUS_KEY;
 
 
-    public void getRealtimeBusData(Integer stId, Integer busRouteId, Integer ord) throws IOException {
+    public List<String> getRealtimeBusData(Integer stId, Integer busRouteId, Integer ord) throws IOException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(REALTIMEBUS_URL);
@@ -47,6 +49,8 @@ public class BusStationService {
         conn.setRequestProperty("Content-Type", "application/xml");
         conn.setRequestMethod("GET");
 
+        // return값 관리
+        List<String> arrmsgList = new ArrayList<>();
 
         // 응답 코드 확인
         int responseCode = conn.getResponseCode();
@@ -61,25 +65,38 @@ public class BusStationService {
                 st.append(line);
             }
 
+
             // JSON데이터로 변환
             JSONObject jsonObject = XML.toJSONObject(st.toString());
-            JSONObject itemList = jsonObject.getJSONObject("ServiceResult").getJSONObject("msgBody").getJSONObject("itemList");
-            //첫번째 도착예정 버스의 도착정보메시지 2분44초후[0번째 전]
-            String arrmsg1 = itemList.getString("arrmsg1");
-            //두번째 도착예정 버스의 도착정보메시지 12분35초후[7번째 전]
-            String arrmsg2 = itemList.getString("arrmsg2");
-            //첫번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
-            int busType1 = itemList.getInt("busType1");
-            //두번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
-            int busType2 = itemList.getInt("busType2");
+            try {
+                JSONObject itemList = jsonObject.getJSONObject("ServiceResult").getJSONObject("msgBody").getJSONObject("itemList");
+                //첫번째 도착예정 버스의 도착정보메시지 2분44초후[0번째 전]
+                String arrmsg1 = itemList.getString("arrmsg1");
+                //두번째 도착예정 버스의 도착정보메시지 12분35초후[7번째 전]
+                String arrmsg2 = itemList.getString("arrmsg2");
+                //첫번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
+                int busType1 = itemList.getInt("busType1");
+                //두번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
+                int busType2 = itemList.getInt("busType2");
+                // 첫번째 도착예정 버스가 일반버스면 없다고 판단
+                if (busType1 == 0) arrmsg1 = null;
+                // 첫번째 도착예정 버스가 일반버스면 없다고 판단
+                if (busType2 == 0) arrmsg2 = null;
 
-            // 이제 xmlResponse를 원하는 방식으로 처리하면 됩니다.
-            // 예: XML 파싱, 객체로 매핑 등
-            System.out.println("JSON Response:\n" + busType1);
+                arrmsgList.add(arrmsg1);
+                arrmsgList.add(arrmsg2);
+
+                System.out.println("JSON Response:\n" + busType1);
+                System.out.println("JSON Response:\n" + busType2);
+            }catch (JSONException e){
+                System.out.println("제공하지 않는 버스입니다.");
+                e.printStackTrace();
+            }
         } else {
             // 오류 처리
             System.out.println("HTTP Request Failed with response code: " + responseCode);
         }
+        return arrmsgList;
     }
 
     //busRouteId : 노선 ID - 버스 번호 고유 아이디
@@ -123,6 +140,7 @@ public class BusStationService {
     }
 
     public RealTimeParamDTO getAllParam(String busName, String stName){
+        busName = busName.substring(3);
         Optional<BusStationEntity> temp = busStationRepository.findByBusNameAndStName(busName,stName);
         RealTimeParamDTO realTimeParamDTO = null;
         if(temp.isPresent()){
