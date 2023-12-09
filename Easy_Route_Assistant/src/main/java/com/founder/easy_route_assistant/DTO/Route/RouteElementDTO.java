@@ -14,6 +14,4 @@ public class RouteElementDTO {
     private String line; // bus: null, subway: n호선의 n
     private Long distance;
     private Long sectionTime;
-    private String arrmsg1;
-    private String arrmsg2;
 }

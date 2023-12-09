@@ -15,6 +15,8 @@ public class DetailElementDTO {
     private String line; // bus: null, subway: n호선의 n
     private Long distance;
     private String sectionTime;
+    private String arrmsg1;
+    private String arrmsg2;
 
     private JSONArray description;
 }
