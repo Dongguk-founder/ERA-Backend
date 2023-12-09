@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.founder.easy_route_assistant.DTO.RealTimeParamDTO;
 import com.founder.easy_route_assistant.DTO.Route.*;
 import com.founder.easy_route_assistant.Entity.ExcelEntity;
 import com.founder.easy_route_assistant.Repository.ExcelRepository;
@@ -19,7 +20,6 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,7 @@ public class RouteService {
 
     private final RouteRepository routeRepository;
     private final ExcelRepository excelRepository;
+    private final BusStationService busStationService;
 
     // 요약 경로
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
@@ -97,7 +98,7 @@ public class RouteService {
 
                     List<RouteElementDTO> singleRoute = new ArrayList<>(); // 하나의 경로
                     List<RouteElementDTO> singleRoute_ = new ArrayList<>();
-
+                    RouteElementDTO elementDTO = new RouteElementDTO();
                     JSONArray routes = (JSONArray) route.get("legs"); // 모든 경로 중 하나
                     for (Object r : routes) {
                         JSONObject element = (JSONObject) r; // 각 경로 속 세부 요소(ex. 도보, 버스, 지하철)
@@ -135,20 +136,52 @@ public class RouteService {
                                 }
                             }
                             line = startStationCodes.get(2);
+
+                            elementDTO = RouteElementDTO.builder()
+                                    .start(startName)
+                                    .end(endName)
+                                    .mode(mode)
+                                    .routeColor("#"+routeColor)
+                                    .name(name)
+                                    .line(line)
+                                    .distance(distance)
+                                    .sectionTime(sectionTime)
+                                    .build();
+
+                        }else if (mode.equals("BUS")) {
+                            RealTimeParamDTO temp = busStationService.getAllParam(name,startName);
+                            if (temp != null){
+                                List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(),temp.getBusRouteId(),temp.getOrd());
+                                //실시간 저상버스로 제공되는 데이터가 있으면
+                                if (!arrmsgList.isEmpty()) {
+                                    elementDTO = RouteElementDTO.builder()
+                                            .start(startName)
+                                            .end(endName)
+                                            .mode(mode)
+                                            .routeColor("#"+routeColor)
+                                            .name(name)
+                                            .line(line)
+                                            .distance(distance)
+                                            .sectionTime(sectionTime)
+                                            .arrmsg1(arrmsgList.get(0))
+                                            .arrmsg2(arrmsgList.get(1))
+                                            .build();
+                                }
+                            }
                         }
 
-                        RouteElementDTO elementDTO = RouteElementDTO.builder()
-                                .start(startName)
-                                .end(endName)
-                                .mode(mode)
-                                .routeColor("#"+routeColor)
-                                .name(name)
-                                .line(line)
-                                .distance(distance)
-                                .sectionTime(sectionTime)
-                                .build();
 
                         if (mode.equals("WALK")) {
+                            elementDTO = RouteElementDTO.builder()
+                                    .start(startName)
+                                    .end(endName)
+                                    .mode(mode)
+                                    .routeColor("#"+routeColor)
+                                    .name(name)
+                                    .line(line)
+                                    .distance(distance)
+                                    .sectionTime(sectionTime)
+                                    .build();
                             singleRoute_.add(elementDTO);
                             continue;
                         }

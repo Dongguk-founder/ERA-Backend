@@ -5,13 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b2d6dac9-f6d9-4d79-ad42-8152adc9953e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/DetailElementDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/DetailElementDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/RouteElementDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/DTO/Route/RouteElementDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Entity/LowBusEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/BusStationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/BusStationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -39,6 +47,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -89,7 +98,7 @@
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.EasyRouteAssistantApplication.local.executor": "Run",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "feat/lowbus",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/Users/heoeunjeong/Desktop/ERA-Backend/Easy_Route_Assistant/src/main/resources",
     "node.js.detected.package.eslint": "true",
@@ -99,7 +108,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.28444445",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
+    "settings.editor.selected.configurable": "editor.preferences.import",
     "vue.rearranger.settings.migration": "true"
   },
   "keyToStringList": {
@@ -122,18 +131,20 @@
       <option name="ALTERNATIVE_JRE_PATH" value="17" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <envs>
-        <env name="BATHROOM_APPKEY" value="6w0XqMP6lUJtobm9g6BdudLKxpvbHQ4MIQvrbfDehRyLocesuEQNxQz0Li/mzAKCjh00ju6b+r+ZQNtZeqHoVA==" />
-        <env name="BATHROOM_URL" value="https://api.odcloud.kr/api/15118705/v1/uddi:5fb8ec36-ae8a-48ed-ace8-88374daabeaf" />
-        <env name="ELEVATOR_APPKEY" value="6d7448626868656f373565645a6d7a" />
-        <env name="ELEVATOR_URL" value="http://openapi.seoul.go.kr:8088/" />
-        <env name="SEOUL_KEY" value="6d7448626868656f373565645a6d7a" />
         <env name="SEOUL_URL" value="http://openapi.seoul.go.kr:8088/" />
-        <env name="SUBWAY_KEY" value="$2a$10$a/.Cn3ik/SbSnsjtoRpoD.A1kMEztIApTCK5nVkDuf4Iq49LL6x56" />
-        <env name="SUBWAYENEX_URL" value="https://openapi.kric.go.kr/openapi/handicapped/stationMovement" />
-        <env name="SUBWAYTRANSFER_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement" />
-        <env name="TMAP_APPKEY" value="e8wHh2tya84M88aReEpXCa5XTQf3xgo01aZG39k5" />
-        <env name="TMAP_URL" value="https://apis.openapi.sk.com/transit/routes" />
+        <env name="SEOUL_KEY" value="6d7448626868656f373565645a6d7a" />
+        <env name="BATHROOM_URL" value="https://api.odcloud.kr/api/15118705/v1/uddi:5fb8ec36-ae8a-48ed-ace8-88374daabeaf" />
+        <env name="BATHROOM_APPKEY" value="6w0XqMP6lUJtobm9g6BdudLKxpvbHQ4MIQvrbfDehRyLocesuEQNxQz0Li/mzAKCjh00ju6b+r+ZQNtZeqHoVA==" />
+        <env name="ELEVATOR_URL" value="http://openapi.seoul.go.kr:8088/" />
+        <env name="ELEVATOR_APPKEY" value="6d7448626868656f373565645a6d7a" />
         <env name="TRANSFETMOVEMENT_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement?" />
+        <env name="TMAP_URL" value="https://apis.openapi.sk.com/transit/routes" />
+        <env name="TMAP_APPKEY" value="e8wHh2tya84M88aReEpXCa5XTQf3xgo01aZG39k5" />
+        <env name="SUBWAYTRANSFER_URL" value="https://openapi.kric.go.kr/openapi/vulnerableUserInfo/transferMovement" />
+        <env name="SUBWAYENEX_URL" value="https://openapi.kric.go.kr/openapi/handicapped/stationMovement" />
+        <env name="SUBWAY_KEY" value="$2a$10$a/.Cn3ik/SbSnsjtoRpoD.A1kMEztIApTCK5nVkDuf4Iq49LL6x56" />
+        <env name="REALTIMEBUS_URL" value="http://ws.bus.go.kr/api/rest/arrive/getLowArrInfoByRoute" />
+        <env name="REALTIMEBUS_KEY" value="0HBe78U7mNB8GP8q43qLeeTSw08Q98FJDHSUSDU2MA4QxgpNNNTJo4q3fbbhzljltUtbFTJ3Xkkd%2BshTgfiMww%3D%3D" />
       </envs>
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="Easy_Route_Assistant.main" />
@@ -163,6 +174,11 @@
       <workItem from="1701747237106" duration="14702000" />
       <workItem from="1701884235838" duration="5049000" />
       <workItem from="1701896300367" duration="7050000" />
+      <workItem from="1702042758952" duration="145000" />
+      <workItem from="1702056628870" duration="1190000" />
+      <workItem from="1702060335298" duration="27684000" />
+      <workItem from="1702126093958" duration="724000" />
+      <workItem from="1702127018127" duration="4379000" />
     </task>
     <servers />
   </component>
@@ -199,6 +215,11 @@
           <properties class="org.springframework.beans.factory.BeanDefinitionStoreException" package="org.springframework.beans.factory" />
           <option name="timeStamp" value="1" />
         </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/BusStationService.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
