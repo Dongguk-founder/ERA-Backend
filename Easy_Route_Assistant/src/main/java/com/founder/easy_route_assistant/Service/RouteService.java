@@ -136,8 +136,7 @@ public class RouteService {
                             }
                             line = startStationCodes.get(2);
 
-                        }
-                        if (mode.equals("BUS")) {
+                        }else if (mode.equals("BUS")) {
                             RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
                             if (temp != null) {
                                 List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(), temp.getBusRouteId(), temp.getOrd());
@@ -146,20 +145,7 @@ public class RouteService {
                                     continue;
                                 }
                             }
-                        }
-                            elementDTO = RouteElementDTO.builder()
-                                    .start(startName)
-                                    .end(endName)
-                                    .mode(mode)
-                                    .routeColor("#" + routeColor)
-                                    .name(name)
-                                    .line(line)
-                                    .distance(distance)
-                                    .sectionTime(sectionTime)
-                                    .build();
-
-
-                            if (mode.equals("WALK")) {
+                        } else  {
                                 elementDTO = RouteElementDTO.builder()
                                         .start(startName)
                                         .end(endName)
@@ -171,8 +157,18 @@ public class RouteService {
                                         .sectionTime(sectionTime)
                                         .build();
                                 singleRoute_.add(elementDTO);
-                                continue;
-                            }
+                        }
+
+                        elementDTO = RouteElementDTO.builder()
+                                .start(startName)
+                                .end(endName)
+                                .mode(mode)
+                                .routeColor("#" + routeColor)
+                                .name(name)
+                                .line(line)
+                                .distance(distance)
+                                .sectionTime(sectionTime)
+                                .build();
                             singleRoute.add(elementDTO);
                             singleRoute_.add(elementDTO);
                         }
