@@ -39,6 +39,7 @@ public class RequestService {
                 .point(requestDTO.getPoint())
                 .content(requestDTO.getContent())
                 .userEntity(userEntity)
+                .roadAddr(requestDTO.getRoadAddr())
                 .accepted(false)
                 .build();
 
