@@ -249,6 +249,20 @@ public class RouteService {
                                     .build();
                             detailElementDTOS.add(elementDTO);
                         }
+                    }else {
+                        DetailElementDTO hh = DetailElementDTO.builder()
+                                .start((String) current.get("start"))
+                                .end((String) current.get("end"))
+                                .mode((String) current.get("mode"))
+                                .routeColor((String) current.get("routeColor"))
+                                .name((String) current.get("name"))
+                                .line((String) current.get("line"))
+                                .distance((Long) current.get("distance"))
+                                .arrmsg1("2분44초후[0번째 전]")
+                                .arrmsg2("12분35초후[7번째 전]")
+                                .sectionTime(sectionTime)
+                                .build();
+                        detailElementDTOS.add(hh);
                     }
                 }else {
                     DetailElementDTO detailElementDTO = DetailElementDTO.builder()

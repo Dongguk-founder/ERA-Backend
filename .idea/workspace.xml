@@ -173,7 +173,7 @@
       <workItem from="1702056628870" duration="1190000" />
       <workItem from="1702060335298" duration="27684000" />
       <workItem from="1702126093958" duration="724000" />
-      <workItem from="1702127018127" duration="14629000" />
+      <workItem from="1702127018127" duration="15376000" />
     </task>
     <servers />
   </component>
@@ -210,11 +210,6 @@
           <properties class="org.springframework.beans.factory.BeanDefinitionStoreException" package="org.springframework.beans.factory" />
           <option name="timeStamp" value="1" />
         </breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Easy_Route_Assistant/src/main/java/com/founder/easy_route_assistant/Service/RouteService.java</url>
-          <line>232</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
