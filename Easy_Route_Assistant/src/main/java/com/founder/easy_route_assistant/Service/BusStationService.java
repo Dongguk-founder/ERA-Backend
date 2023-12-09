@@ -14,13 +14,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class BusStationService {
 
-    private final BusStationRepository lowBusRepository;
+    private final BusStationRepository busStationRepository;
 
     @Value("${REALTIMEBUS_URL}")
     private String REALTIMEBUS_URL;
@@ -92,7 +93,7 @@ public class BusStationService {
     public Optional<Long> getBusRouteId(String busName) {
         try {
             busName = busName.substring(3);
-            return lowBusRepository.findByBusName(busName)
+            return busStationRepository.findByBusName(busName)
                     .map(BusStationEntity::getBusRouteId);
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,4 +101,21 @@ public class BusStationService {
         }
     }
 
+    //    public List<BusStationEntity> getStationId(String stName) {
+//        try {
+//            return busStationRepository.findAllByStName(stName)
+//                    .stream().toList();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            throw e;
+//        }
+//    }
+    public List<BusStationEntity> getStationId(String stName) {
+        List<BusStationEntity> data = busStationRepository.findAllByStName(stName);
+        return data;
+    }
+
+    public Optional<BusStationEntity> getAllParam(String busName, String stName){
+        return busStationRepository.findByBusNameAndStName(busName,stName);
+    }
 }

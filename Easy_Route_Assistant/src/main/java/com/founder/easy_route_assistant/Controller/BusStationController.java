@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Controller;
 
+import com.founder.easy_route_assistant.Entity.BusStationEntity;
 import com.founder.easy_route_assistant.Service.BusStationService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,11 +28,29 @@ public class BusStationController {
 //        return ResponseEntity.ok().build();
 //    }
 
-    @GetMapping("/busName")
+    @GetMapping("/getBusRoutId")
     public ResponseEntity<Void> getBusRouteId(@RequestParam(value = "busName") String busName) {
         Optional<Long> busRouteId = busStationService.getBusRouteId(busName);
         busRouteId.ifPresent(id -> logger.info("Bus Route ID: {}", id));
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/getStationId")
+    public ResponseEntity<Void> getStationId(@RequestParam(value = "stName") String stName) {
+        System.out.println(stName);
+        List<BusStationEntity> busRoute = busStationService.getStationId(stName);
+        for (BusStationEntity b : busRoute){
+            System.out.println(b.getBusRouteId());
+        }
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/getAllParam")
+    public ResponseEntity<Void> getAllparam(@RequestParam(value = "busName") String busName, @RequestParam(value = "stName") String stName) {
+        Optional<BusStationEntity> temp = busStationService.getAllParam(busName,stName);
+        System.out.println(temp.get().getBusRouteId()+"\n"+temp.get().getOrd()+"\n"+temp.get().getStId());
+        return ResponseEntity.ok().build();
+    }
+
+
 
 }
