@@ -215,8 +215,9 @@ public class RouteService {
         String strRoute = routeRepository.findById(id);
 
         JSONParser jsonParser = new JSONParser();
+        Object obj = null;
         try {
-            Object obj = jsonParser.parse(strRoute);
+            obj = jsonParser.parse(strRoute);
             JSONObject route = (JSONObject) obj;
 
             List<DetailElementDTO> detailElementDTOS = new ArrayList<>();
@@ -224,10 +225,21 @@ public class RouteService {
             String totalTime = (String) route.get("totalTime");
 
             JSONArray elements = (JSONArray) route.get("routeElements");
-            for (int i = 0; i < elements.size() - 1; i++) {
+            for(int i=0; i<elements.size()-1; i++) {
                 JSONObject current = (JSONObject) elements.get(i);
                 Long tempSectionTime = (Long) current.get("sectionTime");
-                String sectionTime = tempSectionTime / 60 + "분";
+                String sectionTime = tempSectionTime / 60 + "분" ;
+                DetailElementDTO detailElementDTO = DetailElementDTO.builder()
+                        .start((String) current.get("start"))
+                        .end((String) current.get("end"))
+                        .mode((String) current.get("mode"))
+                        .routeColor((String) current.get("routeColor"))
+                        .name((String) current.get("name"))
+                        .line((String) current.get("line"))
+                        .distance((Long) current.get("distance"))
+                        .sectionTime(sectionTime)
+                        .build();
+                detailElementDTOS.add(detailElementDTO);
 
                 JSONObject after = (JSONObject) elements.get(i + 1);
 
@@ -257,11 +269,12 @@ public class RouteService {
                     String chtnNextStinCd = codesNameAfter.get(1);
                     int tmp1 = Integer.parseInt(codesStartAfter.get(1).replaceAll("[^0-9]", ""));
                     int tmp2 = Integer.parseInt(codesNameAfter.get(1).replaceAll("[^0-9]", ""));
-                    int prev = ((tmp2 - tmp1) > 0) ? tmp1 - 1 : tmp1 + 1;
+                    int prev = ((tmp2-tmp1)>0) ? tmp1-1 : tmp1+1;
                     String prevStinCd;
                     if (Character.isLetter(codesStartAfter.get(1).charAt(0))) {
                         prevStinCd = codesStartAfter.get(1).charAt(0) + String.valueOf(prev);
-                    } else {
+                    }
+                    else {
                         prevStinCd = String.valueOf(prev);
                     }
 
@@ -304,11 +317,12 @@ public class RouteService {
 
                     int tmp1 = Integer.parseInt(codesEndCurrent.get(1).replaceAll("[^0-9]", ""));
                     int tmp2 = Integer.parseInt(codesStartCurrent.get(1).replaceAll("[^0-9]", ""));
-                    int tmp = ((tmp1 - tmp2) > 0) ? tmp1 + 1 : tmp1 - 1;
+                    int tmp = ((tmp1-tmp2)>0) ? tmp1+1 : tmp1-1;
                     String nextStinCd;
                     if (Character.isLetter(codesEndCurrent.get(1).charAt(0))) {
                         nextStinCd = codesEndCurrent.get(1).charAt(0) + String.valueOf(tmp);
-                    } else {
+                    }
+                    else {
                         nextStinCd = String.valueOf(tmp);
                     }
 
@@ -320,18 +334,18 @@ public class RouteService {
                     detailElementDTOS.add(elevator);
                     System.out.println("\nexitInfo: " + enEx + "\n");
                 }
-
             }
 
-            JSONObject lastElement = (JSONObject) elements.get(elements.size() - 1);
-            String sectionTime = (Long) lastElement.get("sectionTime") / 60 + "분";
+            JSONObject lastElement = (JSONObject) elements.get(elements.size()-1);
+            String sectionTime = (Long)lastElement.get("sectionTime") / 60 + "분" ;
+            DetailElementDTO elementDTO = null;
             if (lastElement.get("mode").equals("BUS")) {
                 RealTimeParamDTO temp = busStationService.getAllParam((String) lastElement.get("name"), (String) lastElement.get("startName"));
                 if (temp != null) {
                     List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(), temp.getBusRouteId(), temp.getOrd());
                     //실시간 저상버스로 제공되는 데이터가 있으면
                     if (!arrmsgList.isEmpty()) {
-                        DetailElementDTO elementDTO = DetailElementDTO.builder()
+                        elementDTO = DetailElementDTO.builder()
                                 .start((String) lastElement.get("start"))
                                 .end((String) lastElement.get("end"))
                                 .mode((String) lastElement.get("mode"))
@@ -343,10 +357,11 @@ public class RouteService {
                                 .arrmsg2(arrmsgList.get(1))
                                 .sectionTime(sectionTime)
                                 .build();
+                        detailElementDTOS.add(elementDTO);
                     }
                 }
-            }
-                DetailElementDTO lastDetail = DetailElementDTO.builder()
+            }else {
+                elementDTO = DetailElementDTO.builder()
                         .start((String) lastElement.get("start"))
                         .end((String) lastElement.get("end"))
                         .mode((String) lastElement.get("mode"))
@@ -356,21 +371,20 @@ public class RouteService {
                         .distance((Long) lastElement.get("distance"))
                         .sectionTime(sectionTime)
                         .build();
+            }
+            detailElementDTOS.add(elementDTO);
 
-                detailElementDTOS.add(lastDetail);
+            DetailRouteDTO detailRouteDTO = DetailRouteDTO.builder()
+                    .totalTime(totalTime)
+                    .detailElements(detailElementDTOS)
+                    .build();
 
-                DetailRouteDTO detailRouteDTO = DetailRouteDTO.builder()
-                        .totalTime(totalTime)
-                        .detailElements(detailElementDTOS)
-                        .build();
-
-                return detailRouteDTO;
+            return detailRouteDTO;
 
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
-
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
         // ex) stationNm = "옥수", lineNm = "3" or "수도권3호선"
 
