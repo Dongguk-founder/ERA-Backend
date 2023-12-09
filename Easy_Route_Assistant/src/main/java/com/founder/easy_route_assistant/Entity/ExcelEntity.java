@@ -12,14 +12,14 @@ public class ExcelEntity {
     @Id
     private Long id;
 
-    @Column
+    @Column(name = "opr_code")
     private String opr_code;
-    @Column
+    @Column(name = "station_code")
     private String stationCode;
-    @Column
+    @Column(name = "station_name")
     private String stationName;
-    @Column
+    @Column(name = "line_num")
     private String lineNum;
-    @Column
+    @Column (name = "line_code")
     private String lineCode;
 }
