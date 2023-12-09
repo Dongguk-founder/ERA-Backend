@@ -73,7 +73,7 @@ public class RequestService {
                     .point(requestEntity.getPoint())
                     .roadAddr(requestEntity.getRoadAddr())
                     .content(requestEntity.getContent())
-                    .userID(userEntity.getUserID())
+                    .userID(requestEntity.getUserEntity().getUserID())
                     .build();
 
             requestDTOS.add(requestDTO);
