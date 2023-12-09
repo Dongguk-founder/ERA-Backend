@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,10 +28,15 @@ public class BusStationController {
 //        System.out.println(busRouteId);
 //        return ResponseEntity.ok().build();
 //    }
+    @GetMapping("/getBusRoute")
+    public ResponseEntity<Void> getBusRoute() throws IOException {
+        busStationService.getRealtimeBusData(112000001,100100118,22);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/getBusRoutId")
     public ResponseEntity<Void> getBusRouteId(@RequestParam(value = "busName") String busName) {
-        Optional<Long> busRouteId = busStationService.getBusRouteId(busName);
+        Optional<Integer> busRouteId = busStationService.getBusRouteId(busName);
         busRouteId.ifPresent(id -> logger.info("Bus Route ID: {}", id));
         return ResponseEntity.ok().build();
     }
@@ -44,12 +50,12 @@ public class BusStationController {
         }
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/getAllParam")
-    public ResponseEntity<Void> getAllparam(@RequestParam(value = "busName") String busName, @RequestParam(value = "stName") String stName) {
-        Optional<BusStationEntity> temp = busStationService.getAllParam(busName,stName);
-        System.out.println(temp.get().getBusRouteId()+"\n"+temp.get().getOrd()+"\n"+temp.get().getStId());
-        return ResponseEntity.ok().build();
-    }
+//    @GetMapping("/getAllParam")
+//    public ResponseEntity<Void> getAllparam(@RequestParam(value = "busName") String busName, @RequestParam(value = "stName") String stName) {
+//        Optional<BusStationEntity> temp = busStationService.getAllParam(busName,stName);
+//        System.out.println(temp.get().getBusRouteId()+"\n"+temp.get().getOrd()+"\n"+temp.get().getStId());
+//        return ResponseEntity.ok().build();
+//    }
 
 
 

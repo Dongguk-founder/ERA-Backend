@@ -1,5 +1,6 @@
 package com.founder.easy_route_assistant.Service;
 
+import com.founder.easy_route_assistant.DTO.RealTimeParamDTO;
 import com.founder.easy_route_assistant.Entity.BusStationEntity;
 import com.founder.easy_route_assistant.Repository.BusStationRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,7 +32,7 @@ public class BusStationService {
     private String REALTIMEBUS_KEY;
 
 
-    public void getRealtimeBusData(String stId, String busRouteId, String ord) throws IOException {
+    public void getRealtimeBusData(Integer stId, Integer busRouteId, Integer ord) throws IOException {
 
         StringBuilder sb = new StringBuilder();
         sb.append(REALTIMEBUS_URL);
@@ -62,13 +63,19 @@ public class BusStationService {
 
             // JSON데이터로 변환
             JSONObject jsonObject = XML.toJSONObject(st.toString());
-            JSONObject msgBody = jsonObject.getJSONObject("ServiceResult").getJSONObject("msgBody").getJSONObject("itemList");
-            String jsonPrettyPrintString = msgBody.toString(4);
-
+            JSONObject itemList = jsonObject.getJSONObject("ServiceResult").getJSONObject("msgBody").getJSONObject("itemList");
+            //첫번째 도착예정 버스의 도착정보메시지 2분44초후[0번째 전]
+            String arrmsg1 = itemList.getString("arrmsg1");
+            //두번째 도착예정 버스의 도착정보메시지 12분35초후[7번째 전]
+            String arrmsg2 = itemList.getString("arrmsg2");
+            //첫번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
+            int busType1 = itemList.getInt("busType1");
+            //두번째 도착예정버스의 차량유형 (0 : 일반버스, 1: 저상버스)
+            int busType2 = itemList.getInt("busType2");
 
             // 이제 xmlResponse를 원하는 방식으로 처리하면 됩니다.
             // 예: XML 파싱, 객체로 매핑 등
-            System.out.println("JSON Response:\n" + jsonPrettyPrintString);
+            System.out.println("JSON Response:\n" + busType1);
         } else {
             // 오류 처리
             System.out.println("HTTP Request Failed with response code: " + responseCode);
@@ -90,7 +97,7 @@ public class BusStationService {
 //                .map(BusStationEntity::getBusRouteId);
 //    }
 
-    public Optional<Long> getBusRouteId(String busName) {
+    public Optional<Integer> getBusRouteId(String busName) {
         try {
             busName = busName.substring(3);
             return busStationRepository.findByBusName(busName)
@@ -115,7 +122,16 @@ public class BusStationService {
         return data;
     }
 
-    public Optional<BusStationEntity> getAllParam(String busName, String stName){
-        return busStationRepository.findByBusNameAndStName(busName,stName);
+    public RealTimeParamDTO getAllParam(String busName, String stName){
+        Optional<BusStationEntity> temp = busStationRepository.findByBusNameAndStName(busName,stName);
+        RealTimeParamDTO realTimeParamDTO = null;
+        if(temp.isPresent()){
+            realTimeParamDTO= RealTimeParamDTO.builder()
+                    .busRouteId(temp.get().getBusRouteId())
+                    .ord(temp.get().getOrd())
+                    .stId(temp.get().getStId())
+                    .build();
+        }
+        return realTimeParamDTO;
     }
 }

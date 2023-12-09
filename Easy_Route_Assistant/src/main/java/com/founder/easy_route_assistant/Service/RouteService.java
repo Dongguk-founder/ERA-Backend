@@ -1,6 +1,7 @@
 package com.founder.easy_route_assistant.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.founder.easy_route_assistant.DTO.RealTimeParamDTO;
 import com.founder.easy_route_assistant.DTO.Route.*;
 import com.founder.easy_route_assistant.Entity.ExcelEntity;
 import com.founder.easy_route_assistant.Repository.ExcelRepository;
@@ -19,7 +20,6 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,7 @@ public class RouteService {
 
     private final RouteRepository routeRepository;
     private final ExcelRepository excelRepository;
+    private final BusStationService busStationService;
 
     // 요약 경로
     public RouteDTOList searchRoute(RouteRequestDTO routeRequestDTO) throws IOException {
@@ -135,6 +136,11 @@ public class RouteService {
                                 }
                             }
                             line = startStationCodes.get(2);
+                        } else if (mode.equals("BUS")) {
+                            RealTimeParamDTO temp = busStationService.getAllParam(name,startName);
+                            if (temp != null){
+                                busStationService.getRealtimeBusData(temp.getStId(),temp.getBusRouteId(),temp.getOrd());
+                            }
                         }
 
                         RouteElementDTO elementDTO = RouteElementDTO.builder()

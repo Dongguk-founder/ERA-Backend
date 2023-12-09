@@ -14,13 +14,13 @@ import lombok.*;
 public class BusStationEntity {
     @Id
     @Column(name = "bus_route_id")
-    Long busRouteId;
+    Integer busRouteId;
     @Column(name = "bus_name")
     String busName;
     @Column
-    Long ord;
+    Integer ord;
     @Column(name = "st_id")
-    Long stId;
+    Integer stId;
     @Column(name = "st_name")
     String stName;
 
