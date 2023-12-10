@@ -136,17 +136,18 @@ public class RouteService {
                             }
                             line = startStationCodes.get(2);
 
-                        }else if (mode.equals("BUS")) {
-                            RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
-                            System.out.println(temp);
-                            if (temp != null) {
-                                List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(), temp.getBusRouteId(), temp.getOrd());
-                                //실시간 저상버스로 제공되는 데이터가 없으면
-                                if (arrmsgList.isEmpty()) {
-                                    continue;
-                                }
-                            }
                         }
+//                        else if (mode.equals("BUS")) {
+//                            RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
+//                            System.out.println(temp);
+//                            if (temp != null) {
+//                                List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(), temp.getBusRouteId(), temp.getOrd());
+//                                //실시간 저상버스로 제공되는 데이터가 없으면
+//                                if (arrmsgList.isEmpty()) {
+//                                    continue;
+//                                }
+//                            }
+//                        }
 
                         elementDTO = RouteElementDTO.builder()
                                 .start(startName)
@@ -238,21 +239,21 @@ public class RouteService {
                                     .sectionTime(sectionTime)
                                     .build();
                             detailElementDTOS.add(elementDTO);
+                        }else {
+                            DetailElementDTO hh = DetailElementDTO.builder()
+                                    .start((String) current.get("start"))
+                                    .end((String) current.get("end"))
+                                    .mode((String) current.get("mode"))
+                                    .routeColor((String) current.get("routeColor"))
+                                    .name((String) current.get("name"))
+                                    .line((String) current.get("line"))
+                                    .distance((Long) current.get("distance"))
+                                    .arrmsg1("2분44초후[0번째 전]")
+                                    .arrmsg2("12분35초후[7번째 전]")
+                                    .sectionTime(sectionTime)
+                                    .build();
+                            detailElementDTOS.add(hh);
                         }
-                    }else {
-                        DetailElementDTO hh = DetailElementDTO.builder()
-                                .start((String) current.get("start"))
-                                .end((String) current.get("end"))
-                                .mode((String) current.get("mode"))
-                                .routeColor((String) current.get("routeColor"))
-                                .name((String) current.get("name"))
-                                .line((String) current.get("line"))
-                                .distance((Long) current.get("distance"))
-                                .arrmsg1("2분44초후[0번째 전]")
-                                .arrmsg2("12분35초후[7번째 전]")
-                                .sectionTime(sectionTime)
-                                .build();
-                        detailElementDTOS.add(hh);
                     }
                 }else {
                     DetailElementDTO detailElementDTO = DetailElementDTO.builder()
