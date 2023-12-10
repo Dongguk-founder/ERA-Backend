@@ -138,6 +138,7 @@ public class RouteService {
 
                         }else if (mode.equals("BUS")) {
                             RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
+                            System.out.println(temp);
                             if (temp != null) {
                                 List<String> arrmsgList = busStationService.getRealtimeBusData(temp.getStId(), temp.getBusRouteId(), temp.getOrd());
                                 //실시간 저상버스로 제공되는 데이터가 없으면
@@ -145,18 +146,6 @@ public class RouteService {
                                     continue;
                                 }
                             }
-                        } else  {
-                                elementDTO = RouteElementDTO.builder()
-                                        .start(startName)
-                                        .end(endName)
-                                        .mode(mode)
-                                        .routeColor("#" + routeColor)
-                                        .name(name)
-                                        .line(line)
-                                        .distance(distance)
-                                        .sectionTime(sectionTime)
-                                        .build();
-                                singleRoute_.add(elementDTO);
                         }
 
                         elementDTO = RouteElementDTO.builder()
@@ -169,36 +158,41 @@ public class RouteService {
                                 .distance(distance)
                                 .sectionTime(sectionTime)
                                 .build();
-                            singleRoute.add(elementDTO);
+
+                        if(mode.equals("WALK")) {
                             singleRoute_.add(elementDTO);
+                            continue;
                         }
-
-                        RouteElementDTO tmp = singleRoute.get(singleRoute.size() - 1);
-                        RouteElementDTO lastElement = RouteElementDTO.builder()
-                                .start(tmp.getEnd())
-                                .routeColor(tmp.getRouteColor())
-                                .build();
-                        singleRoute.add(lastElement);
-
-                        RouteDTO routeDTO = RouteDTO.builder()
-                                .id(id)
-                                .totalTime(totalTime)
-                                .routeElements(singleRoute)
-                                .build();
-                        routeDTOS.add(routeDTO);
-                        RouteDTO routeDTO_ = RouteDTO.builder()
-                                .id(id++)
-                                .totalTime(totalTime)
-                                .routeElements(singleRoute_)
-                                .build();
-                        String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
-                        routeRepository.save(routeDTO_.getId(), jsonString);
+                        singleRoute.add(elementDTO);
+                        singleRoute_.add(elementDTO);
                     }
 
+                    RouteElementDTO tmp = singleRoute.get(singleRoute.size() - 1);
+                    RouteElementDTO lastElement = RouteElementDTO.builder()
+                            .start(tmp.getEnd())
+                            .routeColor(tmp.getRouteColor())
+                            .build();
+                    singleRoute.add(lastElement);
+
+                    RouteDTO routeDTO = RouteDTO.builder()
+                            .id(id)
+                            .totalTime(totalTime)
+                            .routeElements(singleRoute)
+                            .build();
+                    routeDTOS.add(routeDTO);
+                    RouteDTO routeDTO_ = RouteDTO.builder()
+                            .id(id++)
+                            .totalTime(totalTime)
+                            .routeElements(singleRoute_)
+                            .build();
+                    String jsonString = new ObjectMapper().writeValueAsString(routeDTO_);
+                    routeRepository.save(routeDTO_.getId(), jsonString);
+                }
+
             }catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        fullRoute.setRouteDTOS(routeDTOS);
+                throw new RuntimeException(e);
+            }
+            fullRoute.setRouteDTOS(routeDTOS);
             return fullRoute;
 
         } catch (ParseException e) {
@@ -372,16 +366,16 @@ public class RouteService {
             JSONObject lastElement = (JSONObject) elements.get(elements.size()-1);
             String sectionTime = (Long)lastElement.get("sectionTime") / 60 + "분" ;
             DetailElementDTO elementDTO = null;
-                elementDTO = DetailElementDTO.builder()
-                        .start((String) lastElement.get("start"))
-                        .end((String) lastElement.get("end"))
-                        .mode((String) lastElement.get("mode"))
-                        .routeColor((String) lastElement.get("routeColor"))
-                        .name((String) lastElement.get("name"))
-                        .line((String) lastElement.get("line"))
-                        .distance((Long) lastElement.get("distance"))
-                        .sectionTime(sectionTime)
-                        .build();
+            elementDTO = DetailElementDTO.builder()
+                    .start((String) lastElement.get("start"))
+                    .end((String) lastElement.get("end"))
+                    .mode((String) lastElement.get("mode"))
+                    .routeColor((String) lastElement.get("routeColor"))
+                    .name((String) lastElement.get("name"))
+                    .line((String) lastElement.get("line"))
+                    .distance((Long) lastElement.get("distance"))
+                    .sectionTime(sectionTime)
+                    .build();
 
             detailElementDTOS.add(elementDTO);
 
