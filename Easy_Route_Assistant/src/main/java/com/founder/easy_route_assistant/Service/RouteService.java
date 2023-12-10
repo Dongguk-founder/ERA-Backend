@@ -134,7 +134,13 @@ public class RouteService {
                                     break;
                                 }
                             }
-                            line = startStationCodes.get(2);
+                            //line = startStationCodes.get(2);
+                            if (startStationCodes.get(2).equals("K1")) {
+                                line = "수인분당";
+                            }
+                            else {
+                                line = startStationCodes.get(2);
+                            }
 
                         }
 //                        else if (mode.equals("BUS")) {
@@ -280,11 +286,17 @@ public class RouteService {
                 String endAfter = (String) after.get("end");
                 String nameAfter = (String) after.get("name");
                 String lineAfter = (String) after.get("line");
+                /*if (!(lineAfter == null) && lineAfter.equals("수인분당")) {
+                    lineAfter = "K1";
+                }*/
 
                 // 출발지==도착지, mode==WALK -> 지하철 환승
                 if (startCurrent.equals(endCurrent) && modeAfter.equals("SUBWAY") && modeCurrent.equals("WALK")) {
                     JSONObject before = (JSONObject) elements.get(i - 1);
                     String lineBefore = (String) before.get("line");
+                    /*if (!(lineBefore==null) && lineBefore.equals("수인분당")) {
+                        lineBefore = "K1";
+                    }*/
                     // stinNm == startCurrent, endCurrent
                     List<String> codesCurrent = getStationCode(startCurrent, lineBefore);
                     String lnCd = codesCurrent.get(2);
@@ -293,6 +305,9 @@ public class RouteService {
 
                     List<String> codesStartAfter = getStationCode(startAfter, lineAfter);
                     List<String> codesNameAfter = getStationCode(nameAfter, lineAfter);
+                    if (codesStartAfter == null) {
+                        System.out.println("error: " + startAfter + ", " + lineAfter);
+                    }
                     String chthTgtLn = codesStartAfter.get(2);
                     String chtnNextStinCd = codesNameAfter.get(1);
                     int tmp1 = Integer.parseInt(codesStartAfter.get(1).replaceAll("[^0-9]", ""));
@@ -336,6 +351,9 @@ public class RouteService {
                 } else if (!startAfter.equals(endAfter) && modeCurrent.equals("SUBWAY") && modeAfter.equals("WALK")) {
                     // 쟈철 나가는 길
                     String lineCurrent = (String) current.get("line");
+                    /*if (!(lineCurrent == null) && lineCurrent.equals("수인분당")) {
+                        lineCurrent = "K1";
+                    }*/
                     List<String> codesEndCurrent = getStationCode(endCurrent, lineCurrent);
                     List<String> codesStartCurrent = getStationCode(startCurrent, lineCurrent);
 
@@ -393,14 +411,15 @@ public class RouteService {
     }
     private List<String> getStationCode(String stationNm, String lineNm) throws ParseException {
         // ex) stationNm = "옥수", lineNm = "3" or "수도권3호선"
-
+        // ex) stationNm = "강남구청", lineNm = "K1"
+        System.out.println(stationNm + lineNm);
         stationNm = stationNm.replaceAll("\\([^)]*\\)", "");
         List<ExcelEntity> excelEntities = excelRepository.findAllByStationName(stationNm);
         List<String> answer = new ArrayList<>();
         String opr_code, stationCode, lineCode;
         for (ExcelEntity o : excelEntities) {
             String lineNum = o.getLineNum();
-            if ((lineNum.length()>lineNm.length()) && o.getLineNum().contains(lineNm)) {
+            if ((lineNum.length()>=lineNm.length()) && lineNum.contains(lineNm)) {
                 opr_code = o.getOpr_code();
                 stationCode = o.getStationCode();
                 lineCode = o.getLineCode();
@@ -529,9 +548,12 @@ public class RouteService {
         JSONObject jsonObject = (JSONObject) jsonParser.parse(getstring);
         JSONArray body = (JSONArray) jsonObject.get("body");
 
-        // JSONObject transferInfo = new JSONObject();
         JSONArray transferInfo = new JSONArray();
         List<String> d = new ArrayList<>();
+
+        if(body == null) {
+            return null;
+        }
 
         // int cnt = 1;
         for(int i=0; i<body.size()-1; i++) {
