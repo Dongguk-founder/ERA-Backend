@@ -144,20 +144,12 @@ public class RouteService {
 
                             JSONObject passStopList = (JSONObject) element.get("passStopList");
                             JSONArray stationList = (JSONArray) passStopList.get("stationList");
-                            Long cnt = 1L;
-                            for(Object s : stationList) {
-                                cnt += 1;
-                            }
-                            distance = cnt;
+                            distance = (long) stationList.size()-1;
 
                         } else if (mode.equals("BUS")) {
                             JSONObject passStopList = (JSONObject) element.get("passStopList");
                             JSONArray stationList = (JSONArray) passStopList.get("stationList");
-                            Long cnt = 1L;
-                            for(Object s : stationList) {
-                                cnt += 1;
-                            }
-                            distance = cnt;
+                            distance = (long) stationList.size()-1;
                         }
 //                        else if (mode.equals("BUS")) {
 //                            RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
