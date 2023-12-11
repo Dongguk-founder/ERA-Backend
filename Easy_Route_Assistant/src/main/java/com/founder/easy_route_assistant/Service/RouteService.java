@@ -114,7 +114,7 @@ public class RouteService {
                         Long sectionTime = (Long) element.get("sectionTime");
                         String name = (String) element.get("route"); // 버스 번호(유지), 지하철 호선(-> 방향)
                         String line = null;
-                        if (mode.equals("SUBWAY")) { // name = 지하철 방향
+                        if (mode.equals("SUBWAY")) { // name = 지하철 방향, distance = 정류장 수
                             List<String> startStationCodes = getStationCode(startName, name);
                             List<String> endStationCodes = getStationCode(endName, name);
 
@@ -142,6 +142,22 @@ public class RouteService {
                                 line = startStationCodes.get(2);
                             }
 
+                            JSONObject passStopList = (JSONObject) element.get("passStopList");
+                            JSONArray stationList = (JSONArray) passStopList.get("stationList");
+                            Long cnt = 1L;
+                            for(Object s : stationList) {
+                                cnt += 1;
+                            }
+                            distance = cnt;
+
+                        } else if (mode.equals("BUS")) {
+                            JSONObject passStopList = (JSONObject) element.get("passStopList");
+                            JSONArray stationList = (JSONArray) passStopList.get("stationList");
+                            Long cnt = 1L;
+                            for(Object s : stationList) {
+                                cnt += 1;
+                            }
+                            distance = cnt;
                         }
 //                        else if (mode.equals("BUS")) {
 //                            RealTimeParamDTO temp = busStationService.getAllParam(name, startName);
