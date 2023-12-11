@@ -103,10 +103,10 @@ public class ConvenientService {
 
 
         if (convenientType.equals("elevator")) { // elevator api
-            List<ConvenientDTO> elevatorDTOS = requestElevatorAPI("중구");
+            List<ConvenientDTO> elevatorDTOS = requestElevatorAPI();
             convenientDTOS.addAll(elevatorDTOS);
         } else if (convenientType.equals("charger")) {
-            List<ConvenientDTO> chargerDTOS = requestChargerAPI("중구");
+            List<ConvenientDTO> chargerDTOS = requestChargerAPI();
             convenientDTOS.addAll(chargerDTOS);
         } else if ( convenientType.equals("bathroom")) {
             List<ConvenientDTO> bathroomDTOS = requestBathroomAPI();
@@ -121,7 +121,7 @@ public class ConvenientService {
     }
 
     //elevator
-    public List<ConvenientDTO> requestElevatorAPI(String sgg_nm) {
+    public List<ConvenientDTO> requestElevatorAPI() {
 
         //UriBulider 설정을 해주는 DefaultUriBuilderFactory
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SEOUL_URL);
@@ -157,7 +157,37 @@ public class ConvenientService {
             row = (JSONArray) fullObject.get("row");
             for (Object o : row) {
                 JSONObject element = (JSONObject) o;
-                String SGG_NM = (String) element.get("SGG_NM");
+                String s = (String) element.get("NODE_WKT");
+                String station = (String) element.get("SW_NM");
+
+                //정규 표현식 패턴 ( - :문자 혹은 숫자가 있고, ? : 앞의 표현식이 없거나 최대 한개만, \d : 0-9사이의 숫자 ,+: 앞의 표현식이 1개 이상,...)
+                String pattern = "-?\\d+\\.?\\d*";
+                //패턴 컴파일
+                Pattern p = Pattern.compile(pattern);
+                //매처 생성
+                Matcher m = p.matcher(s);
+
+                Double latitude = 0.0;
+                Double longtitude = 0.0;
+
+                int count = 0;
+                while (m.find()){
+                    if (count == 0){
+                        longtitude = Double.parseDouble(m.group());
+                    }else {
+                        latitude = Double.parseDouble(m.group());
+                    }
+                    count++;
+                }
+                Point point = new Point(longtitude, latitude);
+
+                ConvenientDTO elevatorDTO = ConvenientDTO.builder()
+                        .convenientType("elevator")
+                        .point(point)
+                        .description(station)
+                        .build();
+                elevatorDTOList.add(elevatorDTO);
+                /*String SGG_NM = (String) element.get("SGG_NM");
                 if (Objects.equals(SGG_NM, sgg_nm)) {
                     String s = (String) element.get("NODE_WKT");
                     String station = (String) element.get("SW_NM");
@@ -189,7 +219,7 @@ public class ConvenientService {
                             .description(station)
                             .build();
                     elevatorDTOList.add(elevatorDTO);
-                }
+                }*/
 
             }
 
@@ -262,7 +292,7 @@ public class ConvenientService {
         return bathroomDTOS;
     }
     //charger
-    public List<ConvenientDTO> requestChargerAPI(String target) { // target = 시군구코드
+    public List<ConvenientDTO> requestChargerAPI() { // target = 시군구코드
         DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(SEOUL_URL);
 
         factory.setEncodingMode(DefaultUriBuilderFactory.EncodingMode.VALUES_ONLY);
@@ -297,7 +327,36 @@ public class ConvenientService {
             row = (JSONArray) fullObject.get("row");
             for (Object o : row) {
                 JSONObject element = (JSONObject) o;
-                String signgunm = (String) element.get("SIGNGUNM");
+                String latitude = (String) element.get("LATITUDE"); // 위도
+                String longitude = (String) element.get("LONGITUDE"); // 경도
+                String placeDescript = (String) element.get("INSTLLCDESC");
+                String weekStart = (String) element.get("WEEKDAYOPEROPENHHMM");
+                String weekEnd = (String) element.get("WEEKDAYOPERCOLSEHHMM");
+                String satStart = (String) element.get("SATOPEROPEROPENHHMM");
+                String satEnd = (String) element.get("SATOPERCLOSEHHMM");
+                String holiStart = (String) element.get("HOLIDAYOPEROPENHHMM");
+                String holiEnd = (String) element.get("HOLIDAYCLOSEOPENHHMM");
+
+                String weekday = weekStart + " - " + weekEnd;
+                String saturday = satStart + " - " + satEnd;
+                String holiday = holiStart + " - " + holiEnd;
+
+                double lat = Double.parseDouble(latitude);
+                double lon = Double.parseDouble(longitude);
+                Point point = new Point(lon, lat);
+
+                ConvenientDTO convenientDTO = ConvenientDTO.builder()
+                        .convenientType("charger")
+                        .point(point)
+                        .description(placeDescript)
+                        .weekday(weekday)
+                        .saturday(saturday)
+                        .holiday(holiday)
+                        .build();
+
+                convenientDTOS.add(convenientDTO);
+
+                /*String signgunm = (String) element.get("SIGNGUNM");
                 if (Objects.equals(target, signgunm)) {
                     String latitude = (String) element.get("LATITUDE"); // 위도
                     String longitude = (String) element.get("LONGITUDE"); // 경도
@@ -328,7 +387,7 @@ public class ConvenientService {
 
                     convenientDTOS.add(convenientDTO);
 
-                    /*ChargerDTO chargerDTO = ChargerDTO.builder()
+                    *//*ChargerDTO chargerDTO = ChargerDTO.builder()
                             .point(point)
                             .placeDescript(placeDescript)
                             .weekStart(weekStart)
@@ -339,8 +398,8 @@ public class ConvenientService {
                             .holiEnd(holiEnd)
                             .build();
 
-                    chargerDTOList.add(chargerDTO);*/
-                }
+                    chargerDTOList.add(chargerDTO);*//*
+                }*/
             }
         } catch(Exception e) {
             e.printStackTrace();
